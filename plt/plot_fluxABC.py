@@ -12,6 +12,7 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
+    tf = 10.0
     met = ["abc_4", "sx_6_4", "tc_6_3", "tc_6_6", "tc_5", "tc_5_1", "tc_5_2"]
     nom = ["\mathcal{ABC}^{[4]}", "\mathcal{S}_{6}^{[4]}", "\mathcal{X}_{(6,E)}^{[4]}", r"\mathcal{X}_{(6,|\vec{k}|)}^{[4]}", "\mathcal{SS}_{5}^{[4]}", "\mathcal{X}_{(5,E)}^{[4]}", r"\mathcal{X}_{(5,|\vec{k}|)}^{[4]}"]
     Neval = []
@@ -38,7 +39,7 @@ if __name__ == "__main__":
 
     for i in range(0, len(met)):
         plt.plot(Neval[i], z[i], label = r"$\displaystyle " + nom[i] + "$")
-    plt.title(r"Flux ABC amb $A=" + str(co[0]) + "$, $B=" + str(co[1]) + "$, $C=" + str(co[2]) + r"$ i $\vec{z}_0=(" + str(z0[0]) + "," + str(z0[1]) + "," + str(z0[2]) + r")$: Efici\`encia en $\vec{z}$ a $t=10$ per a $\mathcal{X}^4$ (3 parts)")
+    plt.title(r"Flux ABC amb $A=" + str(co[0]) + "$, $B=" + str(co[1]) + "$, $C=" + str(co[2]) + r"$ i $\vec{z}_0=(" + str(z0[0]) + "," + str(z0[1]) + "," + str(z0[2]) + r")$: Efici\`encia en $\vec{z}$ a $t=" + str(tf) + r"$ per a $\mathcal{X}^4$ (3 parts)")
     plt.xlabel(r'$\displaystyle\log_{10}\left(N_{\rm{eval}}\right)$')
     plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{|\vec{z}-\vec{z}_{\rm{ex}}|}{|\vec{z}_{\rm{ex}}|}\right)$')
     plt.legend()

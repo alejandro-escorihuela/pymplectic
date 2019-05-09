@@ -47,9 +47,9 @@ def lectura_coefX_priv(nom_fit):
 def lectura_coefX(nom_fit):
     vec_coef = lectura_coefX_priv(nom_fit)
     a = vec_coef[0]
-    m = len(a)
-    for i in range(0, m):
-        a.append(a[m - i - 1])
+    m = len(a) / 2
+    # for i in range(0, m):
+    #     a.append(a[m - i - 1])
     metode = []
     cont = [0, 0, 0]
     coef = [[], [], []]

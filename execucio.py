@@ -13,7 +13,7 @@ from ddnls import *
 from solucionador import *
 
 if __name__ == "__main__":
-    problema = "fluxABC"
+    problema = "ddnls"
     t_final = 10.0
     met = []
     tip = []
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     met.append("tc_5_2")
     tip.append(0)
     h.append(h_elem)
-
+    
     met.append("sx_6_4")
     tip.append(0)
     h.append(h_elem)
