@@ -114,9 +114,17 @@ def lectura_coefX_P0(nom_fit):
     i = 0
     while (i < tam) and (noms[i] != 'a'):
         i = i + 1
-    metode_a, coef_a= XaABC(coefs[i])
-    
-    return metode_a, coef_a
+    met_a, cof_a = XaABC(coefs[i])
+    i = 0
+    while (i < tam) and (noms[i] != 'g'):
+        i = i + 1
+    met_g, cof_g = XaABC(coefs[i])
+    coefs_p = []
+    n = len(coefs[i])
+    for j in range(0, n):
+        coefs_p.append(-coefs[i][n - j - 1])
+    met_p, cof_p = XaABC(coefs_p)
+    return [met_a, cof_a], [met_g, cof_g], [met_p, cof_p]
 
 def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False):
     if (problema == "ddnls"):
