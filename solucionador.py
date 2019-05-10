@@ -75,12 +75,10 @@ def lectura_coefX_priv(nom_fit):
                 nom.append(jtem[0])
         if (len(aux) > 0):
             coef.append(aux)
-    if (len(coef) > 1):
-        return nom, coef
-    return coef
+    return nom, coef
 
 def lectura_coefX(nom_fit):
-    vec_coef = lectura_coefX_priv(nom_fit)
+    vec_coef = lectura_coefX_priv(nom_fit)[1]
     metode, coef = XaABC(vec_coef[0])
     return [metode, coef]
 
@@ -111,8 +109,14 @@ def lectura_coefABC(nom_fit):
     return [metode, coef]
 
 def lectura_coefX_P0(nom_fit):
-    vec_a, vec_g = lectura_coefX_priv(nom_fit)
-    return [vec_a, vec_g]
+    noms, coefs = lectura_coefX_priv(nom_fit)
+    tam = len(noms)
+    i = 0
+    while (i < tam) and (noms[i] != 'a'):
+        i = i + 1
+    metode_a, coef_a= XaABC(coefs[i])
+    
+    return metode_a, coef_a
 
 def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False):
     if (problema == "ddnls"):
@@ -147,13 +151,13 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         exit(-1)
 
     if (tipus_metode == 0):
-        orde, coef = lectura_coefX(metode)
+        ordre, coef = lectura_coefX(metode)
     elif (tipus_metode == 1):
-        orde, coef = lectura_coefABC(metode)
+        ordre, coef = lectura_coefABC(metode)
     else:
         print str(tipus_metode) + " no és cap tipus de mètode."
         exit(-2)
-    m = len(orde)
+    m = len(ordre)
     Nit = int(round(T / h))
     temps = 0.0
     Neval = 0
@@ -171,8 +175,8 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
     for it in range(0, Nit):
         t0 = tm.time()
         for i in range(0, m):
-            flux = orde[i][0]
-            index = orde[i][1]
+            flux = ordre[i][0]
+            index = ordre[i][1]
             dt = coef[flux][index] * h
             fluxABC(flux, z, dt, parametres)
         temps += tm.time() - t0
