@@ -13,7 +13,7 @@ from ddnls import *
 from solucionador import *
 
 if __name__ == "__main__":
-    problema = "ddnls"
+    problema = "fluxABC"
     t_final = 10.0
     met = []
     tip = []
@@ -54,7 +54,7 @@ if __name__ == "__main__":
         direc = "dat/" + met[i]
         fit = open(direc + "/" + problema + "_err.dat", "w")
         for j in range(0, len(h[i])):
-            r = solucionador(problema, tip[i], met[i], h[i][j], t_final, True)
+            r = solucionador(problema, tip[i], 0, met[i], h[i][j], t_final, True)
             esc = str(r).replace(",", "").replace("[", "").replace("]","")
             esc = str(h[i][j]) + " " + esc
             fit.write(esc + "\n")

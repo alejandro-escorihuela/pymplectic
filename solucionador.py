@@ -28,28 +28,8 @@ def crearDir(met):
         if not os.path.exists(direc):
             os.mkdir(direc)
 
-def lectura_coefX_priv(nom_fit):
-    fit = open("./coef/" + nom_fit + ".cnf", "r")
-    lis = fit.readlines()
-    fit.close()
-    coef = []
-    for i, item in enumerate(lis):
-        aux = []
-        linia = item.replace("\n", "")
-        tros = linia.split(" ")
-        for j, jtem in enumerate(tros):
-            if (is_numeric(jtem)):
-                aux.append(float(jtem))
-        if (len(aux) > 0):
-            coef.append(aux)
-    return coef
-
-def lectura_coefX(nom_fit):
-    vec_coef = lectura_coefX_priv(nom_fit)
-    a = vec_coef[0]
+def XaABC(a):
     m = len(a) / 2
-    # for i in range(0, m):
-    #     a.append(a[m - i - 1])
     metode = []
     cont = [0, 0, 0]
     coef = [[], [], []]
@@ -76,32 +56,32 @@ def lectura_coefX(nom_fit):
     coef[2].append(a[pu]+ a[pu + 1])
     coef[1].append(a[pu + 1])
     coef[0].append(a[pu + 1])
-    return [metode, coef]
+    return [metode, coef]    
+            
+def lectura_coefX_priv(nom_fit):
+    fit = open("./coef/" + nom_fit + ".cnf", "r")
+    lis = fit.readlines()
+    fit.close()
+    coef = []
+    nom = []
+    for i, item in enumerate(lis):
+        aux = []
+        linia = item.replace("\n", "")
+        tros = linia.split(" ")
+        for j, jtem in enumerate(tros):
+            if (is_numeric(jtem)):
+                aux.append(float(jtem))
+            elif (j == 0):
+                nom.append(jtem[0])
+        if (len(aux) > 0):
+            coef.append(aux)
+    if (len(coef) > 1):
+        return nom, coef
+    return coef
 
-def lectura_coefX2(nom_fit):
+def lectura_coefX(nom_fit):
     vec_coef = lectura_coefX_priv(nom_fit)
-    a = vec_coef[0]
-    m = len(a)
-    for i in range(0, m):
-        a.append(a[m - i - 1])
-    metode = []
-    cont = [0, 0]
-    coef = [[], []]
-    metode.append([0, cont[0]])
-    cont[0] = cont[0] + 1
-    coef[0].append(a[0])
-    
-    for i in range(0, m):
-        metode.append([1, cont[1]])
-        cont[1] = cont[1] + 1
-        metode.append([0, cont[0]])
-        cont[0] = cont[0] + 1
-    for i in range(0, 2*(m - 1), 2):
-        coef[1].append(a[i] + a[i + 1])
-        coef[0].append(a[i + 1] + a[i + 2])
-    pu = 2*(m - 1)
-    coef[1].append(a[pu]+ a[pu + 1])
-    coef[0].append(a[pu + 1])
+    metode, coef = XaABC(vec_coef[0])
     return [metode, coef]
 
 def lectura_coefABC(nom_fit):
@@ -129,8 +109,12 @@ def lectura_coefABC(nom_fit):
             for j in range(0, len(cadena)):
                 coef[ind].append(float(cadena[j]))
     return [metode, coef]
-    
-def solucionador(problema, tipus_metode, metode, h, T, calOrdreQP = False):
+
+def lectura_coefX_P0(nom_fit):
+    vec_a, vec_g = lectura_coefX_priv(nom_fit)
+    return [vec_a, vec_g]
+
+def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False):
     if (problema == "ddnls"):
         fluxA = fluxA_ddnls
         fluxB = fluxB_ddnls
