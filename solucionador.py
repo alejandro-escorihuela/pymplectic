@@ -174,16 +174,21 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         z = np.array(np.zeros(3))
         parametres = [A, B, C]
     else:
-        print "El métode " + problema + " no està definit."
+        print "El problema " + problema + " no està definit."
         exit(-1)
-
-    if (tipus_metode == 0):
-        ordre, coef = lectura_coefX(metode)
-    elif (tipus_metode == 1):
-        ordre, coef = lectura_coefABC(metode)
-    else:
-        print str(tipus_metode) + " no és cap tipus de mètode."
-        exit(-2)
+    if (tipus_processat == 0):
+        if (tipus_metode == 0):
+            ordre, coef = lectura_coefX(metode)
+        elif (tipus_metode == 1):
+            ordre, coef = lectura_coefABC(metode)
+        else:
+            print str(tipus_metode) + " no és cap tipus de mètode."
+            exit(-2)
+    elif (tipus_processat == 1):
+        if (tipus_metode == 0):
+            ordre, coef = lectura_coefX(metode)
+        else:
+            print "El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode)
     m = len(ordre)
     Nit = int(round(T / h))
     temps = 0.0
