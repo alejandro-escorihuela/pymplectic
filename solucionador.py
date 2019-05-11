@@ -28,36 +28,55 @@ def crearDir(met):
         if not os.path.exists(direc):
             os.mkdir(direc)
 
-def XaABC(a):
+def XaABC_priv(a, ordre):
+    A, B, C = ordre
     m = len(a) / 2
+    senar = (len(a) % 2) != 0
     metode = []
     cont = [0, 0, 0]
     coef = [[], [], []]
-    metode.append([0, cont[0]])
+    metode.append([A, cont[0]])
     cont[0] = cont[0] + 1
     coef[0].append(a[0])
     
     for i in range(0, m):
-        metode.append([1, cont[1]])
+        metode.append([B, cont[1]])
         cont[1] = cont[1] + 1
-        metode.append([2, cont[2]])
+        metode.append([C, cont[2]])
         cont[2] = cont[2] + 1
-        metode.append([1, cont[1]])
+        metode.append([B, cont[1]])
         cont[1] = cont[1] + 1
-        metode.append([0, cont[0]])
+        metode.append([A, cont[0]])
         cont[0] = cont[0] + 1
-    for i in range(0, 2*(m - 1), 2):
+    if (senar):
+        metode.append([B, cont[1]])
+        cont[1] = cont[1] + 1
+        metode.append([C, cont[2]])
+        cont[2] = cont[2] + 1        
+    pu = 2*(m - 1)
+    if (senar):
+        pu = 2*m
+    for i in range(0, pu, 2):
         coef[1].append(a[i])
         coef[2].append(a[i] + a[i + 1])
         coef[1].append(a[i + 1])
         coef[0].append(a[i + 1] + a[i + 2])
-    pu = 2*(m - 1)
-    coef[1].append(a[pu])
-    coef[2].append(a[pu]+ a[pu + 1])
-    coef[1].append(a[pu + 1])
-    coef[0].append(a[pu + 1])
+    if not senar:
+        coef[1].append(a[pu])
+        coef[2].append(a[pu]+ a[pu + 1])
+        coef[1].append(a[pu + 1])
+        coef[0].append(a[pu + 1])
+    else:
+        coef[1].append(a[pu])
+        coef[2].append(a[pu])        
     return [metode, coef]    
-            
+
+def XaABC(a):
+    return XaABC_priv(a, [0, 1, 2])
+
+def XaABC_adj(a):
+    return XaABC_priv(a, [2, 1, 0])
+
 def lectura_coefX_priv(nom_fit):
     fit = open("./coef/" + nom_fit + ".cnf", "r")
     lis = fit.readlines()
@@ -118,13 +137,13 @@ def lectura_coefX_P0(nom_fit):
     i = 0
     while (i < tam) and (noms[i] != 'g'):
         i = i + 1
-    met_g, cof_g = XaABC(coefs[i])
+    met_pre, cof_pre = XaABC_adj(coefs[i])
     coefs_p = []
     n = len(coefs[i])
     for j in range(0, n):
         coefs_p.append(-coefs[i][n - j - 1])
-    met_p, cof_p = XaABC(coefs_p)
-    return [met_a, cof_a], [met_g, cof_g], [met_p, cof_p]
+    met_post, cof_post = XaABC(coefs_p)
+    return [met_a, cof_a], [met_pre, cof_pre], [met_post, cof_post]
 
 def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False):
     if (problema == "ddnls"):
