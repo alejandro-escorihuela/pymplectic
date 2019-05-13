@@ -127,7 +127,7 @@ def lectura_coefABC(nom_fit):
                 coef[ind].append(float(cadena[j]))
     return [metode, coef]
 
-def lectura_coefX_P0(nom_fit):
+def lectura_coefX_P1(nom_fit):
     noms, coefs = lectura_coefX_priv(nom_fit)
     tam = len(noms)
     i = 0
@@ -142,8 +142,31 @@ def lectura_coefX_P0(nom_fit):
     n = len(coefs[i])
     for j in range(0, n):
         coefs_p.append(-coefs[i][n - j - 1])
-    met_post, cof_post = XaABC(coefs_p)
-    return [met_a, cof_a], [met_pre, cof_pre], [met_post, cof_post]
+    met_pos, cof_pos = XaABC(coefs_p)
+    return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
+
+def lectura_coefX_P2(nom_fit):
+    noms, coefs = lectura_coefX_priv(nom_fit)
+    tam = len(noms)
+    i = 0
+    while (i < tam) and (noms[i] != 'a'):
+        i = i + 1
+    met_a, cof_a = XaABC(coefs[i])
+    i = 0
+    while (i < tam) and (noms[i] != 'g'):
+        i = i + 1
+    cofX_pre = []
+    cofX_pos = []
+    n = len(coefs[i])
+    for j in range(0, n):
+        cofX_pre.append(-coefs[i][n - j - 1])
+        cofX_pos.append(-coefs[i][j])
+    for j in range(0, n):
+        cofX_pre.append(coefs[i][n - j - 1])
+        cofX_pos.append(-coefs[i][j])
+    met_pre, cof_pre = XaABC_adj(cofX_pre)
+    met_pos, cof_pos = XaABC(cofX_pos)
+    return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
 
 def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False):
     if (problema == "ddnls"):
@@ -186,9 +209,20 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
             exit(-2)
     elif (tipus_processat == 1):
         if (tipus_metode == 0):
-            ordre, coef = lectura_coefX(metode)
+            nucli, prep, postp = lectura_coefX_P1(metode)
+            ordre, coef = nucli[0], nucli[1]
+            ordre_pre, coef_pre = prep[0], prep[1]
+            ordre_pos, coef_pos = postp[0], postp[1]            
         else:
             print "El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode)
+    elif (tipus_processat == 2):
+        if (tipus_metode == 0):
+            nucli, prep, postp = lectura_coefX_P2(metode)
+            ordre, coef = nucli[0], nucli[1]
+            ordre_pre, coef_pre = prep[0], prep[1]
+            ordre_pos, coef_pos = postp[0], postp[1]            
+        else:
+            print "El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode)    
     m = len(ordre)
     Nit = int(round(T / h))
     temps = 0.0
@@ -203,7 +237,7 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
     for i in range(0, num_cons):
         Csub0[i] = conserves[i](z, parametres)
         Cvalr[i] = Csub0[i]
-
+    # ací preprocessem
     for it in range(0, Nit):
         t0 = tm.time()
         for i in range(0, m):
@@ -213,6 +247,7 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
             fluxABC(flux, z, dt, parametres)
         temps += tm.time() - t0
         Neval += m
+        #aci post-processem
         for i in range(0, num_cons):
             Cvalr[i] = conserves[i](z, parametres)
             Cdife[i] = abs(Cvalr[i] - Csub0[i])
@@ -279,5 +314,5 @@ def sol_exacte(problema, t0, tf):
     return solver.y
 
 if __name__ == "__main__":
-    print solucionador("fluxABC", 0, "tc_6_8", 0.5, 10, True)
-    print solucionador("ddnls", 1, "abc_4", 0.5, 10, True)
+    print solucionador("fluxABC", 0, 0, "tc_6_8", 0.5, 10, True)
+    print solucionador("ddnls", 1, 0, "abc_4", 0.5, 10, True)
