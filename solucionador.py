@@ -224,7 +224,12 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         else:
             print "El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode)    
     m = len(ordre)
+    r = 0
     Nit = int(round(T / h))
+    p_it = 0
+    if (tipus_processat > 0):
+        r = len(ordre_pre)
+        p_it = Nit / 10
     temps = 0.0
     Neval = 0
     
@@ -237,7 +242,17 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
     for i in range(0, num_cons):
         Csub0[i] = conserves[i](z, parametres)
         Cvalr[i] = Csub0[i]
-    # ací preprocessem
+    # Preprocessat
+    if (tipus_processat > 0):
+        t0 = tm.time()
+        for i in range(0, r):
+            flux = ordre_pre[i][0]
+            index = ordre_pre[i][1]
+            dt = coef_pre[flux][index] * h
+            fluxABC(flux, z, dt, parametres)
+        temps += tm.time() - t0
+        Neval += r
+    # Nucli
     for it in range(0, Nit):
         t0 = tm.time()
         for i in range(0, m):
@@ -248,11 +263,22 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         temps += tm.time() - t0
         Neval += m
         #aci post-processem
-        for i in range(0, num_cons):
-            Cvalr[i] = conserves[i](z, parametres)
-            Cdife[i] = abs(Cvalr[i] - Csub0[i])
-            if (Cdife[i] > Cemax[i]):
-                Cemax[i] = Cdife[i]                    
+        if ((tipus_processat > 0) and ((it % p_it) == 0)) or (tipus_processat == 0):
+            z_copia = z.copy()
+            for i in range(0, r):
+                flux = ordre_pos[i][0]
+                index = ordre_pos[i][1]
+                dt = coef_pos[flux][index] * h
+                fluxABC(flux, z, dt, parametres)
+            temps += tm.time() - t0
+            Neval += r
+            for i in range(0, num_cons):
+                Cvalr[i] = conserves[i](z, parametres)
+                Cdife[i] = abs(Cvalr[i] - Csub0[i])
+                if (Cdife[i] > Cemax[i]):
+                    Cemax[i] = Cdife[i]
+            if (it < Nit - 1):
+                z = z_copia.copy()
     tornar = [temps, Neval]
     for i in range(0, num_cons):
         tornar.append(abs(Cemax[i] / Csub0[i]))
@@ -316,3 +342,5 @@ def sol_exacte(problema, t0, tf):
 if __name__ == "__main__":
     print solucionador("fluxABC", 0, 0, "tc_6_8", 0.5, 10, True)
     print solucionador("ddnls", 1, 0, "abc_4", 0.5, 10, True)
+    print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.5, 10, True)
+    print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
