@@ -28,6 +28,49 @@ def crearDir(met):
         if not os.path.exists(direc):
             os.mkdir(direc)
 
+# def XaABC_priv(a, ordre):
+#     A, B, C = ordre
+#     m = len(a) / 2
+#     senar = (len(a) % 2) != 0
+#     metode = []
+#     cont = [0, 0, 0]
+#     coef = [[], [], []]
+#     metode.append([A, cont[0]])
+#     cont[0] = cont[0] + 1
+#     coef[0].append(a[0])
+    
+#     for i in range(0, m):
+#         metode.append([B, cont[1]])
+#         cont[1] = cont[1] + 1
+#         metode.append([C, cont[2]])
+#         cont[2] = cont[2] + 1
+#         metode.append([B, cont[1]])
+#         cont[1] = cont[1] + 1
+#         metode.append([A, cont[0]])
+#         cont[0] = cont[0] + 1
+#     if (senar):
+#         metode.append([B, cont[1]])
+#         cont[1] = cont[1] + 1
+#         metode.append([C, cont[2]])
+#         cont[2] = cont[2] + 1        
+#     pu = 2*(m - 1)
+#     if (senar):
+#         pu = 2*m
+#     for i in range(0, pu, 2):
+#         coef[1].append(a[i])
+#         coef[2].append(a[i] + a[i + 1])
+#         coef[1].append(a[i + 1])
+#         coef[0].append(a[i + 1] + a[i + 2])
+#     if not senar:
+#         coef[1].append(a[pu])
+#         coef[2].append(a[pu]+ a[pu + 1])
+#         coef[1].append(a[pu + 1])
+#         coef[0].append(a[pu + 1])
+#     else:
+#         coef[1].append(a[pu])
+#         coef[2].append(a[pu])        
+#     return [metode, coef]
+
 def XaABC_priv(a, ordre):
     A, B, C = ordre
     m = len(a) / 2
@@ -35,41 +78,41 @@ def XaABC_priv(a, ordre):
     metode = []
     cont = [0, 0, 0]
     coef = [[], [], []]
-    metode.append([A, cont[0]])
-    cont[0] = cont[0] + 1
-    coef[0].append(a[0])
+    metode.append([A, cont[A]])
+    cont[A] = cont[A] + 1
+    coef[A].append(a[0])
     
     for i in range(0, m):
-        metode.append([B, cont[1]])
-        cont[1] = cont[1] + 1
-        metode.append([C, cont[2]])
-        cont[2] = cont[2] + 1
-        metode.append([B, cont[1]])
-        cont[1] = cont[1] + 1
-        metode.append([A, cont[0]])
-        cont[0] = cont[0] + 1
+        metode.append([B, cont[B]])
+        cont[B] = cont[B] + 1
+        metode.append([C, cont[C]])
+        cont[C] = cont[C] + 1
+        metode.append([B, cont[B]])
+        cont[B] = cont[B] + 1
+        metode.append([A, cont[A]])
+        cont[A] = cont[A] + 1
     if (senar):
-        metode.append([B, cont[1]])
-        cont[1] = cont[1] + 1
-        metode.append([C, cont[2]])
-        cont[2] = cont[2] + 1        
+        metode.append([B, cont[B]])
+        cont[B] = cont[B] + 1
+        metode.append([C, cont[C]])
+        cont[C] = cont[C] + 1        
     pu = 2*(m - 1)
     if (senar):
         pu = 2*m
     for i in range(0, pu, 2):
-        coef[1].append(a[i])
-        coef[2].append(a[i] + a[i + 1])
-        coef[1].append(a[i + 1])
-        coef[0].append(a[i + 1] + a[i + 2])
+        coef[B].append(a[i])
+        coef[C].append(a[i] + a[i + 1])
+        coef[B].append(a[i + 1])
+        coef[A].append(a[i + 1] + a[i + 2])
     if not senar:
-        coef[1].append(a[pu])
-        coef[2].append(a[pu]+ a[pu + 1])
-        coef[1].append(a[pu + 1])
-        coef[0].append(a[pu + 1])
+        coef[B].append(a[pu])
+        coef[C].append(a[pu]+ a[pu + 1])
+        coef[B].append(a[pu + 1])
+        coef[A].append(a[pu + 1])
     else:
-        coef[1].append(a[pu])
-        coef[2].append(a[pu])        
-    return [metode, coef]    
+        coef[B].append(a[pu])
+        coef[C].append(a[pu])        
+    return [metode, coef]
 
 def XaABC(a):
     return XaABC_priv(a, [0, 1, 2])
@@ -229,10 +272,9 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
     p_it = 0
     if (tipus_processat > 0):
         r = len(ordre_pre)
-        p_it = Nit / 10
+        p_it = Nit / 5
     temps = 0.0
     Neval = 0
-    
     iniciador(z, parametres)
     num_cons = len(conserves)
     Csub0 = np.array(np.zeros(num_cons))
@@ -250,7 +292,7 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
             index = ordre_pre[i][1]
             dt = coef_pre[flux][index] * h
             fluxABC(flux, z, dt, parametres)
-        temps += tm.time() - t0
+            temps += tm.time() - t0
         Neval += r
     # Nucli
     for it in range(0, Nit):
@@ -340,7 +382,12 @@ def sol_exacte(problema, t0, tf):
     return solver.y
 
 if __name__ == "__main__":
-    print solucionador("fluxABC", 0, 0, "tc_6_8", 0.5, 10, True)
-    print solucionador("ddnls", 1, 0, "abc_4", 0.5, 10, True)
-    print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.5, 10, True)
-    print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
+    # print solucionador("fluxABC", 0, 0, "tc_6_8", 0.5, 10, True)
+    # print solucionador("ddnls", 1, 0, "abc_4", 0.5, 10, True)
+    # print solucionador("fluxABC", 0, 0, "tc_4_1", 0.5, 10, True)
+    # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.5, 10, True)
+    # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
+    print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.1, 10, True)
+    print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.1, 10, True)
+    print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.01, 10, True)
+    print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.01, 10, True)
