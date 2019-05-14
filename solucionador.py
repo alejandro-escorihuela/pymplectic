@@ -28,49 +28,6 @@ def crearDir(met):
         if not os.path.exists(direc):
             os.mkdir(direc)
 
-# def XaABC_priv(a, ordre):
-#     A, B, C = ordre
-#     m = len(a) / 2
-#     senar = (len(a) % 2) != 0
-#     metode = []
-#     cont = [0, 0, 0]
-#     coef = [[], [], []]
-#     metode.append([A, cont[0]])
-#     cont[0] = cont[0] + 1
-#     coef[0].append(a[0])
-    
-#     for i in range(0, m):
-#         metode.append([B, cont[1]])
-#         cont[1] = cont[1] + 1
-#         metode.append([C, cont[2]])
-#         cont[2] = cont[2] + 1
-#         metode.append([B, cont[1]])
-#         cont[1] = cont[1] + 1
-#         metode.append([A, cont[0]])
-#         cont[0] = cont[0] + 1
-#     if (senar):
-#         metode.append([B, cont[1]])
-#         cont[1] = cont[1] + 1
-#         metode.append([C, cont[2]])
-#         cont[2] = cont[2] + 1        
-#     pu = 2*(m - 1)
-#     if (senar):
-#         pu = 2*m
-#     for i in range(0, pu, 2):
-#         coef[1].append(a[i])
-#         coef[2].append(a[i] + a[i + 1])
-#         coef[1].append(a[i + 1])
-#         coef[0].append(a[i + 1] + a[i + 2])
-#     if not senar:
-#         coef[1].append(a[pu])
-#         coef[2].append(a[pu]+ a[pu + 1])
-#         coef[1].append(a[pu + 1])
-#         coef[0].append(a[pu + 1])
-#     else:
-#         coef[1].append(a[pu])
-#         coef[2].append(a[pu])        
-#     return [metode, coef]
-
 def XaABC_priv(a, ordre):
     A, B, C = ordre
     m = len(a) / 2
@@ -206,9 +163,9 @@ def lectura_coefX_P2(nom_fit):
         cofX_pos.append(-coefs[i][j])
     for j in range(0, n):
         cofX_pre.append(coefs[i][n - j - 1])
-        cofX_pos.append(-coefs[i][j])
+        cofX_pos.append(coefs[i][j])
     met_pre, cof_pre = XaABC_adj(cofX_pre)
-    met_pos, cof_pos = XaABC(cofX_pos)
+    met_pos, cof_pos = XaABC_adj(cofX_pos)
     return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
 
 def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False):
@@ -304,9 +261,10 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
             fluxABC(flux, z, dt, parametres)
         temps += tm.time() - t0
         Neval += m
-        #aci post-processem
-        if ((tipus_processat > 0) and ((it % p_it) == 0)) or (tipus_processat == 0):
+        # Post-processat
+        if ((tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (tipus_processat == 0):
             z_copia = z.copy()
+            t0 = tm.time()
             for i in range(0, r):
                 flux = ordre_pos[i][0]
                 index = ordre_pos[i][1]
@@ -381,13 +339,13 @@ def sol_exacte(problema, t0, tf):
         exit(-1)
     return solver.y
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # print solucionador("fluxABC", 0, 0, "tc_6_8", 0.5, 10, True)
     # print solucionador("ddnls", 1, 0, "abc_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 0, "tc_4_1", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
-    print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.1, 10, True)
-    print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.1, 10, True)
-    print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.01, 10, True)
-    print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.01, 10, True)
+    # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.5, 10, True)
+    # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
+    # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.05, 10, True)
+    # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.05, 10, True)
