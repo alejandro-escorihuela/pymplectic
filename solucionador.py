@@ -147,6 +147,7 @@ def lectura_coefX_P1(nom_fit):
 
 def lectura_coefX_P2(nom_fit):
     noms, coefs = lectura_coefX_priv(nom_fit)
+    print noms, coefs
     tam = len(noms)
     i = 0
     while (i < tam) and (noms[i] != 'a'):
@@ -159,13 +160,18 @@ def lectura_coefX_P2(nom_fit):
     cofX_pos = []
     n = len(coefs[i])
     for j in range(0, n):
-        cofX_pre.append(-coefs[i][n - j - 1])
+        #cofX_pre.append(-coefs[i][n - j - 1])
         cofX_pos.append(-coefs[i][j])
     for j in range(0, n):
-        cofX_pre.append(coefs[i][n - j - 1])
+        #cofX_pre.append(coefs[i][n - j - 1])
         cofX_pos.append(coefs[i][j])
-    met_pre, cof_pre = XaABC_adj(cofX_pre)
-    met_pos, cof_pos = XaABC_adj(cofX_pos)
+    #met_pre, cof_pre = XaABC(cofX_pre)
+    for j in range(0, 2*n):
+        cofX_pre.append(-cofX_pos[2*n - j - 1])
+    print cofX_pre, cofX_pos
+    exit(-1)
+    met_pos, cof_pos = XaABC(cofX_pos)
+    met_pre, cof_pre = XaABC(cofX_pre)
     return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
 
 def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False):
@@ -191,9 +197,9 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         fluxABC = fluxABC_fluxABC
         iniciador = iniciador_fluxABC
         conserves = []
-        A = 1.0
-        B = 2.0
-        C = 3.0
+        A = 0.5
+        B = 1.0
+        C = 1.0
         z = np.array(np.zeros(3))
         parametres = [A, B, C]
     else:
@@ -215,6 +221,7 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
             ordre_pos, coef_pos = postp[0], postp[1]            
         else:
             print "El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode)
+            exit(-2)
     elif (tipus_processat == 2):
         if (tipus_metode == 0):
             nucli, prep, postp = lectura_coefX_P2(metode)
@@ -222,7 +229,8 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
             ordre_pre, coef_pre = prep[0], prep[1]
             ordre_pos, coef_pos = postp[0], postp[1]            
         else:
-            print "El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode)    
+            print "El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode)
+            exit(-2)
     m = len(ordre)
     r = 0
     Nit = int(round(T / h))
@@ -279,6 +287,7 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
                     Cemax[i] = Cdife[i]
             if (it < Nit - 1):
                 z = z_copia.copy()
+    
     tornar = [temps, Neval]
     for i in range(0, num_cons):
         tornar.append(abs(Cemax[i] / Csub0[i]))
@@ -317,9 +326,9 @@ def sol_exacte(problema, t0, tf):
         iniciador = iniciador_fluxABC
         eqDreta = eqDreta_fluxABC
         iniciador = iniciador_fluxABC
-        A = 1.0
-        B = 2.0
-        C = 3.0
+        A = 0.5
+        B = 1.0
+        C = 1.0
         z = np.array(np.zeros(3))
         parametres = [A, B, C]
     else:

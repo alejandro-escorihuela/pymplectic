@@ -11,9 +11,9 @@ import numpy as np
 
 def iniciador_fluxABC(z, params):
     A, B, C = params
-    z[0] = 1.0
-    z[1] = 2.0
-    z[2] = 3.0
+    z[0] = 3.14
+    z[1] = 2.77
+    z[2] = 0.0
 
 def fluxA_fluxABC(z, h, params):
     A, B, C = params
