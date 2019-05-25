@@ -9,6 +9,7 @@ import time as tm
 import os
 from ddnls import *
 from fluxABC import *
+from em_estatic import *
 
 def is_numeric(val):
     if (val.strip() == ""):
@@ -195,13 +196,19 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         fluxB = fluxB_fluxABC
         fluxC = fluxC_fluxABC
         fluxABC = fluxABC_fluxABC
-        iniciador = iniciador_fluxABC
         conserves = []
         A = 0.5
         B = 1.0
         C = 1.0
         z = np.array(np.zeros(3))
         parametres = [A, B, C]
+    elif (problema == "em_estatic"):
+        iniciador = iniciador_em_estatic
+        fluxABC = fluxABCem_estatic
+        conserves = [funcioP_em_estatic, funcioH_em_estatic, funcioMu_em_estatic]
+        zeros = [0.0, 0.0, 0.0]
+        z = np.array([zeros, zeros, zeros, zeros])
+        parametres = [1.0, 1.0, 1.0]
     else:
         print "El problema " + problema + " no està definit."
         exit(-1)
@@ -348,7 +355,7 @@ def sol_exacte(problema, t0, tf):
         exit(-1)
     return solver.y
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
     # print solucionador("fluxABC", 0, 0, "tc_6_8", 0.5, 10, True)
     # print solucionador("ddnls", 1, 0, "abc_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 0, "tc_4_1", 0.5, 10, True)
@@ -358,3 +365,4 @@ def sol_exacte(problema, t0, tf):
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.05, 10, True)
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.05, 10, True)
+    print solucionador("em_estatic", 0, 0, "sx_6_4", 0.05, 10, False)
