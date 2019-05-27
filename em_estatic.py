@@ -58,7 +58,7 @@ def fluxABCem_estatic(flux, z, dt, params):
     b = [B[0]/Bmod, B[1]/Bmod, B[2]/Bmod]
     if flux == 0:
         for i in range(0, 3):
-            x[i] = x[i] - (dt*v[i])
+            x[i] = x[i] + (dt*v[i])
     elif flux == 1:
         for i in range(0, 3):
             v[i] = v[i] + ((dt*q*E[i])/m)
