@@ -206,9 +206,8 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         iniciador = iniciador_em_estatic
         fluxABC = fluxABCem_estatic
         conserves = [funcioP_em_estatic, funcioH_em_estatic, funcioMu_em_estatic]
-        zeros = [0.0, 0.0, 0.0]
-        z = np.array([zeros, zeros, zeros, zeros])
-        parametres = [1.0, 1.0, 1.0]
+        z = np.array(np.zeros(3*4))
+        parametres = [-1.0, 1.0]
     else:
         print "El problema " + problema + " no està definit."
         exit(-1)
@@ -332,12 +331,16 @@ def sol_exacte(problema, t0, tf):
     elif (problema == "fluxABC"):
         iniciador = iniciador_fluxABC
         eqDreta = eqDreta_fluxABC
-        iniciador = iniciador_fluxABC
         A = 0.5
         B = 1.0
         C = 1.0
         z = np.array(np.zeros(3))
         parametres = [A, B, C]
+    elif (problema == "em_estatic"):
+        iniciador = iniciador_em_estatic
+        eqDreta = eqDreta_em_estatic
+        z = np.array(np.zeros(3*4))
+        parametres = [-1.0, 1.0]
     else:
         print "El métode " + problema + " no està definit."
         exit(-3)
@@ -365,4 +368,4 @@ if __name__ == "__main__":
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.05, 10, True)
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.05, 10, True)
-    print solucionador("em_estatic", 0, 0, "sx_6_4", 0.05, 10, False)
+    print solucionador("em_estatic", 0, 0, "sx_2", np.pi/10.0, 10, True)
