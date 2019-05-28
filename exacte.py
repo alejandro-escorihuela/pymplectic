@@ -16,15 +16,15 @@ if __name__ == "__main__":
         print "S'ha de passar el temps inicial i el final"
         exit(-1)
     else:
-        problema = "em_estatic"
+        problema = "fluxABC"
         t_ini = float(sys.argv[1])
         t_fi = float(sys.argv[2])
-        t = 0.0
-        h = 0.1
-        for i in range(0, 300):
-            z = sol_exacte(problema, 0, t + h)
-            t = t + h
-            print z[0], z[1]
-        # z = sol_exacte(problema, t_ini, t_fi)
-        # for i in range(0, len(z)):
-        #     print i, z[i]
+        # t = 0.0
+        # h = 0.1
+        # for i in range(0, 300):
+        #     z = sol_exacte(problema, 0, t + h)
+        #     t = t + h
+        #     print z[0], z[1]
+        z = sol_exacte(problema, t_ini, t_fi)
+        for i in range(0, len(z)):
+            print i, z[i]

@@ -148,12 +148,11 @@ def lectura_coefX_P1(nom_fit):
 
 def lectura_coefX_P2(nom_fit):
     noms, coefs = lectura_coefX_priv(nom_fit)
-    print noms, coefs
     tam = len(noms)
     i = 0
     while (i < tam) and (noms[i] != 'a'):
         i = i + 1
-    met_a, cof_a = XaABC(coefs[i])
+    met_a, cof_a = XaABC_adj(coefs[i])
     i = 0
     while (i < tam) and (noms[i] != 'g'):
         i = i + 1
@@ -169,10 +168,8 @@ def lectura_coefX_P2(nom_fit):
     #met_pre, cof_pre = XaABC(cofX_pre)
     for j in range(0, 2*n):
         cofX_pre.append(-cofX_pos[2*n - j - 1])
-    print cofX_pre, cofX_pos
-    exit(-1)
-    met_pos, cof_pos = XaABC(cofX_pos)
-    met_pre, cof_pre = XaABC(cofX_pre)
+    met_pos, cof_pos = XaABC(cofX_pre[::-1])
+    met_pre, cof_pre = XaABC(cofX_pos[::-1])
     return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
 
 def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False):
@@ -368,4 +365,4 @@ if __name__ == "__main__":
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.05, 10, True)
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.05, 10, True)
-    print solucionador("em_estatic", 0, 0, "sx_2", np.pi/10.0, 10, True)
+    print solucionador("em_estatic", 0, 0, "sx_6_4", np.pi/10.0, 10, True)
