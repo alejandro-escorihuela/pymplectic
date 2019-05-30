@@ -31,17 +31,17 @@ def iniciador_em_estatic(z, params):
 def funcioP_em_estatic(z, params):
     q, m = params
     x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
-    L0 = m*(x[1]*v[2] - x[2]*v[1])
-    L1 = m*(x[2]*v[0] - x[0]*v[2])
-    L2 = m*(x[0]*v[1] - x[1]*v[0])
-    return np.sqrt(L0**2 + L1**2 + L2**2)
+    Bmod = np.sqrt(B[0]**2 + B[1]**2 + B[2]**2)
+    R = np.sqrt(x[0]**2 + x[1]**2)
+    w = -q*Bmod/m 
+    return m*(R**2)*w + (R**3)/3
 
 def funcioH_em_estatic(z, params):
     q, m = params
     x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
     R = np.sqrt(x[0]**2 + x[1]**2)
     V2 = v[0]**2 + v[1]**2 + v[2]**2
-    return (0.5*V2) + (0.01/R)
+    return (0.5*m*V2) + (0.01*q/R)
 
 def funcioMu_em_estatic(z, params):
     q, m = params
@@ -65,17 +65,21 @@ def fluxABCem_estatic(flux, z, dt, params):
     elif flux == 2:
         s = np.sin(dt*w)
         c = 1.0 - np.cos(dt*w)
-        # v[0] = v[0] + s*(b[1]*v[2]-b[2]*v[1]) + c*(-(b[1]**2 + b[2]**2)*v[0]           + b[0]*b[1]*v[1]           + b[0]*b[2]*v[2])
-        # v[1] = v[1] + s*(b[2]*v[0]-b[0]*v[2]) + c*(           b[0]*b[1]*v[0] - (b[0]**2 + b[2]**2)*v[1]           + b[1]*b[2]*v[2])
-        # v[2] = v[2] + s*(b[0]*v[1]-b[1]*v[0]) + c*(           b[0]*b[2]*v[0]           + b[1]*b[2]*v[1] - (b[0]**2 + b[1]**2)*v[2])
-        v[0] = v[0] - s*v[1] - c*v[0]
-        v[1] = v[1] + s*v[0] - c*v[1]
+        va = v.copy()
+        v[0] = va[0] + s*(b[1]*va[2]-b[2]*va[1]) + c*(-(b[1]**2 + b[2]**2)*va[0]           + b[0]*b[1]*va[1]           + b[0]*b[2]*va[2])
+        v[1] = va[1] + s*(b[2]*va[0]-b[0]*va[2]) + c*(           b[0]*b[1]*va[0] - (b[0]**2 + b[2]**2)*va[1]           + b[1]*b[2]*va[2])
+        v[2] = va[2] + s*(b[0]*va[1]-b[1]*va[0]) + c*(           b[0]*b[2]*va[0]           + b[1]*b[2]*va[1] - (b[0]**2 + b[1]**2)*va[2])
+        # aproximat particular
+        # hw = dt*w
+        # hw2 = hw**2
+        # v[0] = v[0] + ((4*hw)/(4 + hw2))*(-v[1]) + ((2*hw2)/(4 + hw2))*(-v[0])
+        # v[1] = v[1] + ((4*hw)/(4 + hw2))*( v[0]) + ((2*hw2)/(4 + hw2))*(-v[1])
     R = np.sqrt(x[0]**2 + x[1]**2)
     B[2] = R
     Emod = 0.01/(R**3)
     E[0] = Emod * x[0]
     E[1] = Emod * x[1]
-    
+
 def eqDreta_em_estatic(t, z, params):
     q, m = params
     x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]

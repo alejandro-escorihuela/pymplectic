@@ -174,9 +174,6 @@ def lectura_coefX_P2(nom_fit):
 
 def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False):
     if (problema == "ddnls"):
-        fluxA = fluxA_ddnls
-        fluxB = fluxB_ddnls
-        fluxC = fluxC_ddnls
         fluxABC = fluxABCddnls
         iniciador = iniciador_ddnls
         conserves = [funcioS_ddnls, funcioH_ddnls]
@@ -189,9 +186,6 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         parametres = [e, B, N, W, direc]
     elif (problema == "fluxABC"):
         iniciador = iniciador_fluxABC
-        fluxA = fluxA_fluxABC
-        fluxB = fluxB_fluxABC
-        fluxC = fluxC_fluxABC
         fluxABC = fluxABC_fluxABC
         conserves = []
         A = 0.5
@@ -274,6 +268,8 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         Neval += m
         # Post-processat
         if ((tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (tipus_processat == 0):
+            # depuracio de les z
+            # print z[0], z[1]
             z_copia = z.copy()
             t0 = tm.time()
             for i in range(0, r):
@@ -357,7 +353,7 @@ def sol_exacte(problema, t0, tf):
 
 if __name__ == "__main__":
     # print solucionador("fluxABC", 0, 0, "tc_6_8", 0.5, 10, True)
-    # print solucionador("ddnls", 1, 0, "abc_4", 0.5, 10, True)
+    # print solucionador("ddnls", 1, 0, "abc_4", 0.05, 10, True)
     # print solucionador("fluxABC", 0, 0, "tc_4_1", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
@@ -365,4 +361,4 @@ if __name__ == "__main__":
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.05, 10, True)
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.05, 10, True)
-    print solucionador("em_estatic", 0, 0, "sx_6_4", np.pi/10.0, 10, True)
+    print solucionador("em_estatic", 0, 0, "tc_6_6", np.pi/1000.0, 10, True)
