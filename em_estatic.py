@@ -33,8 +33,15 @@ def funcioP_em_estatic(z, params):
     x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
     Bmod = np.sqrt(B[0]**2 + B[1]**2 + B[2]**2)
     R = np.sqrt(x[0]**2 + x[1]**2)
-    w = -q*Bmod/m 
-    return m*(R**2)*w + (R**3)/3
+    w = -q*Bmod/m
+    Lpoint =  abs(B[2]*(x[0]*E[0] + x[1]*E[1]))
+    L0 = m*(x[1]*v[2] - x[2]*v[1])
+    L1 = m*(x[2]*v[0] - x[0]*v[2])
+    L2 = m*(x[0]*v[1] - x[1]*v[0])
+    Lmec = np.sqrt(L0**2 + L1**2 + L2**2)
+    #return Lmec
+    vang = np.sqrt(v[0]**2 + v[1]**2 + v[2]**2)/R
+    return (R**2)*vang + (R**3)/3.0
 
 def funcioH_em_estatic(z, params):
     q, m = params
