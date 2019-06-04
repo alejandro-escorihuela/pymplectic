@@ -53,8 +53,6 @@ def funcioMu_em_estatic(z, params):
     q, m = params
     x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
     R = np.sqrt(x[0]**2 + x[1]**2)
-    vT2 = v[0]**2 + v[1]**2
-    #return vT2/(2.0*R)
     return abs((-q*0.01)/(R**2))
 
 def fluxABCem_estatic(flux, z, dt, params):

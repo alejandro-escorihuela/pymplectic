@@ -228,6 +228,14 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         else:
             print "El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode)
             exit(-2)
+
+    ruta_comu = "./dat/" + metode + "/" + problema
+    ruta_Z = ruta_comu + "_coor_" + str(int(round(T))) + "_" + str(h).replace(".", "") + ".dat"
+    ruta_C = ruta_comu + "_cons_" + str(int(round(T))) + "_" + str(h).replace(".", "") + ".dat"
+    if printZ:
+        fitZ = open(ruta_Z, "w")
+    if printC:
+        fitC = open(ruta_C, "w")    
     m = len(ordre)
     r = 0
     Nit = int(round(T / h))
@@ -268,8 +276,6 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         Neval += m
         # Post-processat
         if ((tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (tipus_processat == 0):
-            # depuracio de les z
-            print z[0], z[1]
             z_copia = z.copy()
             t0 = tm.time()
             for i in range(0, r):
@@ -284,13 +290,27 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
                 Cdife[i] = abs(Cvalr[i] - Csub0[i])
                 if (Cdife[i] > Cemax[i]):
                     Cemax[i] = Cdife[i]
+            if printZ:
+                esc = str(it * h) + " " + str(z.tolist()).replace(",", "").replace("[", "").replace("]","")
+                fitZ.write(esc + "\n")
+            if printC:
+                esc = str(it * h) + " "
+                for i in range(0, num_cons):
+                    esc = esc + " " + str(Cvalr[i]) + " " +  str(Cdife[i]/Csub0[i])
+                fitC.write(esc + "\n")
+    
             if (it < Nit - 1):
                 z = z_copia.copy()
     
     tornar = [temps, Neval]
     for i in range(0, num_cons):
-        tornar.append(abs(Cemax[i] / Csub0[i]))
-    
+        tornar.append(abs(Cemax[i]/Csub0[i]))
+        
+    if printZ:
+        fitZ.close()
+    if printC:
+        fitC.close()
+        
     if (calOrdreQP == True):
         ruta_ex = "./dat/dop853/" + problema + "_t" + str(int(round(T))) + ".dat"
         errorQP = 0.0
@@ -361,4 +381,4 @@ if __name__ == "__main__":
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.05, 10, True)
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.05, 10, True)
-    print solucionador("em_estatic", 0, 0, "tc_6_6", np.pi/10.0, 1000, True)
+    print solucionador("em_estatic", 0, 0, "tc_6_6", np.pi/10.0, 1000, True, True, True)
