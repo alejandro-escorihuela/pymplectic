@@ -172,7 +172,7 @@ def lectura_coefX_P2(nom_fit):
     met_pre, cof_pre = XaABC(cofX_pos[::-1])
     return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
 
-def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False):
+def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdreQP = False, printZ = False, printC = False):
     if (problema == "ddnls"):
         fluxABC = fluxABCddnls
         iniciador = iniciador_ddnls
@@ -269,7 +269,7 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         # Post-processat
         if ((tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (tipus_processat == 0):
             # depuracio de les z
-            # print z[0], z[1]
+            print z[0], z[1]
             z_copia = z.copy()
             t0 = tm.time()
             for i in range(0, r):
@@ -361,4 +361,4 @@ if __name__ == "__main__":
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.05, 10, True)
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.05, 10, True)
-    print solucionador("em_estatic", 0, 0, "tc_6_6", np.pi/1000.0, 10, True)
+    print solucionador("em_estatic", 0, 0, "tc_6_6", np.pi/10.0, 1000, True)

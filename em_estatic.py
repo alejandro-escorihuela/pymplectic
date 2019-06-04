@@ -31,17 +31,16 @@ def iniciador_em_estatic(z, params):
 def funcioP_em_estatic(z, params):
     q, m = params
     x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
-    Bmod = np.sqrt(B[0]**2 + B[1]**2 + B[2]**2)
     R = np.sqrt(x[0]**2 + x[1]**2)
-    w = -q*Bmod/m
-    Lpoint =  abs(B[2]*(x[0]*E[0] + x[1]*E[1]))
-    L0 = m*(x[1]*v[2] - x[2]*v[1])
-    L1 = m*(x[2]*v[0] - x[0]*v[2])
-    L2 = m*(x[0]*v[1] - x[1]*v[0])
-    Lmec = np.sqrt(L0**2 + L1**2 + L2**2)
-    #return Lmec
-    vang = np.sqrt(v[0]**2 + v[1]**2 + v[2]**2)/R
-    return (R**2)*vang + (R**3)/3.0
+    Amod = (R**2)/3
+    theta = np.arctan2(x[1], x[0])
+    A = np.array([-Amod*np.sin(theta), Amod*np.cos(theta), 0])
+    p = np.array([0.0, 0.0, 0.0])
+    L = np.array([0.0, 0.0, 0.0])
+    for i in range(0, 3):
+        p[i] = m*v[i] + q*A[i]
+    L = prod_vec(x, p)
+    return np.linalg.norm(L)
 
 def funcioH_em_estatic(z, params):
     q, m = params
@@ -55,7 +54,8 @@ def funcioMu_em_estatic(z, params):
     x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
     R = np.sqrt(x[0]**2 + x[1]**2)
     vT2 = v[0]**2 + v[1]**2
-    return vT2/(2.0*R)
+    #return vT2/(2.0*R)
+    return abs((-q*0.01)/(R**2))
 
 def fluxABCem_estatic(flux, z, dt, params):
     q, m = params
@@ -96,10 +96,13 @@ def eqDreta_em_estatic(t, z, params):
     efac2 = -3.0*Rpunt/R
     xpunt = v.copy()
     vpunt = [0.0, 0.0, 0.0]
-    vpunt[0] = (q/m)*(E[0] + (v[1]*B[2] - v[2]*B[1]))
-    vpunt[1] = (q/m)*(E[1] + (v[2]*B[0] - v[0]*B[2]))
-    vpunt[2] = (q/m)*(E[2] + (v[0]*B[1] - v[1]*B[0]))
+    vxB = prod_vec(v, B)
+    for i in range(0, 3):
+        vpunt[i] = (q/m)*(E[i] + vxB[i])
     epunt = [efac1*(efac2*x[0] + v[0]), efac1*(efac2*x[1] + v[1]), 0.0]
     bpunt = [0.0, 0.0, Rpunt]
     zpunt = np.concatenate((xpunt, vpunt, epunt, bpunt))
     return zpunt
+
+def prod_vec(a, b):
+    return np.array([a[1]*b[2] - a[2]*b[1], a[2]*b[0] - a[0]*b[2], a[0]*b[1] - a[1]*b[0]])
