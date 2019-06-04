@@ -254,7 +254,7 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
     for i in range(0, num_cons):
         Csub0[i] = conserves[i](z, parametres)
         Cvalr[i] = Csub0[i]
-    # Preprocessat
+    # preprocessat
     if (tipus_processat > 0):
         t0 = tm.time()
         for i in range(0, r):
@@ -264,7 +264,7 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
             fluxABC(flux, z, dt, parametres)
             temps += tm.time() - t0
         Neval += r
-    # Nucli
+    # nucli
     for it in range(0, Nit):
         t0 = tm.time()
         for i in range(0, m):
@@ -274,10 +274,10 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
             fluxABC(flux, z, dt, parametres)
         temps += tm.time() - t0
         Neval += m
-        # Post-processat
         if ((tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (tipus_processat == 0):
             z_copia = z.copy()
             t0 = tm.time()
+            # post-processat
             for i in range(0, r):
                 flux = ordre_pos[i][0]
                 index = ordre_pos[i][1]
@@ -285,11 +285,13 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
                 fluxABC(flux, z, dt, parametres)
             temps += tm.time() - t0
             Neval += r
+            # càlcul de les quantitats conservades
             for i in range(0, num_cons):
                 Cvalr[i] = conserves[i](z, parametres)
                 Cdife[i] = abs(Cvalr[i] - Csub0[i])
                 if (Cdife[i] > Cemax[i]):
                     Cemax[i] = Cdife[i]
+            # imprimir z i quantitats conservades
             if printZ:
                 esc = str(it * h) + " " + str(z.tolist()).replace(",", "").replace("[", "").replace("]","")
                 fitZ.write(esc + "\n")
@@ -298,7 +300,6 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
                 for i in range(0, num_cons):
                     esc = esc + " " + str(Cvalr[i]) + " " +  str(Cdife[i]/Csub0[i])
                 fitC.write(esc + "\n")
-    
             if (it < Nit - 1):
                 z = z_copia.copy()
     
@@ -310,7 +311,7 @@ def solucionador(problema, tipus_metode, tipus_processat, metode, h, T, calOrdre
         fitZ.close()
     if printC:
         fitC.close()
-        
+    # comparació amb la solució exacta
     if (calOrdreQP == True):
         ruta_ex = "./dat/dop853/" + problema + "_t" + str(int(round(T))) + ".dat"
         errorQP = 0.0
@@ -373,7 +374,7 @@ def sol_exacte(problema, t0, tf):
 
 if __name__ == "__main__":
     # print solucionador("fluxABC", 0, 0, "tc_6_8", 0.5, 10, True)
-    # print solucionador("ddnls", 1, 0, "abc_4", 0.05, 10, True)
+    # print solucionador("ddnls", 1, 0, "abc_4", 0.05, 10, True, True, True)
     # print solucionador("fluxABC", 0, 0, "tc_4_1", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
@@ -381,4 +382,4 @@ if __name__ == "__main__":
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.5, 10, True)
     # print solucionador("fluxABC", 0, 1, "psx_4_4_4", 0.05, 10, True)
     # print solucionador("fluxABC", 0, 2, "pc_6_3_4", 0.05, 10, True)
-    print solucionador("em_estatic", 0, 0, "tc_6_6", np.pi/10.0, 1000, True, True, True)
+    print solucionador("em_estatic", 0, 0, "tc_6_6", np.pi/100.0, 1000, True, True, True)

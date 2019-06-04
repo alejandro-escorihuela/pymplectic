@@ -66,16 +66,18 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid(True)
 
-    plt.subplot(2, 2, 3)
-    for i in range(0, len(met)):
-        plt.plot(Neval[i], M[i], label = r"$\displaystyle " + nom[i] + "$")
-    plt.title(r"Efici\`encia en $\mu$")
-    plt.xlabel(r'$\displaystyle\log_{10}\left(N_{\rm{eval}}\right)$')
-    plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{\max(|\mu-\mu_0|)}{\mu_0}\right)$')
-    plt.legend()
-    plt.grid(True)
+    # plt.subplot(2, 2, 3)
+    # for i in range(0, len(met)):
+    #     plt.plot(Neval[i], M[i], label = r"$\displaystyle " + nom[i] + "$")
+    # plt.title(r"Efici\`encia en $\mu$")
+    # plt.xlabel(r'$\displaystyle\log_{10}\left(N_{\rm{eval}}\right)$')
+    # plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{\max(|\mu-\mu_0|)}{\mu_0}\right)$')
+    # plt.legend()
+    # plt.grid(True)
     
-    plt.subplot(2, 2, 4)
+    #plt.subplot(2, 2, 4)
+
+    plt.subplot(2, 1, 2)
     for i in range(0, len(met)):
         plt.plot(Neval[i], z[i], label = r"$\displaystyle " + nom[i] + "$")
     plt.title(r"Efici\`encia en $\vec{z}$ a temps final")
