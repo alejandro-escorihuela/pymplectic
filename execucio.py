@@ -26,6 +26,15 @@ if __name__ == "__main__":
     ddnls.set_print_coord(False)
     ddnls.set_print_cons(True)
     # Flux ABC
+    fABC = Solucionador()
+    fABC.set_nom("fluxABC")
+    fABC.set_iniciador(iniciador_fluxABC)
+    fABC.set_mapa(fluxABC_fluxABC)
+    fABC.init_coord(3)
+    fABC.set_parametres([0.5, 1.0, 1.0])
+    fABC.set_calc_error_coord(True)
+    fABC.set_print_coord(False)
+    fABC.set_print_cons(True)
     
     # Particules carregades. Camp em estatic
     em_es = Solucionador()
@@ -42,8 +51,8 @@ if __name__ == "__main__":
     em_es.set_print_coord(True)
     em_es.set_print_cons(True)
 
-    prob = ddnls
-    t_final = 10.0
+    prob = fABC
+    t_final = 5.0
     met = []
     tip = []
     pro = []
