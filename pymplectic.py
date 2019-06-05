@@ -4,12 +4,10 @@
 # alex
 # pymplectic.py
 
+from scipy.integrate import ode
 import numpy as np
 import time as tm
 import os
-from ddnls import *
-from fluxABC import *
-from em_estatic import *
           
 class Solucionador:
     def __init__(self):
