@@ -6,13 +6,13 @@
 
 import numpy as np
 
-def iniciador_fluxABC(z, params):
+def ini_fluxABC(z, params):
     A, B, C = params
     z[0] = 3.14
     z[1] = 2.77
     z[2] = 0.0
 
-def fluxABC_fluxABC(flux, z, h, params):
+def mapaABC_fluxABC(flux, z, h, params):
     A, B, C = params
     if flux == 0:
         z[0] = z[0] + h*(B*np.cos(z[1]) + C*np.sin(z[2]))

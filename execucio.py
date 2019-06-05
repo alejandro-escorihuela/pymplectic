@@ -8,17 +8,17 @@ import numpy as np
 from pymplectic import *
 from ddnls import *
 from fluxABC import *
-from em_estatic import *
+from em import *
 
 if __name__ == "__main__":
     # DDNLS
     ddnls = Solucionador()
     ddnls.set_nom("ddnls")
-    ddnls.set_iniciador(iniciador_ddnls)
-    ddnls.set_mapa(fluxABCddnls)
+    ddnls.set_ini(ini_ddnls)
+    ddnls.set_mapa(mapaABCddnls)
     Ndd = 1000
     e = np.array(np.zeros(Ndd))
-    ddnls.init_coord(2*Ndd)
+    ddnls.set_tam(2*Ndd)
     ddnls.add_conserva(funcioS_ddnls)
     ddnls.add_conserva(funcioH_ddnls)
     ddnls.set_parametres([e, 0.72, Ndd, 4.0, "."])
@@ -28,9 +28,9 @@ if __name__ == "__main__":
     # Flux ABC
     fABC = Solucionador()
     fABC.set_nom("fluxABC")
-    fABC.set_iniciador(iniciador_fluxABC)
-    fABC.set_mapa(fluxABC_fluxABC)
-    fABC.init_coord(3)
+    fABC.set_ini(ini_fluxABC)
+    fABC.set_mapa(mapaABC_fluxABC)
+    fABC.set_tam(3)
     fABC.set_parametres([0.5, 1.0, 1.0])
     fABC.set_calc_error_coord(True)
     fABC.set_print_coord(False)
@@ -39,9 +39,9 @@ if __name__ == "__main__":
     # Particules carregades. Camp em estatic
     em_es = Solucionador()
     em_es.set_nom("em_estatic")
-    em_es.set_iniciador(iniciador_em_estatic)
-    em_es.init_coord(12)
-    em_es.set_mapa(fluxABCem_estatic)
+    em_es.set_ini(ini_em_estatic)
+    em_es.set_tam(12)
+    em_es.set_mapa(mapaABCem_estatic)
     em_es.set_eqDreta(eqDreta_em_estatic)
     em_es.set_parametres([-1.0, 1.0])
     em_es.add_conserva(funcioP_em_estatic)
@@ -51,8 +51,8 @@ if __name__ == "__main__":
     em_es.set_print_coord(True)
     em_es.set_print_cons(True)
 
-    prob = fABC
-    t_final = 5.0
+    prob = em_es
+    t_final = 10.0
     met = []
     tip = []
     pro = []

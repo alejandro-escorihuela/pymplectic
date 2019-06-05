@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*- 
 # 25-05-2019
 # alex
-# em_estatic.py
+# em.py
 
 import numpy as np
 import random as rn
 
-def iniciador_em_estatic(z, params):
+def ini_em_estatic(z, params):
     q, m = params
     x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
     x[0] = 0.0
@@ -53,7 +53,7 @@ def funcioMu_em_estatic(z, params):
     R = np.sqrt(x[0]**2 + x[1]**2)
     return abs((-q*0.01)/(R**2))
 
-def fluxABCem_estatic(flux, z, dt, params):
+def mapaABCem_estatic(flux, z, dt, params):
     q, m = params
     x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
     Bmod = np.sqrt(B[0]**2 + B[1]**2 + B[2]**2)

@@ -6,7 +6,7 @@
 
 from ddnls import *
 from fluxABC import *
-from em_estatic import *
+from em import *
 from pymplectic import *
 import numpy as np
 import sys
@@ -18,24 +18,24 @@ if __name__ == "__main__":
     else:
         ddnls = Solucionador()
         ddnls.set_nom("ddnls")
-        ddnls.set_iniciador(iniciador_ddnls)
+        ddnls.set_ini(ini_ddnls)
         ddnls.set_eqDreta(eqDreta_ddnls)
         Ndd = 1000
         e = np.array(np.zeros(Ndd))
-        ddnls.init_coord(2*Ndd)
+        ddnls.set_tam(2*Ndd)
         ddnls.set_parametres([e, 0.72, Ndd, 4.0, "."])
 
         fABC = Solucionador()
         fABC.set_nom("fluxABC")
-        fABC.set_iniciador(iniciador_fluxABC)
-        fABC.init_coord(3)
+        fABC.set_ini(ini_fluxABC)
+        fABC.set_tam(3)
         fABC.set_eqDreta(eqDreta_fluxABC)
         fABC.set_parametres([0.5, 1.0, 1.0])
         
         em_es = Solucionador()
         em_es.set_nom("em_estatic")
-        em_es.set_iniciador(iniciador_em_estatic)
-        em_es.init_coord(12)
+        em_es.set_ini(ini_em_estatic)
+        em_es.set_tam(12)
         em_es.set_eqDreta(eqDreta_em_estatic)
         em_es.set_parametres([-1.0, 1.0])
         

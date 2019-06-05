@@ -12,7 +12,7 @@ import os
 class Solucionador:
     def __init__(self):
         self.nom_problema = ""
-        self.iniciador = None
+        self.ini = None
         self.mapa = None
         self.eqDreta = None
         self.conserves = []
@@ -29,10 +29,10 @@ class Solucionador:
     def get_nom(self):
         return self.nom_problema
         
-    def set_iniciador(self, func):
-        self.iniciador = func
+    def set_ini(self, func):
+        self.ini = func
 
-    def init_coord(self, tam):
+    def set_tam(self, tam):
         self.num_coord = tam
         self.z = np.array(np.zeros(self.num_coord))
         
@@ -78,7 +78,7 @@ class Solucionador:
             p_it = Nit / 5
         temps = 0.0
         Neval = 0
-        self.iniciador(self.z, self.parametres)
+        self.ini(self.z, self.parametres)
         num_cons = len(self.conserves)
         Csub0 = np.array(np.zeros(num_cons))
         Cvalr = np.array(np.zeros(num_cons))
@@ -163,7 +163,7 @@ class Solucionador:
     def solucionar_exacte(self, t0, tf):
         t = t0
         h = tf - t0        
-        self.iniciador(self.z, self.parametres)
+        self.ini(self.z, self.parametres)
         solver = ode(self.eqDreta)
         solver.set_integrator('dop853', rtol = 1e-15, nsteps = 5000)
         solver.set_f_params(self.parametres)
@@ -377,3 +377,4 @@ def lectura_coefX_P2(nom_fit):
     met_pos, cof_pos = XaABC(cofX_pre[::-1])
     met_pre, cof_pre = XaABC(cofX_pos[::-1])
     return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
+

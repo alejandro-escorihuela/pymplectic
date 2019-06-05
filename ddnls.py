@@ -8,7 +8,7 @@ import numpy as np
 import random as rn
 
 
-def iniciador_ddnls_rnd(z, params):
+def ini_ddnls_rnd(z, params):
     e, B, N, W, direc = params
     q, p = z[0:N], z[N:2*N]     
     for i in range(N):
@@ -19,7 +19,7 @@ def iniciador_ddnls_rnd(z, params):
         q[i] = rn.random()
         p[i] = np.sqrt(2.0 - (q[i] * q[i]))
 
-def iniciador_ddnls(z, params):
+def ini_ddnls(z, params):
     e, B, N, W, direc = params
     q, p = z[0:N], z[N:2*N]    
     Npert = N / 50
@@ -63,7 +63,7 @@ def funcioH_ddnls(z, params):
     suma += (0.5 * e[ult] * qpq) + (0.125 * B * qpq * qpq)
     return suma
 
-def fluxA_ddnls(z, h, params):
+def mapaA_ddnls(z, h, params):
     e, B, N, W, direc = params
     q, p = z[0:N], z[N:2*N]
     tam = len(q)
@@ -75,7 +75,7 @@ def fluxA_ddnls(z, h, params):
         q[i] = (q_ant * np.cos(alpha * h)) + (p_ant * np.sin(alpha * h))
         p[i] = (p_ant * np.cos(alpha * h)) - (q_ant * np.sin(alpha * h))
 
-def fluxB_ddnls(z, h, params):
+def mapaB_ddnls(z, h, params):
     e, B, N, W, direc = params
     q, p = z[0:N], z[N:2*N]
     ult = len(q) - 1
@@ -84,7 +84,7 @@ def fluxB_ddnls(z, h, params):
         q[i] = q[i] - ((p[i - 1] + p[i + 1]) * h)
     q[ult] = q[ult] - (p[ult - 1] * h)
 
-def fluxC_ddnls(z, h, params):
+def mapaC_ddnls(z, h, params):
     e, B, N, W, direc = params
     q, p = z[0:N], z[N:2*N]
     ult = len(q) - 1
@@ -93,13 +93,13 @@ def fluxC_ddnls(z, h, params):
         p[i] = p[i] + ((q[i - 1] + q[i + 1]) * h)
     p[ult] = p[ult] + (q[ult - 1] * h)
 
-def fluxABCddnls(flux, z, dt, params):
+def mapaABCddnls(flux, z, dt, params):
     if flux == 0:
-        fluxA_ddnls(z, dt, params)
+        mapaA_ddnls(z, dt, params)
     elif flux == 1:
-        fluxB_ddnls(z, dt, params)
+        mapaB_ddnls(z, dt, params)
     elif flux == 2:
-        fluxC_ddnls(z, dt, params)
+        mapaC_ddnls(z, dt, params)
 
 def eqDreta_ddnls(t, z, params):
     e, beta, N, W, direc = params
