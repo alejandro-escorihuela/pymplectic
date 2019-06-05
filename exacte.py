@@ -7,7 +7,7 @@
 from ddnls import *
 from fluxABC import *
 from em_estatic import *
-from solucionador import *
+from pymplectic import *
 import numpy as np
 import sys
 
@@ -16,15 +16,15 @@ if __name__ == "__main__":
         print "S'ha de passar el temps inicial i el final"
         exit(-1)
     else:
-        problema = "em_estatic"
+        em_es = Solucionador()
+        em_es.set_nom("em_estatic")
+        em_es.set_iniciador(iniciador_em_estatic)
+        em_es.init_coord(12)
+        em_es.set_eqDreta(eqDreta_em_estatic)
+        em_es.set_parametres([-1.0, 1.0])
+        problema = em_es
         t_ini = float(sys.argv[1])
         t_fi = float(sys.argv[2])
-        # t = 0.0
-        # h = np.pi/10.0
-        # for i in range(0, 1000):
-        #     z = sol_exacte(problema, 0, t + h)
-        #     t = t + h
-        #     print z[0], z[1]
-        z = sol_exacte(problema, t_ini, t_fi)
+        z = problema.solucionar_exacte(t_ini, t_fi)
         for i in range(0, len(z)):
             print i, z[i]

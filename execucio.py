@@ -10,7 +10,6 @@ import random as rn
 import time as tm
 import os
 from ddnls import *
-from solucionador import *
 from pymplectic import *
 
 if __name__ == "__main__":

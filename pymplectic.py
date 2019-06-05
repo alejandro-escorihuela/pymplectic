@@ -162,7 +162,7 @@ class Solucionador:
         return tornar
 
 
-    def solucionar_exacte(t0, tf):
+    def solucionar_exacte(self, t0, tf):
         t = t0
         h = tf - t0        
         self.iniciador(self.z, self.parametres)
