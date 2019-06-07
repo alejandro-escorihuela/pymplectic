@@ -51,7 +51,7 @@ if __name__ == "__main__":
     em_es.set_print_coord(True)
     em_es.set_print_cons(True)
 
-    prob = em_es
+    prob = ddnls
     t_final = 10.0
     met = []
     tip = []
@@ -64,55 +64,75 @@ if __name__ == "__main__":
     pro.append(0)
     h.append(h_elem)
     
-    met.append("tc_5")
-    tip.append(0)
-    pro.append(0)
-    h.append(h_elem)
-    
-    met.append("tc_5_1")
-    tip.append(0)
-    pro.append(0)
-    h.append(h_elem)    
-    
-    met.append("tc_5_2")
-    tip.append(0)
-    pro.append(0)
-    h.append(h_elem)
-    
     met.append("sx_6_4")
     tip.append(0)
     pro.append(0)
     h.append(h_elem)
 
-    met.append("tc_6_3")
+    met.append("xc_4")
     tip.append(0)
     pro.append(0)
     h.append(h_elem)
 
-    met.append("tc_6_6")
+    met.append("xc_5")
     tip.append(0)
     pro.append(0)
     h.append(h_elem)
-
-    met.append("psx_4_4_4")
+    
+    met.append("xc_6")
     tip.append(0)
-    pro.append(1)
+    pro.append(0)
     h.append(h_elem)
-
-    met.append("pc_6_6_4")
+    
+    met.append("xc_6_1")
     tip.append(0)
-    pro.append(2)
+    pro.append(0)
     h.append(h_elem)
+    
+    # met.append("tc_5")
+    # tip.append(0)
+    # pro.append(0)
+    # h.append(h_elem)
+    
+    # met.append("tc_5_1")
+    # tip.append(0)
+    # pro.append(0)
+    # h.append(h_elem)    
+    
+    # met.append("tc_5_2")
+    # tip.append(0)
+    # pro.append(0)
+    # h.append(h_elem)
 
-    met.append("pc_9_8_6")
-    tip.append(0)
-    pro.append(2)
-    h.append(h_elem)
+    # met.append("tc_6_3")
+    # tip.append(0)
+    # pro.append(0)
+    # h.append(h_elem)
 
-    met.append("pc_10_18_6")
-    tip.append(0)
-    pro.append(2)
-    h.append(h_elem)   
+    # met.append("tc_6_6")
+    # tip.append(0)
+    # pro.append(0)
+    # h.append(h_elem)
+
+    # met.append("psx_4_4_4")
+    # tip.append(0)
+    # pro.append(1)
+    # h.append(h_elem)
+
+    # met.append("pc_6_6_4")
+    # tip.append(0)
+    # pro.append(2)
+    # h.append(h_elem)
+
+    # met.append("pc_9_8_6")
+    # tip.append(0)
+    # pro.append(2)
+    # h.append(h_elem)
+
+    # met.append("pc_10_18_6")
+    # tip.append(0)
+    # pro.append(2)
+    # h.append(h_elem)   
     
     
     crearDir(met)
