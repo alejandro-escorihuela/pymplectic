@@ -12,9 +12,9 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica'], 'size':'24'})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    metA = ["abc_4", "sx_6_4", "tc_4", "tc_5", "tc_6_3"]
+    metA = ["abc_4", "sx_6_4", "xa_4_4", "ss_5_4", "xa_6_4"]
     nomA = ["\mathcal{ABC}^{[4]}", "\mathcal{S}_{6}^{[4]}", r"\mathcal{XA}_{4}^{[4]}", "\mathcal{SS}_{5}^{[4]}", r"\mathcal{XA}_{6}^{[4]}"]
-    metB = ["abc_4", "sx_6_4", "tc_4_1", "tc_5_2", "tc_6_6"]
+    metB = ["abc_4", "sx_6_4", "xb_4_4", "xb_5_4", "xb_6_4"]
     nomB = ["\mathcal{ABC}^{[4]}", "\mathcal{S}_{6}^{[4]}", r"\mathcal{XB}_{4}^{[4]}", "\mathcal{XB}_{5}^{[4]}", r"\mathcal{XB}_{6}^{[4]}"]
     metodes = [metA, metB]
     noms = [nomA, nomB]

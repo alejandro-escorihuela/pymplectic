@@ -65,21 +65,20 @@ if __name__ == "__main__":
     em_to.set_print_coord(True)
     em_to.set_print_cons(True)
     
-    prob = em_to
-    t_final = 1000.0
+    prob = em_es
+    t_final = 10.0
     met = []
     tip = []
     pro = []
     h = []
     # h_elem = [0.5, 0.4, 0.25, 0.1, 0.05]
     h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]
-    h_elem = [0.25]
     # met.append("abc_4")
     # tip.append(1)
     # pro.append(0)
     # h.append(h_elem)
     
-    met.append("tc_5_2")
+    met.append("xb_5_4")
     tip.append(0)
     pro.append(0)
     h.append(h_elem)

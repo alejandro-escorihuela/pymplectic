@@ -12,7 +12,7 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica'], 'size':'24'})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    ruta = "../dat/tc_5_2/em_estatic_coor_240_001.dat"
+    ruta = "../dat/xb_5_4/em_estatic_coor_240_001.dat"
     fit = open(ruta, "r")
     linies = fit.readlines()
     x = []
@@ -32,8 +32,8 @@ if __name__ == "__main__":
     plt.savefig(nom_arxiu, format='pdf')
     plt.close()
 
-    ruta1 = "../dat/tc_5_2/em_estatic_cons_240_01.dat"
-    ruta2 = "../dat/tc_5_2/em_estatic_cons_240_001.dat"
+    ruta1 = "../dat/xb_5_4/em_estatic_cons_240_01.dat"
+    ruta2 = "../dat/xb_5_4/em_estatic_cons_240_001.dat"
     fit = open(ruta1, "r")
     linies = fit.readlines()
     t = []
