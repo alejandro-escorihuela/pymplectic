@@ -72,11 +72,6 @@ def mapaABCem_estatic(flux, z, dt, params):
         v[0] = va[0] + s*(b[1]*va[2]-b[2]*va[1]) + c*(-(b[1]**2 + b[2]**2)*va[0]           + b[0]*b[1]*va[1]           + b[0]*b[2]*va[2])
         v[1] = va[1] + s*(b[2]*va[0]-b[0]*va[2]) + c*(           b[0]*b[1]*va[0] - (b[0]**2 + b[2]**2)*va[1]           + b[1]*b[2]*va[2])
         v[2] = va[2] + s*(b[0]*va[1]-b[1]*va[0]) + c*(           b[0]*b[2]*va[0]           + b[1]*b[2]*va[1] - (b[0]**2 + b[1]**2)*va[2])
-        # aproximat particular
-        # hw = dt*w
-        # hw2 = hw**2
-        # v[0] = v[0] + ((4*hw)/(4 + hw2))*(-v[1]) + ((2*hw2)/(4 + hw2))*(-v[0])
-        # v[1] = v[1] + ((4*hw)/(4 + hw2))*( v[0]) + ((2*hw2)/(4 + hw2))*(-v[1])
     R = np.sqrt(x[0]**2 + x[1]**2)
     B[2] = R
     Emod = 0.01/(R**3)
@@ -97,6 +92,105 @@ def eqDreta_em_estatic(t, z, params):
         vpunt[i] = (q/m)*(E[i] + vxB[i])
     epunt = [efac1*(efac2*x[0] + v[0]), efac1*(efac2*x[1] + v[1]), 0.0]
     bpunt = [0.0, 0.0, Rpunt]
+    zpunt = np.concatenate((xpunt, vpunt, epunt, bpunt))
+    return zpunt
+
+def ini_em_tokamak1(z, params):
+    q, m = params
+    x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
+    x[0] = 1.05
+    x[1] = 0.0
+    x[2] = 0.0
+    v[0] = 0.0
+    v[1] = 4.816e-4
+    v[2] = -2.059e-3
+    R = np.sqrt(x[0]**2 + x[1]**2)
+    E[0] = 0.0
+    E[1] = 0.0
+    E[2] = 0.0
+    B[0] = -(2.0*x[1] + x[0]*x[2])/(2.0*R**2)
+    B[1] = (2.0*x[0] - x[1]*x[2])/(2.0*R**2)
+    B[2] = (R - 1.0)/(2.0*R)
+
+def ini_em_tokamak2(z, params):
+    q, m = params
+    x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
+    x[0] = 1.05
+    x[1] = 0.0
+    x[2] = 0.0
+    v[0] = 0.0
+    v[1] = 2.0*4.816e-4
+    v[2] = -2.059e-3
+    R = np.sqrt(x[0]**2 + x[1]**2)
+    E[0] = 0.0
+    E[1] = 0.0
+    E[2] = 0.0
+    B[0] = -(2.0*x[1] + x[0]*x[2])/(2.0*R**2)
+    B[1] = (2.0*x[0] - x[1]*x[2])/(2.0*R**2)
+    B[2] = (R - 1.0)/(2.0*R)
+    
+def funcioP_em_tokamak(z, params):
+    q, m = params
+    x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
+    R = np.sqrt(x[0]**2 + x[1]**2)
+    Ar = x[2]/(2.0*R)
+    Ao = ((1.0 - R)**2 + x[2]**2)/(4.0*R)
+    Az = -0.5*np.log(R)
+    theta = np.arctan2(x[1], x[0])
+    s = np.sin(theta)
+    c = np.cos(theta)
+    A = np.array([Ar*c - Ao*s, Ar*s + Ao*c, Az])
+    p = np.array([0.0, 0.0, 0.0])
+    L = np.array([0.0, 0.0, 0.0])
+    for i in range(0, 3):
+        p[i] = m*v[i] + q*A[i]
+    L = prod_vec(x, p)
+    return np.linalg.norm(L)
+
+def funcioH_em_tokamak(z, params):
+    q, m = params
+    x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
+    return 0.5*m*(v[0]**2 + v[1]**2 + v[2]**2)
+
+def mapaABCem_tokamak(flux, z, dt, params):
+    q, m = params
+    x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
+    R = np.sqrt(x[0]**2 + x[1]**2)
+    B[0] = -(2.0*x[1] + x[0]*x[2])/(2.0*R**2)
+    B[1] = (2.0*x[0] - x[1]*x[2])/(2.0*R**2)
+    B[2] = (R - 1.0)/(2.0*R)
+    Bmod = np.sqrt(B[0]**2 + B[1]**2 + B[2]**2)
+    w = -q*Bmod/m
+    b = [B[0]/Bmod, B[1]/Bmod, B[2]/Bmod]
+    if flux == 0:
+        for i in range(0, 3):
+            x[i] = x[i] + (dt*v[i])
+    elif flux == 1:
+        for i in range(0, 3):
+            v[i] = v[i] + ((dt*q*E[i])/m)
+    elif flux == 2:
+        s = np.sin(dt*w)
+        c = 1.0 - np.cos(dt*w)
+        va = v.copy()
+        v[0] = va[0] + s*(b[1]*va[2]-b[2]*va[1]) + c*(-(b[1]**2 + b[2]**2)*va[0]           + b[0]*b[1]*va[1]           + b[0]*b[2]*va[2])
+        v[1] = va[1] + s*(b[2]*va[0]-b[0]*va[2]) + c*(           b[0]*b[1]*va[0] - (b[0]**2 + b[2]**2)*va[1]           + b[1]*b[2]*va[2])
+        v[2] = va[2] + s*(b[0]*va[1]-b[1]*va[0]) + c*(           b[0]*b[2]*va[0]           + b[1]*b[2]*va[1] - (b[0]**2 + b[1]**2)*va[2])
+        
+def eqDreta_em_tokamak(t, z, params):
+    q, m = params
+    x, v, E, B = z[0:3], z[3:6], z[6:9], z[9:12]
+    R = np.sqrt(x[0]**2 + x[1]**2)
+    Rpunt = (x[0]*v[0] + x[1]*v[1])/R
+    bpunt = [0.0, 0.0, 0.0]
+    bpunt[0] = ((2.0*x[1] + x[0]*x[2])*(4.0*R*Rpunt) - (2.0*v[1] + v[0]*x[2] + x[0]*v[2])*(2.0*R**2))/(4.0*R**4)
+    bpunt[1] = ((2.0*v[0] - v[1]*x[2] - x[1]*v[2])*(2.0*R**2) - (2.0*x[0] - x[1]*x[2])*(4.0*R*Rpunt))/(4.0*R**4)
+    bpunt[2] = (2*Rpunt)/(4.0*R**2)
+    xpunt = v.copy()
+    vpunt = [0.0, 0.0, 0.0]
+    vxB = prod_vec(v, B)
+    for i in range(0, 3):
+        vpunt[i] = (q/m)*(E[i] + vxB[i])
+    epunt = [0.0, 0.0, 0.0]
     zpunt = np.concatenate((xpunt, vpunt, epunt, bpunt))
     return zpunt
 

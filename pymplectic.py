@@ -127,7 +127,7 @@ class Solucionador:
                     esc = str(it * h) + " " + str(self.z.tolist()).replace(",", "").replace("[", "").replace("]","")
                     fitZ.write(esc + "\n")
                 if self.printC:
-                    esc = str(it * h) + " "
+                    esc = str(it * h)
                     for i in range(0, num_cons):
                         esc = esc + " " + str(Cvalr[i]) + " " +  str(Cdife[i]/Csub0[i])
                     fitC.write(esc + "\n")

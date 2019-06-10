@@ -47,47 +47,67 @@ if __name__ == "__main__":
     em_es.add_conserva(funcioP_em_estatic)
     em_es.add_conserva(funcioH_em_estatic)
     em_es.add_conserva(funcioMu_em_estatic)
-    em_es.set_calc_error_coord(True)
+    em_es.set_calc_error_coord(False)
     em_es.set_print_coord(True)
     em_es.set_print_cons(True)
-
-    prob = fABC
-    t_final = 20.0
+    
+    # Particules carregades. Tokamak
+    em_to = Solucionador()
+    em_to.set_nom("em_tokamak")
+    em_to.set_ini(ini_em_tokamak1)
+    em_to.set_tam(12)
+    em_to.set_mapa(mapaABCem_tokamak)
+    em_to.set_eqDreta(eqDreta_em_tokamak)
+    em_to.set_parametres([-1.0, 1.0])
+    em_to.add_conserva(funcioP_em_tokamak)
+    em_to.add_conserva(funcioH_em_tokamak)
+    em_to.set_calc_error_coord(False)
+    em_to.set_print_coord(True)
+    em_to.set_print_cons(True)
+    
+    prob = em_to
+    t_final = 1000.0
     met = []
     tip = []
     pro = []
     h = []
     # h_elem = [0.5, 0.4, 0.25, 0.1, 0.05]
     h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]
-    met.append("abc_4")
-    tip.append(1)
+    h_elem = [0.25]
+    # met.append("abc_4")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(h_elem)
+    
+    met.append("tc_5_2")
+    tip.append(0)
     pro.append(0)
     h.append(h_elem)
+    
+    # met.append("sx_6_4")
+    # tip.append(0)
+    # pro.append(0)
+    # h.append(h_elem)
 
-    met.append("sx_6_4")
-    tip.append(0)
-    pro.append(0)
-    h.append(h_elem)
-
-    met.append("psx_4_4_4")
-    tip.append(0)
-    pro.append(1)
-    h.append(h_elem)
+    # met.append("psx_4_4_4")
+    # tip.append(0)
+    # pro.append(1)
+    # h.append(h_elem)
     
-    met.append("pc_6_6_4")
-    tip.append(0)
-    pro.append(2)
-    h.append(h_elem)
+    # met.append("pc_6_6_4")
+    # tip.append(0)
+    # pro.append(2)
+    # h.append(h_elem)
     
-    met.append("pc_9_8_6")
-    tip.append(0)
-    pro.append(2)
-    h.append(h_elem)
+    # met.append("pc_9_8_6")
+    # tip.append(0)
+    # pro.append(2)
+    # h.append(h_elem)
     
-    met.append("pc_10_18_6")
-    tip.append(0)
-    pro.append(2)
-    h.append(h_elem)
+    # met.append("pc_10_18_6")
+    # tip.append(0)
+    # pro.append(2)
+    # h.append(h_elem)
     
     crearDir(met)
     for i in range(0, len(met)):

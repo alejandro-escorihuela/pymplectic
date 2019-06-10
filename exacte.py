@@ -38,8 +38,15 @@ if __name__ == "__main__":
         em_es.set_tam(12)
         em_es.set_eqDreta(eqDreta_em_estatic)
         em_es.set_parametres([-1.0, 1.0])
+
+        em_to = Solucionador()
+        em_to.set_nom("em_tokamak")
+        em_to.set_ini(ini_em_tokamak1)
+        em_to.set_tam(12)
+        em_to.set_eqDreta(eqDreta_em_tokamak)
+        em_to.set_parametres([-1.0, 1.0])
         
-        problema = fABC
+        problema = em_to
         t_ini = float(sys.argv[1])
         t_fi = float(sys.argv[2])
         z = problema.solucionar_exacte(t_ini, t_fi)
