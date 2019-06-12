@@ -110,7 +110,7 @@ if __name__ == "__main__":
     
     crearDir(met)
     for i in range(0, len(met)):
-        print met[i]
+        print(met[i])
         direc = "dat/" + met[i]
         fit = open(direc + "/" + prob.get_nom() + "_err.dat", "w")
         metode = Metode(tip[i], pro[i])
@@ -121,5 +121,5 @@ if __name__ == "__main__":
             esc = str(r).replace(",", "").replace("[", "").replace("]","")
             esc = str(h[i][j]) + " " + esc
             fit.write(esc + "\n")
-            print esc
+            print(esc)
         fit.close()

@@ -172,7 +172,7 @@ class Solucionador:
             t = t + h
             solver.integrate(t)
         if (solver.t != tf):
-            print "No s'ha pogut evolucionar fins", tf, "només fins", solver.t
+            print("No s'ha pogut evolucionar fins", tf, "només fins", solver.t)
             exit(-1)
         return solver.y
     
@@ -196,7 +196,7 @@ class Metode:
             elif (self.tipus_metode == 1):
                 self.ordre, self.coef = lectura_coefABC(arxiu)
             else:
-                print str(tipus_metode) + " no és cap tipus de mètode."
+                print(str(tipus_metode) + " no és cap tipus de mètode.")
                 exit(-2)
         elif (self.tipus_processat == 1):
             if (self.tipus_metode == 0):
@@ -205,7 +205,7 @@ class Metode:
                 self.ordre_pre, self.coef_pre = prep[0], prep[1]
                 self.ordre_pos, self.coef_pos = postp[0], postp[1]            
             else:
-                print "El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode)
+                print("El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode))
                 exit(-2)
         elif (self.tipus_processat == 2):
             if (self.tipus_metode == 0):
@@ -214,7 +214,7 @@ class Metode:
                 self.ordre_pre, self.coef_pre = prep[0], prep[1]
                 self.ordre_pos, self.coef_pos = postp[0], postp[1]            
             else:
-                print "El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode)
+                print("El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode))
                 exit(-2)
                 
 def is_numeric(val):
@@ -237,7 +237,7 @@ def crearDir(met):
 
 def XaABC_priv(a, ordre):
     A, B, C = ordre
-    m = len(a) / 2
+    m = len(a) // 2
     senar = (len(a) % 2) != 0
     metode = []
     cont = [0, 0, 0]
