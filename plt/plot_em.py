@@ -12,9 +12,8 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-
-    met = ["abc_4", "sx_6_4", "xc_4", "xc_5", "xc_6", "xc_6_1"]
-    nom = ["\mathcal{ABC}^{[4]}", "\mathcal{S}_{6}^{[4]}", r"\mathcal{XC}_{4}^{[4]}", r"\mathcal{XC}_{5}^{[4]}", r"\mathcal{XC}_{6}^{[4]}", r"\mathcal{XC}_{61}^{[4]}"]
+    met = ["xa_4_4", "xb_5_4", "psx_4_4_4", "px_4_3_4", "px_4_4_4", "px_4_5_4"]
+    nom = ["\mathcal{XA}_4^{[4]}", "\mathcal{XB}_{5}^{[4]}", r"\mathcal{PSX}_{4,4}^{[4]}", "\mathcal{PX}_{4,3}^{[4]}", "\mathcal{PX}_{4,4}^{[4]}", "\mathcal{PX}_{4,5}^{[4]}"]
     Neval = []
     L = []
     H = []

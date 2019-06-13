@@ -47,7 +47,7 @@ if __name__ == "__main__":
     em_es.add_conserva(funcioP_em_estatic)
     em_es.add_conserva(funcioH_em_estatic)
     em_es.add_conserva(funcioMu_em_estatic)
-    em_es.set_calc_error_coord(False)
+    em_es.set_calc_error_coord(True)
     em_es.set_print_coord(True)
     em_es.set_print_cons(True)
     
@@ -77,6 +77,11 @@ if __name__ == "__main__":
     # tip.append(1)
     # pro.append(0)
     # h.append(h_elem)
+
+    met.append("xa_4_4")
+    tip.append(0)
+    pro.append(0)
+    h.append(h_elem)
     
     met.append("xb_5_4")
     tip.append(0)
@@ -88,10 +93,25 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
 
-    # met.append("psx_4_4_4")
-    # tip.append(0)
-    # pro.append(1)
-    # h.append(h_elem)
+    met.append("psx_4_4_4")
+    tip.append(0)
+    pro.append(1)
+    h.append(h_elem)
+
+    met.append("px_4_3_4")
+    tip.append(0)
+    pro.append(1)
+    h.append(h_elem)
+    
+    met.append("px_4_4_4")
+    tip.append(0)
+    pro.append(1)
+    h.append(h_elem)
+
+    met.append("px_4_5_4")
+    tip.append(0)
+    pro.append(1)
+    h.append(h_elem)
     
     # met.append("pc_6_6_4")
     # tip.append(0)
