@@ -348,7 +348,10 @@ def lectura_coefX_P1(nom_fit):
     coefs_p = []
     n = len(coefs[i])
     for j in range(0, n):
+        # P^{-1}·K·P -> versió del llibre de S. Blanes i F. Casas
         coefs_p.append(-coefs[i][n - j - 1])
+        # P^{*}·K·P -> versió posterior de S. Blanes i F. Casas
+        # coefs_p.append(coefs[i][n - j - 1])
     met_pos, cof_pos = XaABC(coefs_p)
     return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
 

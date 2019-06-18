@@ -22,7 +22,7 @@ def ini_ddnls_rnd(z, params):
 def ini_ddnls(z, params):
     e, B, N, W, direc = params
     q, p = z[0:N], z[N:2*N]    
-    Npert = N / 50
+    Npert = N // 50
     # Npert = N / 10
     # Npert = N / 200
     ruta1 = direc + "/rnd/r" + str(N) + ".dat"
@@ -39,7 +39,7 @@ def ini_ddnls(z, params):
             rnd2.append(float(lin2[i].replace("\n", "")))
     for i in range(N):
         e[i] = (-0.5 * W) + (rnd1[i] * W)
-    ini = (N - Npert) / 2
+    ini = (N - Npert) // 2
     fin = ini + Npert + 1
     for i in range(ini, fin):
         q[i] = rnd2[i - ini]

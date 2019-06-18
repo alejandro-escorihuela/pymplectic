@@ -19,6 +19,8 @@ if __name__ == "__main__":
     # nom = ["\mathcal{ABC}^{[4]}", "\mathcal{S}_{6}^{[4]}", r"\mathcal{XA}_{4}^{[4]}", "\mathcal{SS}_{5}^{[4]}", r"\mathcal{XA}_{6}^{[4]}"]
     met = ["abc_4", "sx_6_4", "psx_4_4_4", "pc_6_6_4", "pc_9_8_6", "pc_10_18_6"]
     nom = ["\mathcal{ABC}^{[4]}", "\mathcal{S}_{6}^{[4]}", r"\mathcal{PSX}_{4}^{[4]}", "\mathcal{PC}_{6,6}^{[4]}", r"\mathcal{PC}_{9,8}^{[6]}", r"\mathcal{PC}_{10,18}^{[6]}"]
+    met = ["xa_4_4", "xb_5_4", "psx_4_4_4", "px_4_3_4", "px_4_4_4", "px_4_5_4"]
+    nom = ["\mathcal{XA}_4^{[4]}", "\mathcal{XB}_{5}^{[4]}", r"\mathcal{PSX}_{4,4}^{[4]}", "\mathcal{PX}_{4,3}^{[4]}", "\mathcal{PX}_{4,4}^{[4]}", "\mathcal{PX}_{4,5}^{[4]}"]
     Neval = []
     z = []
     z0 = [3.14, 2.77, 0.0]
