@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import rc
 
-rc('font',**{'family':'sans-serif','sans-serif':['Helvetica'], 'size':'24'})
+rc('font',**{'family':'sans-serif','sans-serif':['Helvetica'], 'size':'14'})
 rc('text', usetex=True)
 
 if __name__ == "__main__":

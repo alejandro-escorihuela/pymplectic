@@ -73,45 +73,55 @@ if __name__ == "__main__":
     h = []
     h_elem = [0.5, 0.4, 0.25, 0.1, 0.05]
     #h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]
-    # met.append("abc_4")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append(h_elem)
-
-    met.append("xa_4_4")
+    met.append("abc_4")
+    tip.append(1)
+    pro.append(0)
+    h.append(h_elem)
+    
+    met.append("xa_6_4")
     tip.append(0)
     pro.append(0)
     h.append(h_elem)
     
-    met.append("xb_5_4")
+    met.append("xb_6_4")
     tip.append(0)
     pro.append(0)
     h.append(h_elem)
+    
+    # met.append("xa_4_4")
+    # tip.append(0)
+    # pro.append(0)
+    # h.append(h_elem)
+    
+    # met.append("xb_5_4")
+    # tip.append(0)
+    # pro.append(0)
+    # h.append(h_elem)
     
     # met.append("sx_6_4")
     # tip.append(0)
     # pro.append(0)
     # h.append(h_elem)
 
-    met.append("psx_4_4_4")
-    tip.append(0)
-    pro.append(1)
-    h.append(h_elem)
+    # met.append("psx_4_4_4")
+    # tip.append(0)
+    # pro.append(1)
+    # h.append(h_elem)
 
-    met.append("px_4_3_4")
-    tip.append(0)
-    pro.append(1)
-    h.append(h_elem)
+    # met.append("px_4_3_4")
+    # tip.append(0)
+    # pro.append(1)
+    # h.append(h_elem)
     
-    met.append("px_4_4_4")
-    tip.append(0)
-    pro.append(1)
-    h.append(h_elem)
+    # met.append("px_4_4_4")
+    # tip.append(0)
+    # pro.append(1)
+    # h.append(h_elem)
 
-    met.append("px_4_5_4")
-    tip.append(0)
-    pro.append(1)
-    h.append(h_elem)
+    # met.append("px_4_5_4")
+    # tip.append(0)
+    # pro.append(1)
+    # h.append(h_elem)
     
     # met.append("pc_6_6_4")
     # tip.append(0)
