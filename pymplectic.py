@@ -95,7 +95,7 @@ class Solucionador:
                 dt = self.metode.coef_pre[flux][index] * h
                 self.mapa(flux, self.z, dt, self.parametres)
                 temps += tm.time() - t0
-            Neval += r
+            #Neval += r
         for it in range(0, Nit):
             t0 = tm.time()
             for i in range(0, m):
@@ -115,7 +115,7 @@ class Solucionador:
                     dt = self.metode.coef_pos[flux][index] * h
                     self.mapa(flux, self.z, dt, self.parametres)
                 temps += tm.time() - t0
-                Neval += r
+                #Neval += r
                 # càlcul de les quantitats conservades
                 for i in range(0, num_cons):
                     Cvalr[i] = self.conserves[i](self.z, self.parametres)
@@ -235,6 +235,63 @@ def crearDir(met):
         if not os.path.exists(direc):
             os.mkdir(direc)
 
+def comp2split(a, inreves, n_parts):
+    m = len(a) // 2
+    senar = (len(a) % 2) != 0
+    metode = []
+    llis = []
+    cont = []
+    coef = []
+    for i in range(0, n_parts):
+        if (inreves == False):
+            llis.append(i)
+        else:
+            llis.append(n_parts - i - 1)
+        cont.append(0)
+        coef.append([])
+    metode.append([llis[0], cont[llis[0]]])
+    cont[llis[0]] = cont[llis[0]] + 1
+    coef[llis[0]].append(a[0])
+    for i in range(0, m):
+        for j in range(1, n_parts - 1):
+            metode.append([llis[j], cont[llis[j]]])
+            cont[llis[j]] = cont[llis[j]] + 1
+        metode.append([llis[n_parts - 1], cont[llis[n_parts - 1]]])
+        cont[llis[n_parts - 1]] = cont[llis[n_parts - 1]] + 1
+        for j in range(1, n_parts - 1):
+            metode.append([llis[j], cont[llis[j]]])
+            cont[llis[j]] = cont[llis[j]] + 1
+        metode.append([llis[0], cont[llis[0]]])
+        cont[llis[0]] = cont[llis[0]] + 1
+    if (senar):
+        for j in range(1, n_parts - 1):
+            metode.append([llis[j], cont[llis[j]]])
+            cont[llis[j]] = cont[llis[j]] + 1
+        metode.append([llis[n_parts - 1], cont[llis[n_parts - 1]]])
+        cont[llis[n_parts - 1]] = cont[llis[n_parts - 1]] + 1        
+    pu = 2*(m - 1)
+    if (senar):
+        pu = 2*m
+    for i in range(0, pu, 2):
+        for j in range(1, n_parts - 1):
+            coef[llis[j]].append(a[i])
+        coef[llis[n_parts - 1]].append(a[i] + a[i + 1])
+        for j in range(1, n_parts - 1):
+            coef[llis[j]].append(a[i + 1])
+        coef[llis[0]].append(a[i + 1] + a[i + 2])
+    if not senar:
+        for j in range(1, n_parts - 1):
+            coef[llis[j]].append(a[pu])
+        coef[llis[n_parts - 1]].append(a[pu]+ a[pu + 1])
+        for j in range(1, n_parts - 1):
+            coef[llis[j]].append(a[pu + 1])
+        coef[llis[0]].append(a[pu + 1])
+    else:
+        for j in range(1, n_parts - 1):
+            coef[llis[j]].append(a[pu])
+        coef[llis[n_parts - 1]].append(a[pu])        
+    return [metode, coef]    
+            
 def XaABC_priv(a, ordre):
     A, B, C = ordre
     m = len(a) // 2
@@ -305,7 +362,8 @@ def lectura_coefX_priv(nom_fit):
 
 def lectura_coefX(nom_fit):
     vec_coef = lectura_coefX_priv(nom_fit)[1]
-    metode, coef = XaABC(vec_coef[0])
+    #metode, coef = XaABC(vec_coef[0])
+    metode, coef = comp2split(vec_coef[0], False, 3)
     return [metode, coef]
 
 def lectura_coefABC(nom_fit):
@@ -317,6 +375,31 @@ def lectura_coefABC(nom_fit):
     vec_b = []
     vec_c = []
     coef = [[], [], []]
+    for i in range(0, len(linies)):
+        linia = linies[i].replace("\n", "")
+        if linia[0] == 'm':
+            linia = linia[2:]
+            cadena = linia.split(" ")
+            for j in range(0, len(cadena)):
+                flux = ord(cadena[j][0]) - 97
+                nume = int(cadena[j][1]) - 1
+                metode.append([flux, nume])
+        else:
+            ind = ord(linia[0]) - 97
+            linia = linia[2:]
+            cadena = linia.split(" ")
+            for j in range(0, len(cadena)):
+                coef[ind].append(float(cadena[j]))
+    return [metode, coef]
+
+def lectura_coefAB(nom_fit):
+    linies = []
+    with open("./coef/" + nom_fit + ".cnf") as fit:
+        linies = fit.readlines()
+    metode = []
+    vec_a = []
+    vec_b = []
+    coef = [[], []]
     for i in range(0, len(linies)):
         linia = linies[i].replace("\n", "")
         if linia[0] == 'm':
