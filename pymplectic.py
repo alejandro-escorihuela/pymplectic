@@ -12,6 +12,7 @@ import os
 class Solucionador:
     def __init__(self):
         self.nom_problema = ""
+        self.num_parts = 2
         self.ini = None
         self.mapa = None
         self.eqDreta = None
@@ -25,6 +26,9 @@ class Solucionador:
         
     def set_nom(self, n):
         self.nom_problema = n
+        
+    def set_parts(self, n):
+        self.num_parts = n
         
     def get_nom(self):
         return self.nom_problema
@@ -46,6 +50,9 @@ class Solucionador:
         self.parametres = llista
 
     def set_metode(self, metode):
+        if (metode.num_parts != self.num_parts):
+            print("El nombre de parts en que es separa el problema ha de coincidir amb el mètode.")
+            exit(-3)
         self.metode = metode
         
     def add_conserva(self, conserva):
@@ -177,10 +184,11 @@ class Solucionador:
         return solver.y
     
 class Metode:
-    def __init__(self, tm = 0, tp = 0):
+    def __init__(self, np = 2, tm = 0, tp = 0):
         self.nom = "met"
         self.tipus_metode = tm
         self.tipus_processat = tp
+        self.num_parts = np
         self.ordre = []
         self.coef = []
         self.ordre_pre = []
