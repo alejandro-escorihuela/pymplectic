@@ -5,6 +5,8 @@
 # problemes.py
 
 from pymplectic import *
+import sys
+sys.path.insert(0, './prob/')
 from ddnls import *
 from fluxABC import *
 from em import *
