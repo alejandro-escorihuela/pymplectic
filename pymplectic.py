@@ -200,31 +200,172 @@ class Metode:
         self.nom = arxiu
         if (self.tipus_processat == 0):
             if (self.tipus_metode == 0):
-                self.ordre, self.coef = lectura_coefX(arxiu, self.num_parts)
+                #self.ordre, self.coef = read_coefComp(arxiu, self.num_parts)
+                self.ordre, self.coef = self.read_coefComp()
             elif (self.tipus_metode == 1):
-                self.ordre, self.coef = lectura_coefABC(arxiu, self.num_parts)
+                #self.ordre, self.coef = read_coefSplt(arxiu, self.num_parts)
+                self.ordre, self.coef = self.read_coefSplt()
             else:
                 print(str(tipus_metode) + " no és cap tipus de mètode.")
                 exit(-2)
-        elif (self.tipus_processat == 1):
-            if (self.tipus_metode == 0):
-                nucli, prep, postp = lectura_coefX_P1(arxiu, self.num_parts)
-                self.ordre, self.coef = nucli[0], nucli[1]
-                self.ordre_pre, self.coef_pre = prep[0], prep[1]
-                self.ordre_pos, self.coef_pos = postp[0], postp[1]            
+        elif (self.tipus_processat > 0) and (self.tipus_metode == 0):
+            #nucli, prep, postp = read_coefComp_P(arxiu, self.num_parts, self.tipus_processat)
+            nucli, prep, postp = self.read_coefComp_P()
+            self.ordre, self.coef = nucli[0], nucli[1]
+            self.ordre_pre, self.coef_pre = prep[0], prep[1]
+            self.ordre_pos, self.coef_pos = postp[0], postp[1]
+        else:
+            print("El tipus de mètode i/o processat no existeixen.")
+            exit(-2)
+            
+    def comp2split(self, a, inreves = False):
+        n_parts = self.num_parts
+        m = len(a) // 2
+        senar = (len(a) % 2) != 0
+        metode = []
+        llis = []
+        cont = []
+        coef = []
+        for i in range(0, n_parts):
+            if (inreves == False):
+                llis.append(i)
             else:
-                print("El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode))
-                exit(-2)
-        elif (self.tipus_processat == 2):
-            if (self.tipus_metode == 0):
-                nucli, prep, postp = lectura_coefX_P2(arxiu, self.num_parts)
-                self.ordre, self.coef = nucli[0], nucli[1]
-                self.ordre_pre, self.coef_pre = prep[0], prep[1]
-                self.ordre_pos, self.coef_pos = postp[0], postp[1]            
+                llis.append(n_parts - i - 1)
+            cont.append(0)
+            coef.append([])
+        metode.append([llis[0], cont[llis[0]]])
+        cont[llis[0]] = cont[llis[0]] + 1
+        coef[llis[0]].append(a[0])
+        for i in range(0, m):
+            for j in range(1, n_parts - 1):
+                metode.append([llis[j], cont[llis[j]]])
+                cont[llis[j]] = cont[llis[j]] + 1
+            metode.append([llis[n_parts - 1], cont[llis[n_parts - 1]]])
+            cont[llis[n_parts - 1]] = cont[llis[n_parts - 1]] + 1
+            for j in range(1, n_parts - 1):
+                metode.append([llis[j], cont[llis[j]]])
+                cont[llis[j]] = cont[llis[j]] + 1
+            metode.append([llis[0], cont[llis[0]]])
+            cont[llis[0]] = cont[llis[0]] + 1
+        if (senar):
+            for j in range(1, n_parts - 1):
+                metode.append([llis[j], cont[llis[j]]])
+                cont[llis[j]] = cont[llis[j]] + 1
+            metode.append([llis[n_parts - 1], cont[llis[n_parts - 1]]])
+            cont[llis[n_parts - 1]] = cont[llis[n_parts - 1]] + 1        
+        pu = 2*(m - 1)
+        if (senar):
+            pu = 2*m
+        for i in range(0, pu, 2):
+            for j in range(1, n_parts - 1):
+                coef[llis[j]].append(a[i])
+            coef[llis[n_parts - 1]].append(a[i] + a[i + 1])
+            for j in range(1, n_parts - 1):
+                coef[llis[j]].append(a[i + 1])
+            coef[llis[0]].append(a[i + 1] + a[i + 2])
+        if not senar:
+            for j in range(1, n_parts - 1):
+                coef[llis[j]].append(a[pu])
+            coef[llis[n_parts - 1]].append(a[pu]+ a[pu + 1])
+            for j in range(1, n_parts - 1):
+                coef[llis[j]].append(a[pu + 1])
+            coef[llis[0]].append(a[pu + 1])
+        else:
+            for j in range(1, n_parts - 1):
+                coef[llis[j]].append(a[pu])
+            coef[llis[n_parts - 1]].append(a[pu])        
+        return [metode, coef]    
+
+    def __read_coefComp_previ(self):
+        nom_fit = self.nom
+        fit = open("./coef/" + nom_fit + ".cnf", "r")
+        lis = fit.readlines()
+        fit.close()
+        coef = []
+        nom = []
+        for i, item in enumerate(lis):
+            aux = []
+            linia = item.replace("\n", "")
+            tros = linia.split(" ")
+            for j, jtem in enumerate(tros):
+                if (is_numeric(jtem)):
+                    aux.append(float(jtem))
+                elif (j == 0):
+                    nom.append(jtem[0])
+            if (len(aux) > 0):
+                coef.append(aux)
+        return nom, coef
+
+    def read_coefComp(self):
+        nom_fit, n_parts = self.nom, self.num_parts
+        vec_coef = self.__read_coefComp_previ()[1]
+        metode, coef = self.comp2split(vec_coef[0], False)
+        return [metode, coef]
+
+    def read_coefSplt(self):
+        nom_fit, n_parts = self.nom, self.num_parts
+        linies = []
+        with open("./coef/" + nom_fit + ".cnf") as fit:
+            linies = fit.readlines()
+        metode = []
+        coef = []
+        for i in range(0, n_parts):
+            coef.append([])
+        for i in range(0, len(linies)):
+            linia = linies[i].replace("\n", "")
+            if linia[0] == 'm':
+                linia = linia[2:]
+                cadena = linia.split(" ")
+                for j in range(0, len(cadena)):
+                    flux = ord(cadena[j][0]) - 97
+                    nume = int(cadena[j][1]) - 1
+                    metode.append([flux, nume])
             else:
-                print("El processat " + str(tipus_processat) + " no està preparat per als mètodes " + str(tipus_metode))
-                exit(-2)
-                
+                ind = ord(linia[0]) - 97
+                linia = linia[2:]
+                cadena = linia.split(" ")
+                for j in range(0, len(cadena)):
+                    coef[ind].append(float(cadena[j]))
+        return [metode, coef]
+
+    def read_coefComp_P(self):
+        nom_fit, n_parts, tipus = self.nom, self.num_parts, self.tipus_processat
+        noms, coefs = self.__read_coefComp_previ()
+        tam = len(noms)
+        i_n = 0
+        while (i_n < tam) and (noms[i_n] != 'a'):
+            i_n = i_n + 1
+        i_p = 0
+        while (i_p < tam) and (noms[i_p] != 'g'):
+            i_p = i_p + 1    
+        if (tipus == 1):
+            # Processat bàsic
+            met_nuc, cof_nuc = self.comp2split(coefs[i_n], False)
+            met_pre, cof_pre = self.comp2split(coefs[i_p], True)
+            coefs_p = []
+            n = len(coefs[i_p])
+            for j in range(0, n):
+                # P^{-1}·K·P -> versió del llibre de S. Blanes i F. Casas
+                coefs_p.append(-coefs[i_p][n - j - 1])
+                # P^{*}·K·P -> versió posterior de S. Blanes i F. Casas
+                # coefs_p.append(coefs[ip][n - j - 1])
+            met_pos, cof_pos = self.comp2split(coefs_p, False)
+        elif (tipus == 2):
+            # Processat pi=w(h)·w(-h)
+            met_nuc, cof_nuc = self.comp2split(coefs[i_n], True)
+            cofX_pre = []
+            cofX_pos = []
+            n = len(coefs[i_p])
+            for j in range(0, n):
+                cofX_pos.append(-coefs[i_p][j])
+            for j in range(0, n):
+                cofX_pos.append(coefs[i_p][j])
+            for j in range(0, 2*n):
+                cofX_pre.append(-cofX_pos[2*n - j - 1])
+            met_pos, cof_pos = self.comp2split(cofX_pre[::-1], False)
+            met_pre, cof_pre = self.comp2split(cofX_pos[::-1], False)
+        return [met_nuc, cof_nuc], [met_pre, cof_pre], [met_pos, cof_pos]
+           
 def is_numeric(val):
     if (val.strip() == ""):
         return False
@@ -242,154 +383,3 @@ def crearDir(met):
         direc = "dat/" + met[i]
         if not os.path.exists(direc):
             os.mkdir(direc)
-
-def comp2split(a, inreves, n_parts):
-    m = len(a) // 2
-    senar = (len(a) % 2) != 0
-    metode = []
-    llis = []
-    cont = []
-    coef = []
-    for i in range(0, n_parts):
-        if (inreves == False):
-            llis.append(i)
-        else:
-            llis.append(n_parts - i - 1)
-        cont.append(0)
-        coef.append([])
-    metode.append([llis[0], cont[llis[0]]])
-    cont[llis[0]] = cont[llis[0]] + 1
-    coef[llis[0]].append(a[0])
-    for i in range(0, m):
-        for j in range(1, n_parts - 1):
-            metode.append([llis[j], cont[llis[j]]])
-            cont[llis[j]] = cont[llis[j]] + 1
-        metode.append([llis[n_parts - 1], cont[llis[n_parts - 1]]])
-        cont[llis[n_parts - 1]] = cont[llis[n_parts - 1]] + 1
-        for j in range(1, n_parts - 1):
-            metode.append([llis[j], cont[llis[j]]])
-            cont[llis[j]] = cont[llis[j]] + 1
-        metode.append([llis[0], cont[llis[0]]])
-        cont[llis[0]] = cont[llis[0]] + 1
-    if (senar):
-        for j in range(1, n_parts - 1):
-            metode.append([llis[j], cont[llis[j]]])
-            cont[llis[j]] = cont[llis[j]] + 1
-        metode.append([llis[n_parts - 1], cont[llis[n_parts - 1]]])
-        cont[llis[n_parts - 1]] = cont[llis[n_parts - 1]] + 1        
-    pu = 2*(m - 1)
-    if (senar):
-        pu = 2*m
-    for i in range(0, pu, 2):
-        for j in range(1, n_parts - 1):
-            coef[llis[j]].append(a[i])
-        coef[llis[n_parts - 1]].append(a[i] + a[i + 1])
-        for j in range(1, n_parts - 1):
-            coef[llis[j]].append(a[i + 1])
-        coef[llis[0]].append(a[i + 1] + a[i + 2])
-    if not senar:
-        for j in range(1, n_parts - 1):
-            coef[llis[j]].append(a[pu])
-        coef[llis[n_parts - 1]].append(a[pu]+ a[pu + 1])
-        for j in range(1, n_parts - 1):
-            coef[llis[j]].append(a[pu + 1])
-        coef[llis[0]].append(a[pu + 1])
-    else:
-        for j in range(1, n_parts - 1):
-            coef[llis[j]].append(a[pu])
-        coef[llis[n_parts - 1]].append(a[pu])        
-    return [metode, coef]    
-
-def lectura_coefX_priv(nom_fit):
-    fit = open("./coef/" + nom_fit + ".cnf", "r")
-    lis = fit.readlines()
-    fit.close()
-    coef = []
-    nom = []
-    for i, item in enumerate(lis):
-        aux = []
-        linia = item.replace("\n", "")
-        tros = linia.split(" ")
-        for j, jtem in enumerate(tros):
-            if (is_numeric(jtem)):
-                aux.append(float(jtem))
-            elif (j == 0):
-                nom.append(jtem[0])
-        if (len(aux) > 0):
-            coef.append(aux)
-    return nom, coef
-
-def lectura_coefX(nom_fit, n_parts):
-    vec_coef = lectura_coefX_priv(nom_fit)[1]
-    metode, coef = comp2split(vec_coef[0], False, n_parts)
-    return [metode, coef]
-
-def lectura_coefABC(nom_fit, n_parts):
-    linies = []
-    with open("./coef/" + nom_fit + ".cnf") as fit:
-        linies = fit.readlines()
-    metode = []
-    coef = []
-    for i in range(0, n_parts):
-        coef.append([])
-    for i in range(0, len(linies)):
-        linia = linies[i].replace("\n", "")
-        if linia[0] == 'm':
-            linia = linia[2:]
-            cadena = linia.split(" ")
-            for j in range(0, len(cadena)):
-                flux = ord(cadena[j][0]) - 97
-                nume = int(cadena[j][1]) - 1
-                metode.append([flux, nume])
-        else:
-            ind = ord(linia[0]) - 97
-            linia = linia[2:]
-            cadena = linia.split(" ")
-            for j in range(0, len(cadena)):
-                coef[ind].append(float(cadena[j]))
-    return [metode, coef]
-
-def lectura_coefX_P1(nom_fit, n_parts):
-    noms, coefs = lectura_coefX_priv(nom_fit)
-    tam = len(noms)
-    i = 0
-    while (i < tam) and (noms[i] != 'a'):
-        i = i + 1
-    met_a, cof_a = comp2split(coefs[i], False, n_parts)
-    i = 0
-    while (i < tam) and (noms[i] != 'g'):
-        i = i + 1
-    met_pre, cof_pre = comp2split(coefs[i], True, n_parts)
-    coefs_p = []
-    n = len(coefs[i])
-    for j in range(0, n):
-        # P^{-1}·K·P -> versió del llibre de S. Blanes i F. Casas
-        coefs_p.append(-coefs[i][n - j - 1])
-        # P^{*}·K·P -> versió posterior de S. Blanes i F. Casas
-        # coefs_p.append(coefs[i][n - j - 1])
-    met_pos, cof_pos = comp2split(coefs_p, False, n_parts)
-    return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
-
-def lectura_coefX_P2(nom_fit, n_parts):
-    noms, coefs = lectura_coefX_priv(nom_fit)
-    tam = len(noms)
-    i = 0
-    while (i < tam) and (noms[i] != 'a'):
-        i = i + 1
-    met_a, cof_a = comp2split(coefs[i], True, n_parts)
-    i = 0
-    while (i < tam) and (noms[i] != 'g'):
-        i = i + 1
-    cofX_pre = []
-    cofX_pos = []
-    n = len(coefs[i])
-    for j in range(0, n):
-        cofX_pos.append(-coefs[i][j])
-    for j in range(0, n):
-        cofX_pos.append(coefs[i][j])
-    for j in range(0, 2*n):
-        cofX_pre.append(-cofX_pos[2*n - j - 1])
-    met_pos, cof_pos = comp2split(cofX_pre[::-1], False, n_parts)
-    met_pre, cof_pre = comp2split(cofX_pos[::-1], False, n_parts)
-    return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
-
