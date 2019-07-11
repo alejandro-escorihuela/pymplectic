@@ -103,26 +103,11 @@ if __name__ == "__main__":
     pro.append(0)
     h.append(h_elem)
 
-    # met.append("psx_4_4_4")
-    # tip.append(0)
-    # pro.append(1)
-    # h.append(h_elem)
+    met.append("psx_4_4_4")
+    tip.append(0)
+    pro.append(1)
+    h.append(h_elem)
 
-    # met.append("px_4_3_4")
-    # tip.append(0)
-    # pro.append(1)
-    # h.append(h_elem)
-    
-    # met.append("px_4_4_4")
-    # tip.append(0)
-    # pro.append(1)
-    # h.append(h_elem)
-
-    # met.append("px_4_5_4")
-    # tip.append(0)
-    # pro.append(1)
-    # h.append(h_elem)
-    
     met.append("pc_6_6_4")
     tip.append(0)
     pro.append(2)

@@ -291,55 +291,6 @@ def comp2split(a, inreves, n_parts):
             coef[llis[j]].append(a[pu])
         coef[llis[n_parts - 1]].append(a[pu])        
     return [metode, coef]    
-            
-def XaABC_priv(a, ordre):
-    A, B, C = ordre
-    m = len(a) // 2
-    senar = (len(a) % 2) != 0
-    metode = []
-    cont = [0, 0, 0]
-    coef = [[], [], []]
-    metode.append([A, cont[A]])
-    cont[A] = cont[A] + 1
-    coef[A].append(a[0])
-    
-    for i in range(0, m):
-        metode.append([B, cont[B]])
-        cont[B] = cont[B] + 1
-        metode.append([C, cont[C]])
-        cont[C] = cont[C] + 1
-        metode.append([B, cont[B]])
-        cont[B] = cont[B] + 1
-        metode.append([A, cont[A]])
-        cont[A] = cont[A] + 1
-    if (senar):
-        metode.append([B, cont[B]])
-        cont[B] = cont[B] + 1
-        metode.append([C, cont[C]])
-        cont[C] = cont[C] + 1        
-    pu = 2*(m - 1)
-    if (senar):
-        pu = 2*m
-    for i in range(0, pu, 2):
-        coef[B].append(a[i])
-        coef[C].append(a[i] + a[i + 1])
-        coef[B].append(a[i + 1])
-        coef[A].append(a[i + 1] + a[i + 2])
-    if not senar:
-        coef[B].append(a[pu])
-        coef[C].append(a[pu]+ a[pu + 1])
-        coef[B].append(a[pu + 1])
-        coef[A].append(a[pu + 1])
-    else:
-        coef[B].append(a[pu])
-        coef[C].append(a[pu])        
-    return [metode, coef]
-
-def XaABC(a):
-    return XaABC_priv(a, [0, 1, 2])
-
-def XaABC_adj(a):
-    return XaABC_priv(a, [2, 1, 0])
 
 def lectura_coefX_priv(nom_fit):
     fit = open("./coef/" + nom_fit + ".cnf", "r")
@@ -362,7 +313,6 @@ def lectura_coefX_priv(nom_fit):
 
 def lectura_coefX(nom_fit):
     vec_coef = lectura_coefX_priv(nom_fit)[1]
-    #metode, coef = XaABC(vec_coef[0])
     metode, coef = comp2split(vec_coef[0], False, 3)
     return [metode, coef]
 
@@ -423,11 +373,11 @@ def lectura_coefX_P1(nom_fit):
     i = 0
     while (i < tam) and (noms[i] != 'a'):
         i = i + 1
-    met_a, cof_a = XaABC(coefs[i])
+    met_a, cof_a = comp2split(coefs[i], False, 3)
     i = 0
     while (i < tam) and (noms[i] != 'g'):
         i = i + 1
-    met_pre, cof_pre = XaABC_adj(coefs[i])
+    met_pre, cof_pre = comp2split(coefs[i], True, 3)
     coefs_p = []
     n = len(coefs[i])
     for j in range(0, n):
@@ -435,7 +385,7 @@ def lectura_coefX_P1(nom_fit):
         coefs_p.append(-coefs[i][n - j - 1])
         # P^{*}·K·P -> versió posterior de S. Blanes i F. Casas
         # coefs_p.append(coefs[i][n - j - 1])
-    met_pos, cof_pos = XaABC(coefs_p)
+    met_pos, cof_pos = comp2split(coefs_p, False, 3)
     return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
 
 def lectura_coefX_P2(nom_fit):
@@ -444,7 +394,7 @@ def lectura_coefX_P2(nom_fit):
     i = 0
     while (i < tam) and (noms[i] != 'a'):
         i = i + 1
-    met_a, cof_a = XaABC_adj(coefs[i])
+    met_a, cof_a = comp2split(coefs[i], True, 3)
     i = 0
     while (i < tam) and (noms[i] != 'g'):
         i = i + 1
@@ -452,15 +402,12 @@ def lectura_coefX_P2(nom_fit):
     cofX_pos = []
     n = len(coefs[i])
     for j in range(0, n):
-        #cofX_pre.append(-coefs[i][n - j - 1])
         cofX_pos.append(-coefs[i][j])
     for j in range(0, n):
-        #cofX_pre.append(coefs[i][n - j - 1])
         cofX_pos.append(coefs[i][j])
-    #met_pre, cof_pre = XaABC(cofX_pre)
     for j in range(0, 2*n):
         cofX_pre.append(-cofX_pos[2*n - j - 1])
-    met_pos, cof_pos = XaABC(cofX_pre[::-1])
-    met_pre, cof_pre = XaABC(cofX_pos[::-1])
+    met_pos, cof_pos = comp2split(cofX_pre[::-1], False, 3)
+    met_pre, cof_pre = comp2split(cofX_pos[::-1], False, 3)
     return [met_a, cof_a], [met_pre, cof_pre], [met_pos, cof_pos]
 
