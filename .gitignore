@@ -1,5 +1,6 @@
 *~
 __pycache__/*
+./prob/__pycache__/*
 ./dat/*/*.dat
 *.pyc
 *.pdf
