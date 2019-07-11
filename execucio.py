@@ -9,7 +9,7 @@ from pymplectic import *
 import problemes as prb
 
 if __name__ == "__main__":    
-    prob = prb.fABC
+    prob = prb.solar
     t_final = 40.0
     met = []
     tip = []
@@ -72,7 +72,7 @@ if __name__ == "__main__":
         print(met[i])
         direc = "dat/" + met[i]
         fit = open(direc + "/" + prob.get_nom() + "_err.dat", "w")
-        metode = Metode(3, tip[i], pro[i])
+        metode = Metode(prob.get_parts(), tip[i], pro[i])
         metode.set_metode(met[i])
         prob.set_metode(metode)
         for j in range(0, len(h[i])):

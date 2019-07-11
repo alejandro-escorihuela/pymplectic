@@ -7,6 +7,7 @@
 from pymplectic import *
 import sys
 sys.path.insert(0, './prob/')
+from solar import *
 from ddnls import *
 from fluxABC import *
 from em import *
@@ -71,3 +72,16 @@ em_to.add_conserva(funcioH_em_tokamak)
 em_to.set_calc_error_coord(False)
 em_to.set_print_coord(True)
 em_to.set_print_cons(True)
+
+# Sistema solar exterior i Plutó
+solar_masses = np.array([1.00000597682, 9.543137255E-04, 2.857310206E-04, 4.364519859E-05, 5.148818502E-05, 6.571141277E-09])
+np = 6
+grav_cnt = 0.000295912208286
+solar = Solucionador()
+solar.set_nom("solar")
+solar.set_parts(2)
+solar.set_ini(ini_solar)
+solar.set_tam(2*6*3)
+solar.set_mapa(mapaABsolar)
+solar.set_parametres([solar_masses, np, grav_cnt])
+solar.add_conserva(hamiltonia_solar)
