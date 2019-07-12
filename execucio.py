@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 # 24-02-2019
 # alex
 # execucio.py
@@ -8,15 +8,16 @@ import numpy as np
 from pymplectic import *
 import problemes as prb
 
-if __name__ == "__main__":    
+if __name__ == "__main__":
     prob = prb.solar
-    t_final = 40.0
+    t_final = 1000.0
     met = []
     tip = []
     pro = []
     h = []
     #h_elem = [0.5, 0.4, 0.25, 0.1, 0.05]
     h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]
+    h_elem = [100.0, 10.0, 1.0]
     # met.append("abc_4")
     # tip.append(1)
     # pro.append(0)

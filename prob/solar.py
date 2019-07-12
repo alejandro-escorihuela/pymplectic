@@ -8,9 +8,8 @@ import numpy as np
 
 def ini_solar(z, params):
     masses, npl, grav_cnt = params
-    qq, pp = z[0:18], z[18:36]
-    q = np.zeros((6, 3))
-    p = np.zeros((6, 3))
+    q = np.reshape(z[0:18], (-1, 3))
+    p = np.reshape(z[18:36], (-1, 3))
     # Sol
     q[0][0] = 0.0
     q[0][1] = 0.0
@@ -54,27 +53,20 @@ def ini_solar(z, params):
     p[5][1] = masses[5] * 3.426619083057393E-04
     p[5][2] = masses[5] * -9.199095031922107E-04
     # Dades a les 00:00:00 del 01-01-2018 de https://ssd.jpl.nasa.gov/horizons.cgi
-    qq = np.concatenate((q[0], q[1], q[2], q[3], q[4], q[5]))
-    pp = np.concatenate((p[0], p[1], p[2], p[3], p[4], p[5]))
-    z = np.concatenate((qq, pp))
-    
+
 def hamiltonia_solar(z, params):
     masses, npl, grav_cnt = params
-    qq, pp = z[0:18], z[18:36]
-    q = np.zeros((6, 3))
-    p = np.zeros((6, 3))
-    for i in range(0, npl):
-        q[i] = qq[(i*3):((i + 1)*3)]
-        p[i] = pp[(i*3):((i + 1)*3)]
+    q = np.reshape(z[0:18], (-1, 3))
+    p = np.reshape(z[18:36], (-1, 3))
     resta = np.zeros(3)
     cin = 0.0
     pot = 0.0
     for i in range(0, npl):
-        cin = cin + (p[i][0]**2 + p[i][1]**2 + p[i][2]**2) / masses[i]
+        cin = cin + (p[i][0]**2 + p[i][1]**2 + p[i][2]**2)/masses[i]
     cin = 0.5*cin
     for i in range(0, npl):
         for j in range(0, i):
-            for k in range(0,3):
+            for k in range(0, 3):
                 resta[k] = q[i][k] - q[j][k]
             modul = np.sqrt(resta[0]**2 + resta[1]**2 + resta[2]**2)
             pot = pot + ((masses[i]*masses[j])/modul)
@@ -83,12 +75,8 @@ def hamiltonia_solar(z, params):
 
 def mapaABsolar(flux, z, dt, params):
     masses, npl, grav_cnt = params
-    qq, pp = z[0:18], z[18:36]
-    q = np.zeros((6, 3))
-    p = np.zeros((6, 3))
-    for i in range(0, npl):
-        q[i] = qq[(i*3):((i + 1)*3)]
-        p[i] = pp[(i*3):((i + 1)*3)]
+    q = np.reshape(z[0:18], (-1, 3))
+    p = np.reshape(z[18:36], (-1, 3))
     if flux == 0:
         for i in range(0, npl):
             for j in range(0, 3):
@@ -97,16 +85,12 @@ def mapaABsolar(flux, z, dt, params):
         for i in range(0, npl):
             for j in range(0, 3):
                 p[i][j] = p[i][j] - (dt*grad(z, params, i, j))
-
+    
 def grad(z, params, i, j):
     masses, npl, grav_cnt = params
-    qq, pp = z[0:18], z[18:36]
-    q = np.zeros((6, 3))
-    p = np.zeros((6, 3))
-    resta = np.zeros(3)
-    for ind in range(0, npl):
-        q[ind] = qq[(ind*3):((ind + 1)*3)]
-        p[ind] = pp[(ind*3):((ind + 1)*3)]   
+    q = np.reshape(z[0:18], (-1, 3))
+    p = np.reshape(z[18:36], (-1, 3))
+    resta = np.zeros(3) 
     gV = 0.0
     for k in range(0, npl):
         if (i != k):
@@ -114,5 +98,5 @@ def grad(z, params, i, j):
                 resta[m] = q[i][m] - q[k][m]
             den = (resta[0]**2 + resta[1]**2 + resta[2]**2)**1.5
             gV = gV + ((masses[k]*(q[i][j] - q[k][j]))/den)
-    gV = gV * grav_cnt * masses[i]    
+    gV = gV * grav_cnt * masses[i]
     return gV

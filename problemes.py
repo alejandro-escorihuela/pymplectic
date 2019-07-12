@@ -7,10 +7,11 @@
 from pymplectic import *
 import sys
 sys.path.insert(0, './prob/')
-from solar import *
 from ddnls import *
 from fluxABC import *
 from em import *
+from solar import *
+from harmonic import *
 
 # DDNLS
 ddnls = Solucionador()
@@ -85,3 +86,13 @@ solar.set_tam(2*6*3)
 solar.set_mapa(mapaABsolar)
 solar.set_parametres([solar_masses, np, grav_cnt])
 solar.add_conserva(hamiltonia_solar)
+
+# Oscil·lador harmònic
+harm = Solucionador()
+harm.set_nom("harm")
+harm.set_parts(2)
+harm.set_ini(ini_harm)
+harm.set_tam(2)
+harm.set_mapa(mapaABharm)
+harm.set_parametres([1.0, 1.0])
+harm.add_conserva(hamiltonia_harm)
