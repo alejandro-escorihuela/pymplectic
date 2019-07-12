@@ -48,6 +48,11 @@ if __name__ == "__main__":
     pro.append(0)
     h.append(h_elem)
 
+    met.append("xb_6_4")
+    tip.append(0)
+    pro.append(0)
+    h.append(h_elem)
+    
     met.append("psx_4_4_4")
     tip.append(0)
     pro.append(1)

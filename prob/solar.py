@@ -70,8 +70,8 @@ def hamiltonia_solar(z, params):
                 resta[k] = q[i][k] - q[j][k]
             modul = np.sqrt(resta[0]**2 + resta[1]**2 + resta[2]**2)
             pot = pot + ((masses[i]*masses[j])/modul)
-    pot = pot * grav_cnt
-    return cin + pot   
+    pot = pot * -grav_cnt
+    return cin + pot
 
 def mapaABsolar(flux, z, dt, params):
     masses, npl, grav_cnt = params
@@ -93,7 +93,7 @@ def grad(z, params, i, j):
     resta = np.zeros(3) 
     gV = 0.0
     for k in range(0, npl):
-        if (i != k):
+        if i != k:
             for m in range(0, 3):
                 resta[m] = q[i][m] - q[k][m]
             den = (resta[0]**2 + resta[1]**2 + resta[2]**2)**1.5

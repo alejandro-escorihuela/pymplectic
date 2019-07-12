@@ -12,6 +12,7 @@ from fluxABC import *
 from em import *
 from solar import *
 from harmonic import *
+from kepler import *
 
 # DDNLS
 ddnls = Solucionador()
@@ -86,6 +87,9 @@ solar.set_tam(2*6*3)
 solar.set_mapa(mapaABsolar)
 solar.set_parametres([solar_masses, np, grav_cnt])
 solar.add_conserva(hamiltonia_solar)
+solar.set_calc_error_coord(False)
+solar.set_print_coord(True)
+solar.set_print_cons(True)
 
 # Oscil·lador harmònic
 harm = Solucionador()
@@ -96,3 +100,19 @@ harm.set_tam(2)
 harm.set_mapa(mapaABharm)
 harm.set_parametres([1.0, 1.0])
 harm.add_conserva(hamiltonia_harm)
+harm.set_calc_error_coord(False)
+harm.set_print_coord(False)
+harm.set_print_cons(False)
+
+# Kepler m = 1
+kepl = Solucionador()
+kepl.set_nom("kepl")
+kepl.set_parts(2)
+kepl.set_ini(ini_kepl)
+kepl.set_tam(4)
+kepl.set_mapa(mapaABkepl)
+kepl.set_parametres([0.6])
+kepl.add_conserva(hamiltonia_kepl)
+kepl.set_calc_error_coord(False)
+kepl.set_print_coord(False)
+kepl.set_print_cons(False)
