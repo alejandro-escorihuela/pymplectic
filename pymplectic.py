@@ -203,16 +203,13 @@ class Metode:
         self.nom = arxiu
         if (self.tipus_processat == 0):
             if (self.tipus_metode == 0):
-                #self.ordre, self.coef = read_coefComp(arxiu, self.num_parts)
-                self.ordre, self.coef = self.read_coefComp()
-            elif (self.tipus_metode == 1):
-                #self.ordre, self.coef = read_coefSplt(arxiu, self.num_parts)
                 self.ordre, self.coef = self.read_coefSplt()
+            elif (self.tipus_metode == 1):
+                self.ordre, self.coef = self.read_coefComp()
             else:
                 print(str(tipus_metode) + " no és cap tipus de mètode.")
                 exit(-2)
-        elif (self.tipus_processat > 0) and (self.tipus_metode == 0):
-            #nucli, prep, postp = read_coefComp_P(arxiu, self.num_parts, self.tipus_processat)
+        elif (self.tipus_processat > 0) and (self.tipus_metode == 1):
             nucli, prep, postp = self.read_coefComp_P()
             self.ordre, self.coef = nucli[0], nucli[1]
             self.ordre_pre, self.coef_pre = prep[0], prep[1]

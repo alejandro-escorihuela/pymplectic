@@ -18,8 +18,8 @@ if __name__ == "__main__":
     S0 = 21.0
     met = ["abc_4", "sx_6_4", "xa_6_4", "xb_6_4", "ss_5_4", "tc_5_1", "xb_5_4"]
     nom = ["\mathcal{ABC}^{[4]}", "\mathcal{S}_{6}^{[4]}", "\mathcal{XA}_{6}^{[4]}", r"\mathcal{XB}_{6}^{[4]}", "\mathcal{SS}_{5}^{[4]}", "\mathcal{X}_{(5,E)}^{[4]}", r"\mathcal{XB}_{5}^{[4]}"]
-    met = ["sx_6_4", "psx_4_4_4", "pc_6_6_4", "pc_9_8_6", "pc_10_18_6"]
-    nom = ["\mathcal{S}_{6}^{[4]}", r"\mathcal{PS}_{(4,4)}^{[4]}", r"\mathcal{PX}_{(6,6)}^{[4]}", r"\mathcal{PX}_{(9,8)}^{[6]}", r"\mathcal{PX}_{(10,18)}^{[6]}"]
+    met = ["sx_6_4", "psx_4_4_4", "pc_6_6_4", "pc_9_8_6", "pc_9_18_6"]
+    nom = ["\mathcal{S}_{6}^{[4]}", r"\mathcal{PS}_{(4,4)}^{[4]}", r"\mathcal{PX}_{(6,6)}^{[4]}", r"\mathcal{PX}_{(9,8)}^{[6]}", r"\mathcal{PX}_{(9,18)}^{[6]}"]
     # met = ["abc_4", "sx_6_4", "xc_4", "xc_5", "xc_6", "xc_6_1"]
     # nom = ["\mathcal{ABC}^{[4]}", "\mathcal{S}_{6}^{[4]}", r"\mathcal{XC}_{4}^{[4]}", r"\mathcal{XC}_{5}^{[4]}", r"\mathcal{XC}_{6}^{[4]}", r"\mathcal{XC}_{61}^{[4]}"]
     met = ["xa_4_4", "xb_5_4", "psx_4_4_4", "px_4_3_4", "px_4_4_4", "px_4_5_4"]

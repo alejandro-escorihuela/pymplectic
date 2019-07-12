@@ -13,8 +13,8 @@ rc('text', usetex=True)
 
 if __name__ == "__main__":
     tf = 10.0
-    met = ["sx_6_4", "pc_6_6_4", "pc_9_8_6", "pc_10_18_6"]
-    nom = ["\mathcal{S}_{6}^{[4]}", "\mathcal{PC}_{6,6}^{[4]}", r"\mathcal{PC}_{9,8}^{[6]}", r"\mathcal{PC}_{10,18}^{[6]}"]
+    met = ["sx_6_4", "pc_6_6_4", "pc_9_8_6", "pc_9_18_6"]
+    nom = ["\mathcal{S}_{6}^{[4]}", "\mathcal{PC}_{6,6}^{[4]}", r"\mathcal{PC}_{9,8}^{[6]}", r"\mathcal{PC}_{9,18}^{[6]}"]
     #met = ["sx_6_4", "pc_6_6_4", "pc_9_8_6"]
     #nom = ["\mathcal{S}_{6}^{[4]}", "\mathcal{PC}_{6,6}^{[4]}", r"\mathcal{PC}_{9,8}^{[6]}"]
     Neval = []
