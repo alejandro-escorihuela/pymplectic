@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- 
 # 25-02-2019
 # alex
-# plot_ddnls.py
+# plot_em.py
 
 import matplotlib.pyplot as plt
 import numpy as np
