@@ -202,10 +202,15 @@ class Metode:
     def set_metode(self, arxiu):
         self.nom = arxiu
         if (self.tipus_processat == 0):
+            # Escissió
             if (self.tipus_metode == 0):
                 self.ordre, self.coef = self.read_coefSplt()
+            # Composició de mètodes de primer ordre
             elif (self.tipus_metode == 1):
                 self.ordre, self.coef = self.read_coefComp()
+            # Composició complexa de mètodes d'ordre 2n
+            elif (self.tipus_metode == 2):
+                self.ordre, self.coef = self.read_coefCoCo()
             else:
                 print(str(tipus_metode) + " no és cap tipus de mètode.")
                 exit(-2)
@@ -276,6 +281,28 @@ class Metode:
             coef[llis[n_parts - 1]].append(a[pu])        
         return [metode, coef]    
 
+    def __read_coefCoCo_previ(self):
+        nom_fit = self.nom
+        fit = open("./coef/" + nom_fit + ".cnf", "r")
+        lis = fit.readlines()
+        fit.close()
+        coef = []
+        nom = []
+        for i, item in enumerate(lis):
+            aux = []
+            linia = item.replace("\n", "")
+            linia = linia[2::]
+            tros = linia.split(" ")
+            print(tros)
+            for j, jtem in enumerate(tros):
+                if (is_numeric(jtem)):
+                    aux.append(float(jtem))
+                elif (j == 0):
+                    nom.append(jtem[0])
+            if (len(aux) > 0):
+                coef.append(aux)
+        return nom, coef
+    
     def __read_coefComp_previ(self):
         nom_fit = self.nom
         fit = open("./coef/" + nom_fit + ".cnf", "r")
@@ -295,13 +322,21 @@ class Metode:
             if (len(aux) > 0):
                 coef.append(aux)
         return nom, coef
-
+    
     def read_coefComp(self):
         nom_fit, n_parts = self.nom, self.num_parts
         vec_coef = self.__read_coefComp_previ()[1]
         metode, coef = self.comp2split(vec_coef[0], False)
         return [metode, coef]
 
+    def read_coefCoCo(self):
+        nom_fit, n_parts = self.nom, self.num_parts
+        vec_coef = self.__read_coefCoCo_previ()[1]
+        print(vec_coef)
+        exit(-1)
+        metode, coef = self.comp2split(vec_coef[0], False)
+        return [metode, coef]
+    
     def read_coefSplt(self):
         nom_fit, n_parts = self.nom, self.num_parts
         linies = []
