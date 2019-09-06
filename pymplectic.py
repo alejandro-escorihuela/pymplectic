@@ -112,7 +112,12 @@ class Solucionador:
                 flux = self.metode.ordre[i][0]
                 index = self.metode.ordre[i][1]
                 dt = self.metode.coef[flux][index] * h
-                self.mapa(flux, self.z, dt, self.parametres)
+                if (self.metode.tipus_metode == 2):
+                    z_comp = self.z.astype(complex)
+                    self.mapa(flux, z_comp, dt, self.parametres)
+                    self.z = z_comp.real
+                else:
+                    self.mapa(flux, self.z, dt, self.parametres)
             temps += tm.time() - t0
             Neval += m        
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
@@ -291,14 +296,12 @@ class Metode:
         for i, item in enumerate(lis):
             aux = []
             linia = item.replace("\n", "")
+            nom.append(linia[0])
             linia = linia[2::]
-            tros = linia.split(" ")
-            print(tros)
+            tros = linia.split(") (")
             for j, jtem in enumerate(tros):
-                if (is_numeric(jtem)):
-                    aux.append(float(jtem))
-                elif (j == 0):
-                    nom.append(jtem[0])
+                item = jtem.replace("(", "").replace(")", "").replace(" ", "")
+                aux.append(complex(item))
             if (len(aux) > 0):
                 coef.append(aux)
         return nom, coef
@@ -332,8 +335,6 @@ class Metode:
     def read_coefCoCo(self):
         nom_fit, n_parts = self.nom, self.num_parts
         vec_coef = self.__read_coefCoCo_previ()[1]
-        print(vec_coef)
-        exit(-1)
         metode, coef = self.comp2split(vec_coef[0], False)
         return [metode, coef]
     
