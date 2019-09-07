@@ -76,8 +76,13 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
 
-    met.append("cc")
-    tip.append(2)
+    # met.append("rh4")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append(h_elem)
+
+    met.append("rrr")
+    tip.append(4)
     pro.append(0)
     h.append(h_elem)
     

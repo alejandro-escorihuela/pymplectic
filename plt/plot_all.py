@@ -12,8 +12,8 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    met = ["sx_6_4", "xb_5_4", "xb_6_4", "pc_6_6_4"]
-    nom = [r"\mathcal{S}_{6}^{[4]}", r"\mathcal{XB}_{5}^{[4]}", r"\mathcal{XB}_{6}^{[4]}", r"\mathcal{PC}_{6,6}^{[4]}"]
+    met = ["rh4", "sx_6_4", "xb_5_4", "xb_6_4", "pc_6_6_4"]
+    nom = [r"\mathcal{R}^{[4]}", r"\mathcal{S}_{6}^{[4]}", r"\mathcal{XB}_{5}^{[4]}", r"\mathcal{XB}_{6}^{[4]}", r"\mathcal{PC}_{6,6}^{[4]}"]
     Neval_ddnls = []
     H_ddnls = []    
     Neval_fABC = []

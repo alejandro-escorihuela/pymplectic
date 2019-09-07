@@ -92,6 +92,8 @@ def grad(z, params, i, j):
     p = np.reshape(z[18:36], (-1, 3))
     resta = np.zeros(3) 
     gV = 0.0
+    if (type(q[0][0]).__name__ == "complex128"):
+        resta = resta.astype(complex)
     for k in range(0, npl):
         if i != k:
             for m in range(0, 3):
