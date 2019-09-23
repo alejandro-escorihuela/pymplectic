@@ -69,7 +69,7 @@ class Solucionador:
 
     def set_print_cons(self, valor):
         self.printC = valor
-
+        
     def solucionar(self, h, T):
         self.z = np.array(np.zeros(self.num_coord))
         ruta_comu = "./dat/" + self.metode.nom + "/" + self.nom_problema
@@ -97,6 +97,7 @@ class Solucionador:
         for i in range(0, num_cons):
             Csub0[i] = self.conserves[i](self.z, self.parametres)
             Cvalr[i] = Csub0[i]
+        # pre-processat
         if (self.metode.tipus_processat > 0):
             t0 = tm.time()
             for i in range(0, r):
@@ -105,25 +106,43 @@ class Solucionador:
                 dt = self.metode.coef_pre[flux][index] * h
                 self.mapa(flux, self.z, dt, self.parametres)
                 temps += tm.time() - t0
-            #Neval += r
+            Neval += r
         for it in range(0, Nit):
-            t0 = tm.time()
-            if (self.metode.tipus_metode >= 3):
+            # nucli
+            if not self.metode.compost:
+                t0 = tm.time()
+                if (self.metode.tipus_metode == 3):
+                    z_evol = self.z.astype(complex)
+                else:
+                    z_evol = self.z
+                for i in range(0, m):
+                    flux = self.metode.ordre[i][0]
+                    index = self.metode.ordre[i][1]
+                    dt = self.metode.coef[flux][index] * h
+                    self.mapa(flux, z_evol, dt, self.parametres)
+                if (self.metode.tipus_metode == 3):
+                    self.z = z_evol.real
+                else:
+                    self.z = z_evol
+                temps += tm.time() - t0
+                if (self.metode.tipus_metode == 3):
+                    Neval += 2*m
+                else:
+                    Neval += m
+            else:
+                t0 = tm.time()
                 z_evol = self.z.astype(complex)
-            else:
-                z_evol = self.z
-            for i in range(0, m):
-                print(i,m)
-                flux = self.metode.ordre[i][0]
-                index = self.metode.ordre[i][1]
-                dt = self.metode.coef[flux][index] * h
-                self.mapa(flux, z_evol, dt, self.parametres)
-            if (self.metode.tipus_metode >= 3):
+                for i in range(0, m):
+                    mm = len(self.metode.ordre[i])
+                    for j in range(0, mm):
+                        flux = self.metode.ordre[i][j][0]
+                        index = self.metode.ordre[i][j][1]
+                        dt = self.metode.coef[i][flux][index] * h
+                        self.mapa(flux, z_evol, dt, self.parametres)
+                    Neval += 2*mm
                 self.z = z_evol.real
-            else:
-                self.z = z_evol
-            temps += tm.time() - t0
-            Neval += m        
+                temps += tm.time() - t0
+                
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
                 z_copia = self.z.copy()
                 t0 = tm.time()
@@ -134,7 +153,7 @@ class Solucionador:
                     dt = self.metode.coef_pos[flux][index] * h
                     self.mapa(flux, self.z, dt, self.parametres)
                 temps += tm.time() - t0
-                #Neval += r
+                Neval += r
                 # càlcul de les quantitats conservades
                 for i in range(0, num_cons):
                     Cvalr[i] = self.conserves[i](self.z, self.parametres)
@@ -200,6 +219,7 @@ class Metode:
         self.nom = "met"
         self.tipus_metode = tm
         self.tipus_processat = tp
+        self.compost = False
         self.num_parts = np
         self.ordre = []
         self.coef = []
@@ -223,9 +243,10 @@ class Metode:
             # Composició complexa de mètodes d'ordre 2 (mètodes R)
             elif (self.tipus_metode == 3):
                 self.ordre, self.coef = self.read_coefCoCo()
-            # Composició complexa de 3 mètodes R
+            # Mètodes R
             elif (self.tipus_metode == 4):
-                self.ordre, self.coef = self.read_coefRRR()
+                self.compost = True
+                self.ordre, self.coef = self.read_coefR()
             else:
                 print(str(tipus_metode) + " no és cap tipus de mètode.")
                 exit(-2)
@@ -361,26 +382,44 @@ class Metode:
             vec_comp.append(vec_coef[0][i] * 0.5)
         metode, coef = self.comp2split(vec_comp, False)
         return [metode, coef]
+
+    def read_coefR(self):
+        nom_fit, n_parts = self.nom, self.num_parts
+        vec_coef = self.__read_coefCoCo_previ()[1]
+        n = len(vec_coef)
+        coef = [vec_coef[0]]
+        for i in range(1, n):
+            coef = self.__operadorR(coef, vec_coef[i][0])
+        tam = len(coef)
+        metode = []
+        coefic = []
+        for i in range(0, tam):
+            metode.append([])
+            coefic.append([])
+        for i in range(0, tam):
+            metode[i], coefic[i] = self.comp2split(coef, False)
+        return [metode, coef]
     
     def read_coefRRR(self):
         nom_fit, n_parts = self.nom, self.num_parts
         vec_coef = self.__read_coefCoCo_previ()[1]
         vec_comp = []
+        metode = [[], [], []]
+        coef = [[], [], []]
         aa = vec_coef[0][0]
         bb = vec_coef[0][1]
-        vec_comp.append(aa * 0.5)
-        vec_comp.append(aa * 0.5)
-        vec_comp.append(np.conj(aa) * 0.5)
-        vec_comp.append(np.conj(aa) * 0.5)
-        vec_comp.append(bb * 0.5)
-        vec_comp.append(bb * 0.5)
-        vec_comp.append(np.conj(bb) * 0.5)
-        vec_comp.append(np.conj(bb) * 0.5)
-        vec_comp.append(aa * 0.5)
-        vec_comp.append(aa * 0.5)
-        vec_comp.append(np.conj(aa) * 0.5)
-        vec_comp.append(np.conj(aa) * 0.5)
-        metode, coef = self.comp2split(vec_comp, False)
+        num = [aa, bb, aa]
+        alp = (0.5 + 0.28867513459481287j)
+        
+        for i in range(0, 3):
+            vec_comp = []
+            vec_comp.append(num[i] * 0.5 * alp)
+            vec_comp.append(num[i] * 0.5 * alp)
+            vec_comp.append(np.conj(num[i]) * 0.5 * np.conj(alp))
+            vec_comp.append(np.conj(num[i]) * 0.5 * np.conj(alp))
+            metode[i], coef[i] = self.comp2split(vec_comp, False)
+            print(metode[i], coef[i])
+        exit(-1)
         return [metode, coef]
     
     def read_coefSplt(self):
@@ -446,7 +485,25 @@ class Metode:
             met_pos, cof_pos = self.comp2split(cofX_pre[::-1], False)
             met_pre, cof_pre = self.comp2split(cofX_pos[::-1], False)
         return [met_nuc, cof_nuc], [met_pre, cof_pre], [met_pos, cof_pos]
-           
+    
+    def __operadorR(self, vec, gamma):
+        tam = len(vec)
+        nou_vec = []
+        for i in range(0, 2*tam):
+            nou_vec.append([])
+        for i in range(0, tam):
+            g = gamma
+            for j in range(0, len(vec[i])):
+                nou_vec[i].append(g*vec[i][j])
+                nou_vec[tam + i].append(g*vec[i][j])
+                g = np.conj(g)
+            g = np.conj(gamma)
+            for j in range(0, len(vec[i])):
+                nou_vec[i].append(g*vec[i][j])
+                nou_vec[tam + i].append(g*vec[i][j])
+                g = np.conj(g)
+        return nou_vec
+        
 def is_numeric(val):
     if (val.strip() == ""):
         return False
