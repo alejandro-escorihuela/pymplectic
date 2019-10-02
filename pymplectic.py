@@ -107,41 +107,43 @@ class Solucionador:
                 self.mapa(flux, self.z, dt, self.parametres)
                 temps += tm.time() - t0
             Neval += r
+
         for it in range(0, Nit):
             # nucli
             if not self.metode.compost:
                 t0 = tm.time()
-                if (self.metode.tipus_metode == 3):
-                    z_evol = self.z.astype(complex)
-                else:
-                    z_evol = self.z
                 for i in range(0, m):
                     flux = self.metode.ordre[i][0]
                     index = self.metode.ordre[i][1]
                     dt = self.metode.coef[flux][index] * h
-                    self.mapa(flux, z_evol, dt, self.parametres)
-                if (self.metode.tipus_metode == 3):
-                    self.z = z_evol.real
-                else:
-                    self.z = z_evol
+                    self.mapa(flux, self.z, dt, self.parametres)
                 temps += tm.time() - t0
-                if (self.metode.tipus_metode == 3):
-                    Neval += 2*m
-                else:
-                    Neval += m
+                Neval += m
             else:
+                z_ant = self.z.astype(complex)
+                z_nou = np.array(np.zeros(len(z_ant))).astype(complex)
+                zetes = []
+                for i in range(0, m):
+                    zetes.append(z_ant)
                 t0 = tm.time()
-                z_evol = self.z.astype(complex)
                 for i in range(0, m):
                     mm = len(self.metode.ordre[i])
                     for j in range(0, mm):
                         flux = self.metode.ordre[i][j][0]
                         index = self.metode.ordre[i][j][1]
                         dt = self.metode.coef[i][flux][index] * h
-                        self.mapa(flux, z_evol, dt, self.parametres)
-                    Neval += 2*mm
-                self.z = z_evol.real
+                        zeta = zetes[i].copy()
+                        self.mapa(flux, zeta, dt, self.parametres)
+                        zetes[i] = zeta.copy()
                 temps += tm.time() - t0
+                fac = 1/m
+                for i in range(0, len(z_nou)):
+                    for j in range(0, m):
+                        z_nou[i] += zetes[j][i]
+                for i in range(0, len(z_nou)):
+                    z_nou[i] *= fac
+                self.z = z_nou.real
+                Neval += 2*mm
                 
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
                 z_copia = self.z.copy()
@@ -240,11 +242,8 @@ class Metode:
             # Composició de mètodes de segon ordre
             elif (self.tipus_metode == 2):
                 self.ordre, self.coef = self.read_coefComp2()
-            # Composició complexa de mètodes d'ordre 2 (mètodes R)
-            elif (self.tipus_metode == 3):
-                self.ordre, self.coef = self.read_coefCoCo()
             # Mètodes R
-            elif (self.tipus_metode == 4):
+            elif (self.tipus_metode == 3):
                 self.compost = True
                 self.ordre, self.coef = self.read_coefR()
             else:
@@ -372,16 +371,6 @@ class Metode:
             vec_comp.append(vec_coef[0][i] * 0.5)
         metode, coef = self.comp2split(vec_comp, False)
         return [metode, coef]        
-    
-    def read_coefCoCo(self):
-        nom_fit, n_parts = self.nom, self.num_parts
-        vec_coef = self.__read_coefCoCo_previ()[1]
-        vec_comp = []
-        for i in range(0, len(vec_coef[0])):
-            vec_comp.append(vec_coef[0][i] * 0.5)
-            vec_comp.append(vec_coef[0][i] * 0.5)
-        metode, coef = self.comp2split(vec_comp, False)
-        return [metode, coef]
 
     def read_coefR(self):
         nom_fit, n_parts = self.nom, self.num_parts
@@ -397,30 +386,8 @@ class Metode:
             metode.append([])
             coefic.append([])
         for i in range(0, tam):
-            metode[i], coefic[i] = self.comp2split(coef, False)
-        return [metode, coef]
-    
-    def read_coefRRR(self):
-        nom_fit, n_parts = self.nom, self.num_parts
-        vec_coef = self.__read_coefCoCo_previ()[1]
-        vec_comp = []
-        metode = [[], [], []]
-        coef = [[], [], []]
-        aa = vec_coef[0][0]
-        bb = vec_coef[0][1]
-        num = [aa, bb, aa]
-        alp = (0.5 + 0.28867513459481287j)
-        
-        for i in range(0, 3):
-            vec_comp = []
-            vec_comp.append(num[i] * 0.5 * alp)
-            vec_comp.append(num[i] * 0.5 * alp)
-            vec_comp.append(np.conj(num[i]) * 0.5 * np.conj(alp))
-            vec_comp.append(np.conj(num[i]) * 0.5 * np.conj(alp))
-            metode[i], coef[i] = self.comp2split(vec_comp, False)
-            print(metode[i], coef[i])
-        exit(-1)
-        return [metode, coef]
+            metode[i], coefic[i] = self.comp2split(coef[i], False)
+        return [metode, coefic]
     
     def read_coefSplt(self):
         nom_fit, n_parts = self.nom, self.num_parts
@@ -495,13 +462,13 @@ class Metode:
             g = gamma
             for j in range(0, len(vec[i])):
                 nou_vec[i].append(g*vec[i][j])
-                nou_vec[tam + i].append(g*vec[i][j])
-                g = np.conj(g)
+                nou_vec[tam + i].append(np.conj(g)*vec[i][j])
+                #g = np.conj(g)
             g = np.conj(gamma)
             for j in range(0, len(vec[i])):
                 nou_vec[i].append(g*vec[i][j])
-                nou_vec[tam + i].append(g*vec[i][j])
-                g = np.conj(g)
+                nou_vec[tam + i].append(np.conj(g)*vec[i][j])
+                #g = np.conj(g)
         return nou_vec
         
 def is_numeric(val):
