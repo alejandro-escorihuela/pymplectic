@@ -394,6 +394,8 @@ class Metode:
             coefic.append([])
         for i in range(0, tam):
             metode[i], coefic[i] = self.comp2split(coef[i], False)
+        print([metode, coefic])
+        exit(-1)
         return [metode, coefic]
     
     def read_coefSplt(self):
