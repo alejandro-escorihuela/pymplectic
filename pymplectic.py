@@ -105,12 +105,13 @@ class Solucionador:
                 index = self.metode.ordre_pre[i][1]
                 dt = self.metode.coef_pre[flux][index] * h
                 self.mapa(flux, self.z, dt, self.parametres)
-                temps += tm.time() - t0
-            Neval += r
+            # temps += tm.time() - t0
+            # Neval += r
 
         for it in range(0, Nit):
             # nucli
             if not self.metode.compost:
+                # m <- nombre de fluxes
                 t0 = tm.time()
                 for i in range(0, m):
                     flux = self.metode.ordre[i][0]
@@ -120,14 +121,17 @@ class Solucionador:
                 temps += tm.time() - t0
                 Neval += m
             else:
+                # m  <- nombre de 'fils'
+                # mm <- nombre de fluxes
                 z_ant = self.z.astype(complex)
                 z_nou = np.array(np.zeros(len(z_ant))).astype(complex)
                 zetes = []
                 for i in range(0, m):
                     zetes.append(z_ant)
-                t0 = tm.time()
+                t_max = 0.0
                 for i in range(0, m):
                     mm = len(self.metode.ordre[i])
+                    t0 = tm.time()
                     for j in range(0, mm):
                         flux = self.metode.ordre[i][j][0]
                         index = self.metode.ordre[i][j][1]
@@ -135,7 +139,10 @@ class Solucionador:
                         zeta = zetes[i].copy()
                         self.mapa(flux, zeta, dt, self.parametres)
                         zetes[i] = zeta.copy()
-                temps += tm.time() - t0
+                    t1 = tm.time() - t0
+                    if t1 > t_max:
+                        t_max = t1
+                temps += t_max
                 fac = 1/m
                 for i in range(0, len(z_nou)):
                     for j in range(0, m):
@@ -154,8 +161,8 @@ class Solucionador:
                     index = self.metode.ordre_pos[i][1]
                     dt = self.metode.coef_pos[flux][index] * h
                     self.mapa(flux, self.z, dt, self.parametres)
-                temps += tm.time() - t0
-                Neval += r
+                # temps += tm.time() - t0
+                # Neval += r
                 # càlcul de les quantitats conservades
                 for i in range(0, num_cons):
                     Cvalr[i] = self.conserves[i](self.z, self.parametres)
