@@ -12,8 +12,8 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    met = ["ss_4_3", "r1_s2", "sx_6_4"]
-    nom = [r"\mathcal{SS}^{[4]}_3", r"\hat{\mathcal{R}}^1(\mathcal{S}^{[2]})", r"\mathcal{SS}^{[4]}_3)"]
+    met = ["s_3_4", "r1_ss4", "r2_ss4", "r3_ss4"]
+    nom = [r"\mathcal{SS}^{[4]}_3", r"\hat{\mathcal{R}}^1(\mathcal{SS}^{[4]}_3)", r"\hat{\mathcal{R}}^2(\mathcal{SS}^{[4]}_3)", r"\hat{\mathcal{R}}^3(\mathcal{SS}^{[4]}_3)"]
     Neval_ddnls = []
     H_ddnls = []    
     Neval_fABC = []
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     plt.rc('font', family = 'serif')
     plt.rc('figure', figsize = (11.69, 8.27))
     #plt.rc('figure', figsize = (8.27, 11.69))
-    plt.suptitle(r"Efici\`encia de m\`etodes d'ordre 4. $\displaystyle\log_{10}($Error$)$ vs $\displaystyle\log_{10}\left(N_{\rm{eval}}\right)$", fontsize = 16)
+    plt.suptitle(r"Efici\`encia de m\`etodes $\hat{\mathcal{R}}^n(\mathcal{SS}^{[4]}_3)$. $\displaystyle\log_{10}($Error$)$ vs $\displaystyle\log_{10}\left(N_{\rm{eval}}\right)$", fontsize = 16)
 
     plt.subplot(2, 3, 1)
     for i in range(0, len(met)):

@@ -384,9 +384,14 @@ class Metode:
         vec_coef = self.__read_coefCoCo_previ()[1]
         n = len(vec_coef)
         coef = [vec_coef[0]]
-        for i in range(1, n):
-            coef = self.__operadorR(coef, vec_coef[i][0])
+        coef = self.__operadorR1(coef, vec_coef[1][0])
+        # print(coef)
+        for i in range(2, n):
+            coef = self.__operadorRn(coef, vec_coef[i][0])
+            # print(coef)
         tam = len(coef)
+        # print(tam)
+        # exit(-1)
         metode = []
         coefic = []
         for i in range(0, tam):
@@ -394,8 +399,6 @@ class Metode:
             coefic.append([])
         for i in range(0, tam):
             metode[i], coefic[i] = self.comp2split(coef[i], False)
-        print([metode, coefic])
-        exit(-1)
         return [metode, coefic]
     
     def read_coefSplt(self):
@@ -462,7 +465,7 @@ class Metode:
             met_pre, cof_pre = self.comp2split(cofX_pos[::-1], False)
         return [met_nuc, cof_nuc], [met_pre, cof_pre], [met_pos, cof_pos]
     
-    def __operadorR(self, vec, gamma):
+    def __operadorR1(self, vec, gamma):
         tam = len(vec)
         nou_vec = []
         for i in range(0, 2*tam):
@@ -472,14 +475,32 @@ class Metode:
             for j in range(0, len(vec[i])):
                 nou_vec[i].append(g*vec[i][j])
                 nou_vec[tam + i].append(np.conj(g)*vec[i][j])
-                #g = np.conj(g)
             g = np.conj(gamma)
             for j in range(0, len(vec[i])):
                 nou_vec[i].append(g*vec[i][j])
                 nou_vec[tam + i].append(np.conj(g)*vec[i][j])
-                #g = np.conj(g)
         return nou_vec
-        
+    
+    def __operadorRn(self, essa, gamma):
+        g0 = gamma
+        g1 = np.conj(g0)
+        phi11 = []
+        phi12 = []
+        for i in range(0, len(essa)):
+            phi11.append([])
+            phi12.append([])
+        for i in range(0, len(essa)):
+            for j in range(0, len(essa[i])):
+                phi11[i].append(g0*essa[i][j])
+                phi12[i].append(g1*essa[i][j])
+        phi1 = []
+        phi2 = []
+        for i in range(0, len(phi11)):
+            for j in range(0, len(phi12)):
+                phi1.append(phi11[i] + phi12[j])
+                phi2.append(phi12[i] + phi11[j])
+        return phi1 + phi2
+    
 def is_numeric(val):
     if (val.strip() == ""):
         return False

@@ -58,21 +58,31 @@ if __name__ == "__main__":
     h = []
 
     # Mètodes R
-
+    
     met.append("s_3_4")
     tip.append(1)
     pro.append(0)
-    h.append(h_elem)
-    
-    met.append("r1_s2")
+    h.append([100.0, 50.0, 10.0, 1.0])
+
+    met.append("r1_ss4")
     tip.append(3)
     pro.append(0)
-    h.append(h_elem)
-
-    met.append("sx_6_4")
-    tip.append(1)
+    h.append([200.0, 100.0, 50.0, 10.0])
+    
+    met.append("r2_ss4")
+    tip.append(3)
     pro.append(0)
-    h.append(h_elem)
+    h.append([500.0, 200.0, 100.0])
+
+    met.append("r3_ss4")
+    tip.append(3)
+    pro.append(0)
+    h.append([1000.0, 500.0])
+    
+    # met.append("r4_ss4")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append([2.0, 1.0])
     
     # Escissió 3 parts
     
