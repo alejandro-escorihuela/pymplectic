@@ -150,7 +150,7 @@ class Solucionador:
                 for i in range(0, len(z_nou)):
                     z_nou[i] *= fac
                 self.z = z_nou.real
-                Neval += 2*mm
+                Neval += 7*mm
                 
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
                 z_copia = self.z.copy()
@@ -387,7 +387,7 @@ class Metode:
         coef = self.__operadorR1(coef, vec_coef[1][0])
         # print(coef)
         for i in range(2, n):
-            coef = self.__operadorRn(coef, vec_coef[i][0])
+            coef = self.__operadorR1(coef, vec_coef[i][0])
             # print(coef)
         tam = len(coef)
         # print(tam)
