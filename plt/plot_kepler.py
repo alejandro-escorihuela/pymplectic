@@ -18,7 +18,7 @@ if __name__ == "__main__":
     Neval = []
     H = []
     for i in range(0, len(met)):
-        ruta = "../dat/" + met[i] + "/solar_err.dat"
+        ruta = "../dat/" + met[i] + "/kepl_err.dat"
         fit = open(ruta, "r")
         linies = fit.readlines()
         t_item = []
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     plt.rc('font', family = 'serif')
     plt.rc('figure', figsize = (11.69, 8.27))
     #plt.rc('figure', figsize = (8.27, 11.69))
-    plt.suptitle(r"Sistema Solar exterior + Plut\'o", fontsize = 16)
+    plt.suptitle(r"Kepler", fontsize = 16)
 
     plt.subplot(2, 1, 1)
     for i in range(0, len(met)):

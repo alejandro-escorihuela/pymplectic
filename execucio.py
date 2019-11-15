@@ -62,27 +62,27 @@ if __name__ == "__main__":
     met.append("s_5_4")
     tip.append(1)
     pro.append(0)
-    h.append([100.0, 50.0, 10.0, 1.0])
-
+    h.append([0.05, 0.025, 0.01, 0.005, 0.001])
+    
     met.append("r1_ss_5_4")
     tip.append(3)
     pro.append(0)
-    h.append([500.0, 200.0, 100.0, 50.0, 10.0])
+    h.append([0.25, 0.1, 0.05, 0.04, 0.025, 0.01])
     
     met.append("r2_ss_5_4")
     tip.append(3)
     pro.append(0)
-    h.append([1000.0, 500.0, 200.0, 100.0, 50.0])
+    h.append([0.5, 0.25, 0.1, 0.05, 0.04, 0.025])
 
     met.append("r3_ss_5_4")
     tip.append(3)
     pro.append(0)
-    h.append([2000.0, 1000.0, 500.0, 200.0, 100.0, 50.0])
+    h.append([1.0, 0.5, 0.25, 0.1, 0.05])
     
     met.append("r4_ss_5_4")
     tip.append(3)
     pro.append(0)
-    h.append([2000.0, 1000.0, 500.0, 200.0])
+    h.append([1.0, 0.5])
     
     # Escissió 3 parts
     
