@@ -58,31 +58,50 @@ if __name__ == "__main__":
     h = []
 
     # Mètodes R
+    # met.append("sx_2")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append([0.1, 0.01])
     
-    met.append("s_5_4")
-    tip.append(1)
-    pro.append(0)
-    h.append([0.05, 0.025, 0.01, 0.005, 0.001])
-    
-    met.append("r1_ss_5_4")
+    met.append("r1_s2")
     tip.append(3)
     pro.append(0)
-    h.append([0.25, 0.1, 0.05, 0.04, 0.025, 0.01])
+    h.append([1.0, 0.1, 0.01])
     
-    met.append("r2_ss_5_4")
+    met.append("r2_s2")
     tip.append(3)
     pro.append(0)
-    h.append([0.5, 0.25, 0.1, 0.05, 0.04, 0.025])
+    h.append([1.0, 0.1, 0.01])
 
-    met.append("r3_ss_5_4")
+    met.append("r3_s2")
     tip.append(3)
     pro.append(0)
-    h.append([1.0, 0.5, 0.25, 0.1, 0.05])
+    h.append([1.0, 0.1, 0.01])
+     
+    # met.append("s_5_4")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append([0.1, 0.05, 0.025, 0.01, 0.005, 0.001])
     
-    met.append("r4_ss_5_4")
-    tip.append(3)
-    pro.append(0)
-    h.append([1.0, 0.5])
+    # met.append("r1_ss_5_4")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append([0.5, 0.25, 0.1, 0.05, 0.04, 0.025])
+    
+    # met.append("r2_ss_5_4")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append([1.0, 0.5, 0.25, 0.1])
+
+    # met.append("r3_ss_5_4")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append([5.0, 2.0, 1.0, 0.5])
+    
+    # met.append("r4_ss_5_4")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append([10.0, 5.0, 2.0, 1.0])
     
     # Escissió 3 parts
     
@@ -159,7 +178,7 @@ if __name__ == "__main__":
         metode.set_metode(met[i])
         prob.set_metode(metode)
         for j in range(0, len(h[i])):
-            r = prob.solucionar(h[i][j], t_final)
+            r = prob.solucionar(h[i][j], t_final, quad = True)
             esc = str(r).replace(",", "").replace("[", "").replace("]","")
             esc = str(h[i][j]) + " " + esc
             fit.write(esc + "\n")

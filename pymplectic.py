@@ -41,7 +41,7 @@ class Solucionador:
 
     def set_tam(self, tam):
         self.num_coord = tam
-        self.z = np.array(np.zeros(self.num_coord))
+        self.z = np.float128(np.array(np.zeros(self.num_coord)))
         
     def set_mapa(self, func):
         self.mapa = func
@@ -70,8 +70,13 @@ class Solucionador:
     def set_print_cons(self, valor):
         self.printC = valor
         
-    def solucionar(self, h, T):
-        self.z = np.array(np.zeros(self.num_coord))
+    def solucionar(self, h, T, quad = False):
+        t_real_ = float
+        t_comp_ = complex
+        if quad:
+            t_real_ = np.float128
+            t_comp_ = np.complex256
+        self.z = np.array(np.zeros(self.num_coord), dtype = t_real_)
         ruta_comu = "./dat/" + self.metode.nom + "/" + self.nom_problema
         ruta_Z = ruta_comu + "_coor_" + str(int(round(T))) + "_" + str(h).replace(".", "") + ".dat"
         ruta_C = ruta_comu + "_cons_" + str(int(round(T))) + "_" + str(h).replace(".", "") + ".dat"
@@ -90,10 +95,10 @@ class Solucionador:
         Neval = 0
         self.ini(self.z, self.parametres)
         num_cons = len(self.conserves)
-        Csub0 = np.array(np.zeros(num_cons))
-        Cvalr = np.array(np.zeros(num_cons))
-        Cemax = np.array(np.zeros(num_cons))
-        Cdife = np.array(np.zeros(num_cons))
+        Csub0 = np.array(np.zeros(num_cons), dtype = t_real_)
+        Cvalr = np.array(np.zeros(num_cons), dtype = t_real_)
+        Cemax = np.array(np.zeros(num_cons), dtype = t_real_)
+        Cdife = np.array(np.zeros(num_cons), dtype = t_real_)         
         for i in range(0, num_cons):
             Csub0[i] = self.conserves[i](self.z, self.parametres)
             Cvalr[i] = Csub0[i]
@@ -123,8 +128,8 @@ class Solucionador:
             else:
                 # m  <- nombre de 'fils'
                 # mm <- nombre de fluxes
-                z_ant = self.z.astype(complex)
-                z_nou = np.array(np.zeros(len(z_ant))).astype(complex)
+                z_ant = self.z.astype(t_comp_)
+                z_nou = np.array(np.zeros(len(z_ant))).astype(t_comp_)
                 zetes = []
                 for i in range(0, m):
                     zetes.append(z_ant)
@@ -150,7 +155,7 @@ class Solucionador:
                 for i in range(0, len(z_nou)):
                     z_nou[i] *= fac
                 self.z = z_nou.real
-                Neval += 3*mm
+                Neval += 2*mm
                 
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
                 z_copia = self.z.copy()
@@ -356,7 +361,7 @@ class Metode:
             tros = linia.split(" ")
             for j, jtem in enumerate(tros):
                 if (is_numeric(jtem)):
-                    aux.append(float(jtem))
+                    aux.append(np.float128(jtem))
                 elif (j == 0):
                     nom.append(jtem[0])
             if (len(aux) > 0):
@@ -383,20 +388,23 @@ class Metode:
         nom_fit, n_parts = self.nom, self.num_parts
         vec_coef = self.__read_coefCoCo_previ()[1]
         n = len(vec_coef)
+        # print(n)
         coef = [vec_coef[0]]
         coef = self.__operadorR1(coef, vec_coef[1][0])
-        # print(coef)
-        for i in range(2, n):
-            coef = self.__operadorR1(coef, vec_coef[i][0])
-            # print(coef)
+        for i in range(2, n - 1):
+            coef = self.__operadorRn(coef, vec_coef[i][0])
+        if (n > 2):
+            coef = self.__operadorRnRe(coef, vec_coef[n - 1][0])
+        # for i in range(0, len(coef)):
+        #     print(i + 1, "->", coef[i], "\n")
         tam = len(coef)
-        # print(tam)
-        # exit(-1)
         metode = []
         coefic = []
         for i in range(0, tam):
             metode.append([])
             coefic.append([])
+        # print(coef)
+        # exit(-1)
         for i in range(0, tam):
             metode[i], coefic[i] = self.comp2split(coef[i], False)
         return [metode, coefic]
@@ -424,7 +432,7 @@ class Metode:
                 linia = linia[2:]
                 cadena = linia.split(" ")
                 for j in range(0, len(cadena)):
-                    coef[ind].append(float(cadena[j]))
+                    coef[ind].append(float128(cadena[j]))
         return [metode, coef]
 
     def read_coefComp_P(self):
@@ -500,6 +508,24 @@ class Metode:
                 phi1.append(phi11[i] + phi12[j])
                 phi2.append(phi12[i] + phi11[j])
         return phi1 + phi2
+
+    def __operadorRnRe(self, essa, gamma):
+        g0 = gamma
+        g1 = np.conj(g0)
+        phi11 = []
+        phi12 = []
+        for i in range(0, len(essa)):
+            phi11.append([])
+            phi12.append([])
+        for i in range(0, len(essa)):
+            for j in range(0, len(essa[i])):
+                phi11[i].append(g0*essa[i][j])
+                phi12[i].append(g1*essa[i][j])
+        phi1 = []
+        for i in range(0, len(phi11)):
+            for j in range(0, len(phi12)):
+                phi1.append(phi11[i] + phi12[j])
+        return phi1
     
 def is_numeric(val):
     if (val.strip() == ""):
