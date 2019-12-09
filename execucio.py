@@ -41,7 +41,7 @@ if __name__ == "__main__":
         h_elem = [100.0, 50.0]
     elif pr == 5:
         prob = prb.harm
-        t_final = 20
+        t_final = 5000
         h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]    
     elif pr == 6:
         prob = prb.kepl
@@ -58,25 +58,25 @@ if __name__ == "__main__":
     h = []
 
     # Mètodes R
-    # met.append("sx_2")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append([0.1, 0.01])
+    met.append("sx_2")
+    tip.append(1)
+    pro.append(0)
+    h.append([0.05])
     
     met.append("r1_s2")
     tip.append(3)
     pro.append(0)
-    h.append([1.0, 0.1, 0.01])
+    h.append([0.1])
     
     met.append("r2_s2")
     tip.append(3)
     pro.append(0)
-    h.append([1.0, 0.1, 0.01])
+    h.append([0.2])
 
-    met.append("r3_s2")
-    tip.append(3)
-    pro.append(0)
-    h.append([1.0, 0.1, 0.01])
+    # met.append("r3_s2")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append([1.0, 0.1])
      
     # met.append("s_5_4")
     # tip.append(1)
