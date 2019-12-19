@@ -155,7 +155,7 @@ class Solucionador:
                 for i in range(0, len(z_nou)):
                     z_nou[i] *= fac
                 self.z = z_nou.real
-                Neval += 3*mm
+                Neval += mm
                 
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
                 z_copia = self.z.copy()
@@ -230,7 +230,8 @@ class Solucionador:
     
 class Metode:
     def __init__(self, np = 2, tm = 0, tp = 0):
-        self.nom = "met"
+        self.nom = "metode"
+        self.fit = "fitxer"
         self.tipus_metode = tm
         self.tipus_processat = tp
         self.compost = False
@@ -244,6 +245,7 @@ class Metode:
 
     def set_metode(self, arxiu):
         self.nom = arxiu
+        self.fit = arxiu
         if (self.tipus_processat == 0):
             # Escissió
             if (self.tipus_metode == 0):
@@ -257,7 +259,16 @@ class Metode:
             # Mètodes R
             elif (self.tipus_metode == 3):
                 self.compost = True
-                self.ordre, self.coef = self.read_coefR()
+                self.ordre, self.coef = self.read_coefRT(False)
+            # Mètodes T
+            elif (self.tipus_metode == 4):
+                self.nom = 't' + self.nom[1:]
+                self.compost = True
+                self.ordre, self.coef = self.read_coefRT(True)
+            # Mètodes SC
+            elif (self.tipus_metode == 5):
+                self.compost = True
+                self.ordre, self.coef = self.read_coefSC()
             else:
                 print(str(tipus_metode) + " no és cap tipus de mètode.")
                 exit(-2)
@@ -269,7 +280,8 @@ class Metode:
         else:
             print("El tipus de mètode i/o processat no existeixen.")
             exit(-2)
-            
+        self.crearDir()
+        
     def comp2split(self, a, inreves = False):
         n_parts = self.num_parts
         m = len(a) // 2
@@ -329,8 +341,7 @@ class Metode:
         return [metode, coef]    
 
     def __read_coefCoCo_previ(self):
-        nom_fit = self.nom
-        fit = open("./coef/" + nom_fit + ".cnf", "r")
+        fit = open("./coef/" + self.fit + ".cnf", "r")
         lis = fit.readlines()
         fit.close()
         coef = []
@@ -349,8 +360,7 @@ class Metode:
         return nom, coef
     
     def __read_coefComp_previ(self):
-        nom_fit = self.nom
-        fit = open("./coef/" + nom_fit + ".cnf", "r")
+        fit = open("./coef/" + self.fit + ".cnf", "r")
         lis = fit.readlines()
         fit.close()
         coef = []
@@ -369,13 +379,11 @@ class Metode:
         return nom, coef
     
     def read_coefComp(self):
-        nom_fit, n_parts = self.nom, self.num_parts
         vec_coef = self.__read_coefComp_previ()[1]
         metode, coef = self.comp2split(vec_coef[0], False)
         return [metode, coef]
 
     def read_coefComp2(self):
-        nom_fit, n_parts = self.nom, self.num_parts
         vec_coef = self.__read_coefComp_previ()[1]
         vec_comp = []
         for i in range(0, len(vec_coef[0])):
@@ -384,33 +392,53 @@ class Metode:
         metode, coef = self.comp2split(vec_comp, False)
         return [metode, coef]        
 
-    def read_coefR(self):
-        nom_fit, n_parts = self.nom, self.num_parts
+    def read_coefSC(self):
         vec_coef = self.__read_coefCoCo_previ()[1]
         n = len(vec_coef)
-        # print(n)
-        coef = [vec_coef[0]]
-        coef = self.__operadorR1(coef, vec_coef[1][0])
-        for i in range(2, n - 1):
-            coef = self.__operadorRn(coef, vec_coef[i][0])
-        if (n > 2):
-            coef = self.__operadorRnRe(coef, vec_coef[n - 1][0])
-        # for i in range(0, len(coef)):
-        #     print(i + 1, "->", coef[i], "\n")
+        coef = []
+        for i in range(0, n):
+            aux = []
+            for j in range(0, len(vec_coef[i])):
+                aux.append(vec_coef[i][j] * 0.5)
+                aux.append(vec_coef[i][j] * 0.5)
+            coef.append(aux)
         tam = len(coef)
         metode = []
         coefic = []
         for i in range(0, tam):
             metode.append([])
             coefic.append([])
-        # print(coef)
-        # exit(-1)
+        for i in range(0, tam):
+            metode[i], coefic[i] = self.comp2split(coef[i], False)
+        return [metode, coefic]
+    
+    def read_coefRT(self, itT):
+        vec_coef = self.__read_coefCoCo_previ()[1]
+        n = len(vec_coef)
+        coef = [vec_coef[0]]
+        func0 = self.__operadorR1
+        func1 = self.__operadorRn
+        func2 = self.__operadorRnRe
+        if (itT):
+            func1 = self.__operadorR1
+            func2 = self.__operadorR1
+        coef = func0(coef, vec_coef[1][0])
+        for i in range(2, n - 1):
+            coef = func1(coef, vec_coef[i][0])
+        if (n > 2):
+            coef = func2(coef, vec_coef[n - 1][0])
+        tam = len(coef)
+        metode = []
+        coefic = []
+        for i in range(0, tam):
+            metode.append([])
+            coefic.append([])
         for i in range(0, tam):
             metode[i], coefic[i] = self.comp2split(coef[i], False)
         return [metode, coefic]
     
     def read_coefSplt(self):
-        nom_fit, n_parts = self.nom, self.num_parts
+        nom_fit, n_parts = self.fit, self.num_parts
         linies = []
         with open("./coef/" + nom_fit + ".cnf") as fit:
             linies = fit.readlines()
@@ -432,11 +460,11 @@ class Metode:
                 linia = linia[2:]
                 cadena = linia.split(" ")
                 for j in range(0, len(cadena)):
-                    coef[ind].append(float128(cadena[j]))
+                    coef[ind].append(np.float128(cadena[j]))
         return [metode, coef]
 
     def read_coefComp_P(self):
-        nom_fit, n_parts, tipus = self.nom, self.num_parts, self.tipus_processat
+        tipus = self.tipus_processat
         noms, coefs = self.__read_coefComp_previ()
         tam = len(noms)
         i_n = 0
@@ -526,6 +554,13 @@ class Metode:
             for j in range(0, len(phi12)):
                 phi1.append(phi11[i] + phi12[j])
         return phi1
+
+    def crearDir(self):
+        if not os.path.exists("dat"):
+            os.mkdir("dat")
+        direc = "dat/" + self.nom
+        if not os.path.exists(direc):
+            os.mkdir(direc)
     
 def is_numeric(val):
     if (val.strip() == ""):

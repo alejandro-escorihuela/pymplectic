@@ -41,7 +41,7 @@ if __name__ == "__main__":
         h_elem = [100.0, 50.0]
     elif pr == 5:
         prob = prb.harm
-        t_final = 5000
+        t_final = 20
         h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]    
     elif pr == 6:
         prob = prb.kepl
@@ -57,46 +57,59 @@ if __name__ == "__main__":
     pro = []
     h = []
 
-    # Mètodes R
+    # Mètodes SC
+ 
+    
+    # Mètodes R, T i SC
     met.append("sx_2")
     tip.append(1)
     pro.append(0)
-    h.append([0.05])
+    h.append(h_elem)
     
     met.append("r1_s2")
     tip.append(3)
     pro.append(0)
-    h.append([0.1])
+    h.append(h_elem)
+    
+    met.append("sc_3_4")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem)
     
     met.append("r2_s2")
-    tip.append(3)
+    tip.append(4)
     pro.append(0)
-    h.append([0.2])
-
+    h.append(h_elem)
+    
+    met.append("sc_5_4")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem)
+    
     # met.append("r3_s2")
     # tip.append(3)
     # pro.append(0)
-    # h.append([1.0, 0.1])
+    # h.append(h_elem)
      
-    # met.append("s_5_4")
+    # met.append("s_3_4")
     # tip.append(1)
     # pro.append(0)
-    # h.append([0.1, 0.05, 0.025, 0.01, 0.005, 0.001])
+    # h.append([0.05])
     
-    # met.append("r1_ss_5_4")
+    # met.append("r1_ss4")
     # tip.append(3)
     # pro.append(0)
-    # h.append([0.5, 0.25, 0.1, 0.05, 0.04, 0.025])
+    # h.append([0.1])
     
-    # met.append("r2_ss_5_4")
+    # met.append("r2_ss4")
     # tip.append(3)
     # pro.append(0)
-    # h.append([1.0, 0.5, 0.25, 0.1])
+    # h.append([0.2])
 
-    # met.append("r3_ss_5_4")
+    # met.append("r3_ss4")
     # tip.append(3)
     # pro.append(0)
-    # h.append([5.0, 2.0, 1.0, 0.5])
+    # h.append([0.4])
     
     # met.append("r4_ss_5_4")
     # tip.append(3)
@@ -169,14 +182,13 @@ if __name__ == "__main__":
     # pro.append(2)
     # h.append(h_elem)
     
-    crearDir(met)
     for i in range(0, len(met)):
-        print(met[i])
-        direc = "dat/" + met[i]
-        fit = open(direc + "/" + prob.get_nom() + "_err.dat", "w")
         metode = Metode(prob.get_parts(), tip[i], pro[i])
         metode.set_metode(met[i])
         prob.set_metode(metode)
+        print(metode.nom)
+        direc = "dat/" + metode.nom
+        fit = open(direc + "/" + prob.get_nom() + "_err.dat", "w")
         for j in range(0, len(h[i])):
             r = prob.solucionar(h[i][j], t_final, quad = True)
             esc = str(r).replace(",", "").replace("[", "").replace("]","")
