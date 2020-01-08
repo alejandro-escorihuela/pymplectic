@@ -12,8 +12,8 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    met = ["s_5_4", "r1_ss_5_4", "r2_ss_5_4", "r3_ss_5_4", "r4_ss_5_4"]
-    nom = [r"\mathcal{SS}^{[4]}_5", r"\hat{\mathcal{R}}^1(\mathcal{SS}^{[4]}_5)", r"\hat{\mathcal{R}}^2(\mathcal{SS}^{[4]}_5)", r"\hat{\mathcal{R}}^3(\mathcal{SS}^{[4]}_5)",  r"\hat{\mathcal{R}}^4(\mathcal{SS}^{[4]}_5)"]
+    met = ["r2_s2", "sc_5_6", "sc_7_6", "ssc_7_6"]
+    nom = ["\hat{T}^{2}(S^{[2]})", "s=5", "S_7^{[6]}*", "S_7^{[6]}"]
     t = []
     Neval = []
     H = []
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     plt.rc('font', family = 'serif')
     plt.rc('figure', figsize = (11.69, 8.27))
     #plt.rc('figure', figsize = (8.27, 11.69))
-    plt.suptitle(r"Oscil\textperiodcentered lador harm\`onic", fontsize = 16)
+    plt.suptitle(r"Sim\`etric-conjugat $R_h^{[6]}$. Oscil\textperiodcentered lador harm\`onic", fontsize = 16)
 
     plt.subplot(2, 1, 1)
     for i in range(0, len(met)):

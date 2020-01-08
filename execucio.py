@@ -42,7 +42,7 @@ if __name__ == "__main__":
     elif pr == 5:
         prob = prb.harm
         t_final = 20
-        h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]    
+        h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01]    
     elif pr == 6:
         prob = prb.kepl
         t_final = 20
