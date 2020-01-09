@@ -12,9 +12,9 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica'], 'size' : 18})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    met = ["sx_2", "r1_s2", "r2_s2"]
-    nom = [r"\mathcal{S}^{[2]}", r"\hat{\mathcal{R}}^1(\mathcal{S}^{[2]})", r"\hat{\mathcal{R}}^2(\mathcal{S}^{[2]})"]
-    hacs = ["0.1", "0.2", "0.4"] 
+    met = ["r2_s2", "sc_5_6", "sc_7_6", "ssc_7_6"]
+    nom = ["\hat{T}^{2}(S^{[2]})", "s=5", "S_7^{[6]}*", "S_7^{[6]}"]    
+    hacs = ["0.05", "0.05", "0.05", "0.05", "0.05"] 
     
     # met = ["s_3_4", "r1_ss4", "r2_ss4", "r3_ss4"]
     # nom = [r"\mathcal{SS}^{[4]}_3", r"\hat{\mathcal{T}}^1(\mathcal{SS}^{[4]}_3)", r"\hat{\mathcal{T}}^2(\mathcal{SS}^{[4]}_3)", r"\hat{\mathcal{T}}^3(\mathcal{SS}^{[4]}_3)"]
@@ -49,6 +49,6 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid(True)
    
-    nom_arxiu = "metC_Rharmonic_error_s2.pdf"
+    nom_arxiu = ".pdf"
     plt.savefig(nom_arxiu, format='pdf')
     plt.show()
