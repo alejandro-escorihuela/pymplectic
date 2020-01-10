@@ -12,14 +12,15 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica'], 'size' : 18})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    met = ["r2_s2", "sc_5_6", "sc_7_6", "ssc_7_6"]
-    nom = ["\hat{T}^{2}(S^{[2]})", "s=5", "S_7^{[6]}*", "S_7^{[6]}"]    
-    hacs = ["0.05", "0.05", "0.05", "0.05", "0.05"] 
+    # met = ["r1_s2", "sc_3_4", "ssc_3_4"]
+    # nom = ["s=2", "s=3", "Yoshida"]
     
-    # met = ["s_3_4", "r1_ss4", "r2_ss4", "r3_ss4"]
-    # nom = [r"\mathcal{SS}^{[4]}_3", r"\hat{\mathcal{T}}^1(\mathcal{SS}^{[4]}_3)", r"\hat{\mathcal{T}}^2(\mathcal{SS}^{[4]}_3)", r"\hat{\mathcal{T}}^3(\mathcal{SS}^{[4]}_3)"]
-    # hacs = ["0.25", "0.5", "1.0", "2.0"]
-    tf = 10000
+    met = ["t2_s2", "sc_5_6", "sc_7_6", "ssc_7_6"]
+    nom = ["\hat{T}^{2}(S^{[2]})", "s=5", "S_7^{[6]}*", "S_7^{[6]}"]
+    
+    hacs = ["1.0", "1.0", "1.0", "1.0", "1.0"]
+    
+    tf = int(1e7)
     t = []
     H = []
     for i in range(0, len(met)):
@@ -29,9 +30,10 @@ if __name__ == "__main__":
         t_item = []
         h_item = []
         for j in range(0, len(linies)):
-            lin = linies[j].replace("\n", "").split(" ")
-            t_item.append(np.log10(float(lin[0])))
-            h_item.append(np.log10(float(lin[2])))
+            if (j % 10 == 2):
+                lin = linies[j].replace("\n", "").split(" ")
+                t_item.append(np.log10(float(lin[0])))
+                h_item.append(np.log10(float(lin[2])))
         t.append(t_item)
         H.append(h_item)
     
@@ -44,11 +46,11 @@ if __name__ == "__main__":
     for i in range(0, len(met)):
         plt.plot(t[i], H[i], label = r"$\displaystyle " + nom[i] + "$")
     plt.xlabel(r'$\displaystyle\log_{10}\left(t\right)$')
-    plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{\max(|H-H_0|)}{H_0}\right)$')
-    plt.xlim(0.5, 4.0)
+    plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{|H-H_0|}{H_0}\right)$')
+    plt.xlim(0.5, 7.0)
     plt.legend()
     plt.grid(True)
    
-    nom_arxiu = ".pdf"
+    nom_arxiu = "error.pdf"
     plt.savefig(nom_arxiu, format='pdf')
     plt.show()

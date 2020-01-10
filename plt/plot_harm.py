@@ -12,7 +12,7 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    met = ["r2_s2", "sc_5_6", "sc_7_6", "ssc_7_6"]
+    met = ["t2_s2", "sc_5_6", "sc_7_6", "ssc_7_6"]
     nom = ["\hat{T}^{2}(S^{[2]})", "s=5", "S_7^{[6]}*", "S_7^{[6]}"]
     t = []
     Neval = []
