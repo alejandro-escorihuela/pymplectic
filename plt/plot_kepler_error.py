@@ -11,15 +11,16 @@ from matplotlib import rc
 rc('font',**{'family':'sans-serif','sans-serif':['Helvetica'], 'size' : 18})
 rc('text', usetex=True)
 
-if __name__ == "__main__":
-    # met = ["sx_2", "r1_s2", "r2_s2"]
-    # nom = [r"\mathcal{S}^{[2]}", r"\hat{\mathcal{T}}^1(\mathcal{S}^{[2]})", r"\hat{\mathcal{T}}^2(\mathcal{S}^{[2]})"]
-    # hacs = ["0.025", "0.05", "0.1"] 
+if __name__ == "__main__":    
+    met = ["r1_s2", "sc_3_4", "ssc_3_4"]
+    nom = ["s=2", "s=3", "Yoshida"]
     
-    met = ["s_3_4", "r1_ss4", "r2_ss4", "r3_ss4"]
-    nom = [r"\mathcal{SS}^{[4]}_3", r"\hat{\mathcal{R}}^1(\mathcal{SS}^{[4]}_3)", r"\hat{\mathcal{R}}^2(\mathcal{SS}^{[4]}_3)", r"\hat{\mathcal{R}}^3(\mathcal{SS}^{[4]}_3)"]
-    hacs = ["0.05", "0.1", "0.2", "0.4"]
-    tf = 10000
+    # met = ["t2_s2", "sc_5_6", "sc_7_6", "ssc_7_6"]
+    # nom = ["\hat{T}^{2}(S^{[2]})", "s=5", "S_7^{[6]}*", "S_7^{[6]}"]
+    
+    hacs = ["0.01", "0.01", "0.01"]
+    
+    tf = int(1e5)
     t = []
     H = []
     for i in range(0, len(met)):
@@ -45,10 +46,10 @@ if __name__ == "__main__":
         plt.plot(t[i], H[i], label = r"$\displaystyle " + nom[i] + "$")
     plt.xlabel(r'$\displaystyle\log_{10}\left(t\right)$')
     plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{\max(|H-H_0|)}{H_0}\right)$')
-    plt.xlim(0.5, 4.0)
+    plt.xlim(0.5, 5.0)
     plt.legend()
     plt.grid(True)
    
-    nom_arxiu = "metC_Rkepler_error_ss4.pdf"
+    nom_arxiu = "errorKepler_r4.pdf"
     plt.savefig(nom_arxiu, format='pdf')
     plt.show()
