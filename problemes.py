@@ -56,7 +56,7 @@ em_es.set_parametres([-1.0, 1.0])
 em_es.add_conserva(funcioP_em_estatic)
 em_es.add_conserva(funcioH_em_estatic)
 em_es.add_conserva(funcioMu_em_estatic)
-em_es.set_calc_error_coord(True)
+em_es.set_calc_error_coord(False)
 em_es.set_print_coord(True)
 em_es.set_print_cons(True)
 

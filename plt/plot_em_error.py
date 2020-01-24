@@ -18,18 +18,18 @@ if __name__ == "__main__":
     # met = ["t2_s2", "sc_5_6", "sc_7_6", "ssc_7_6"]
     # nom = ["\hat{T}^{2}(S^{[2]})", "s=5", "S_7^{[6]}*", "S_7^{[6]}"]
     
-    hacs = ["0.01", "0.01", "0.01"]
+    hacs = ["1.0", "1.0", "1.0"]
     
     tf = int(1e6)
     t = []
     H = []
     for i in range(0, len(met)):
-        ruta = "../dat/" + met[i] + "/kepl_cons_" + str(tf) + "_" + str(hacs[i]).replace(".", "") + ".dat"
+        ruta = "../dat/" + met[i] + "/em_estatic_cons_" + str(tf) + "_" + str(hacs[i]).replace(".", "") + ".dat"
         fit = open(ruta, "r")
         linies = fit.readlines()
         t_item = []
         h_item = []
-        for j in range(0, len(linies), 100):
+        for j in range(0, len(linies), 10):
             lin = linies[j].replace("\n", "").split(" ")
             t_item.append(np.log10(float(lin[0])))
             h_item.append(np.log10(abs(float(lin[2]))))
@@ -46,10 +46,10 @@ if __name__ == "__main__":
         plt.plot(t[i], H[i], label = r"$\displaystyle " + nom[i] + "$")
     plt.xlabel(r'$\displaystyle\log_{10}\left(t\right)$')
     plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{\max(|H-H_0|)}{H_0}\right)$')
-    plt.xlim(0.5, 5.0)
+    plt.xlim(0.5, 6.0)
     plt.legend()
     plt.grid(True)
    
-    nom_arxiu = "errorKepler_r4.pdf"
+    nom_arxiu = "errorEM_r4.pdf"
     plt.savefig(nom_arxiu, format='pdf')
     #plt.show()
