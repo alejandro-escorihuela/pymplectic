@@ -14,8 +14,8 @@ rc('text', usetex=True)
 if __name__ == "__main__":
     # met = ["s_5_4", "r1_ss_5_4", "r2_ss_5_4", "r3_ss_5_4", "r4_ss_5_4"]
     # nom = [r"\mathcal{SS}^{[4]}_5", r"\hat{\mathcal{R}}^1(\mathcal{SS}^{[4]}_5)", r"\hat{\mathcal{R}}^2(\mathcal{SS}^{[4]}_5)", r"\hat{\mathcal{R}}^3(\mathcal{SS}^{[4]}_5)",  r"\hat{\mathcal{R}}^4(\mathcal{SS}^{[4]}_5)"]
-    met = ["sx_2", "r1_s2", "r2_s2", "r3_s2"]
-    nom = ["strang", "order 4", "order 6", "order 7"]
+    met = ["s_3_4", "r1_ss4", "r2_ss4", "r3_ss4"]
+    nom = ["yoshida", "order 6", "order 8", "order 10"]
     t = []
     Neval = []
     H = []

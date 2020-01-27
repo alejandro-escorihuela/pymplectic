@@ -12,15 +12,15 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica'], 'size' : 18})
 rc('text', usetex=True)
 
 if __name__ == "__main__":    
-    met = ["r1_s2", "sc_3_4", "ssc_3_4"]
-    nom = ["s=2", "s=3", "Yoshida"]
+    met = ["r1_s2", "r1_s2"]
+    nom = ["order 4, $h=0.05$", "order 4, $h=0.025$"]
     
-    # met = ["t2_s2", "sc_5_6", "sc_7_6", "ssc_7_6"]
-    # nom = ["\hat{T}^{2}(S^{[2]})", "s=5", "S_7^{[6]}*", "S_7^{[6]}"]
+    # met = ["s_3_4", "r1_ss4", "r2_ss4", "r3_ss4"]
+    # nom = ["yoshida", "order 6", "order 8", "order 10"]
     
-    hacs = ["0.01", "0.01", "0.01"]
+    hacs = ["0.05", "0.025"]
     
-    tf = int(1e6)
+    tf = int(1e5)
     t = []
     H = []
     for i in range(0, len(met)):
@@ -29,7 +29,7 @@ if __name__ == "__main__":
         linies = fit.readlines()
         t_item = []
         h_item = []
-        for j in range(0, len(linies), 100):
+        for j in range(0, len(linies)):
             lin = linies[j].replace("\n", "").split(" ")
             t_item.append(np.log10(float(lin[0])))
             h_item.append(np.log10(abs(float(lin[2]))))
@@ -43,13 +43,13 @@ if __name__ == "__main__":
     #plt.suptitle(r"Conservarci\'o de $H$ Oscil\textperiodcentered lador harm\`onic", fontsize = 16)
 
     for i in range(0, len(met)):
-        plt.plot(t[i], H[i], label = r"$\displaystyle " + nom[i] + "$")
+        plt.plot(t[i], H[i], label = nom[i])
     plt.xlabel(r'$\displaystyle\log_{10}\left(t\right)$')
-    plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{\max(|H-H_0|)}{H_0}\right)$')
-    plt.xlim(0.5, 5.0)
+    plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{|H-H_0|}{H_0}\right)$')
+    plt.xlim(0.5, np.log10(tf))
     plt.legend()
     plt.grid(True)
    
     nom_arxiu = "errorKepler_r4.pdf"
     plt.savefig(nom_arxiu, format='pdf')
-    #plt.show()
+    plt.show()
