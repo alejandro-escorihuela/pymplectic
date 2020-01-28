@@ -34,7 +34,6 @@ if __name__ == "__main__":
     elif pr == 3:
         prob = prb.em_es
         t_final = 10
-        t_final = int(1e6)
         h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]
         # h_elem = [1.0]
     elif pr == 4:
@@ -48,9 +47,8 @@ if __name__ == "__main__":
         # h_elem = [1.0]
     elif pr == 6:
         prob = prb.kepl
-        t_final = int(1e5)
-        h_elem = [0.25, 0.1, 0.05, 0.04, 0.025]
-        # h_elem = [0.01]
+        t_final = 20
+        h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01]
     else:
         print("El problema", pr, "no existeix.")
         print_ajuda(sys.argv[0])
@@ -101,25 +99,40 @@ if __name__ == "__main__":
     # met.append("sx_2")
     # tip.append(1)
     # pro.append(0)
-    # h.append([0.025])
+    # h.append(h_elem)
     
-    met.append("r1_s2")
-    tip.append(3)
-    pro.append(0)
-    h.append([0.05])
+    # met.append("r1_s2")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append([0.05])
+
+    # met.append("r1_s2")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append([0.025])
 
     met.append("r1_s2")
     tip.append(3)
     pro.append(0)
-    h.append([0.025])
+    h.append(h_elem)
     
-    # met.append("r2_s2")
-    # tip.append(3)
-    # pro.append(0)
-    # h.append([0.1])
+    met.append("r2_s2")
+    tip.append(3)
+    pro.append(0)
+    h.append(h_elem)
 
     # met.append("r3_s2")
     # tip.append(3)
+    # pro.append(0)
+    # h.append(h_elem)
+    
+    # met.append("r4_s2")
+    # tip.append(4)
+    # pro.append(0)
+    # h.append(h_elem)
+
+    # met.append("r5_s2")
+    # tip.append(4)
     # pro.append(0)
     # h.append(h_elem)
     
