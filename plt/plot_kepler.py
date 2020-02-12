@@ -12,12 +12,12 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
+    met = ["ssc_15_8", "sc_11_8_1", "sc_11_8_2", "sc_11_8_3", "sc_11_8_4", "sc_11_8_5", "sc_11_8_6", "sc_11_8_7"]
+    nom = ["sim", "simc\ 1", "simc\ 2", "simc\ 3", "simc\ 4", "simc\ 5", "simc\ 6", "simc\ 7"]
     # met = ["s_5_4", "r1_ss_5_4", "r2_ss_5_4", "r3_ss_5_4", "r4_ss_5_4"]
     # nom = [r"\mathcal{SS}^{[4]}_5", r"\hat{\mathcal{R}}^1(\mathcal{SS}^{[4]}_5)", r"\hat{\mathcal{R}}^2(\mathcal{SS}^{[4]}_5)", r"\hat{\mathcal{R}}^3(\mathcal{SS}^{[4]}_5)",  r"\hat{\mathcal{R}}^4(\mathcal{SS}^{[4]}_5)"]
     # met = ["s_3_4", "r1_ss4", "r2_ss4", "r3_ss4"]
     # nom = ["yoshida", "order 6", "order 8", "order 10"]
-    met = ["sx_2", "r1_s2", "r2_s2", "r3_s2", "r4_s2", "r5_s2"]
-    nom = ["strang (2.0)", "order 4 (4.2)", "order 6 (6.7)", "order 7 (8.0)", "order 8 (9.0)", "order 9 (10.7)"]
     t = []
     Neval = []
     H = []
@@ -48,7 +48,7 @@ if __name__ == "__main__":
 
     #plt.subplot(2, 1, 1)
     for i in range(0, len(met)):
-        plt.plot(P[i], H[i], label = nom[i])
+        plt.plot(Neval[i], H[i], label = nom[i])
     #plt.title(r"Efici\`encia en H respecte Neval")
     plt.xlabel(r'$\displaystyle\log_{10}\left(\frac{1}{h}\right)$')
     plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{\max(|H-H_0|)}{H_0}\right)$')
