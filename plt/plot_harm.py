@@ -12,8 +12,11 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    met = ["ssc_15_8", "sc_11_8_1", "sc_11_8_2", "sc_11_8_3", "sc_11_8_4", "sc_11_8_5", "sc_11_8_6", "sc_11_8_7"]
-    nom = ["sim", "simc\ 1", "simc\ 2", "simc\ 3", "simc\ 4", "simc\ 5", "simc\ 6", "simc\ 7"]
+    met = ["ssc_15_8"]
+    nom = ["sim"]
+    for i in range(20, 29):
+        met.append("sc_11_8_" + str(i))
+        nom.append("simc\ " + str(i))
     t = []
     Neval = []
     H = []

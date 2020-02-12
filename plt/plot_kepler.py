@@ -12,8 +12,11 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    met = ["ssc_15_8", "sc_11_8_1", "sc_11_8_2", "sc_11_8_3", "sc_11_8_4", "sc_11_8_5", "sc_11_8_6", "sc_11_8_7"]
-    nom = ["sim", "simc\ 1", "simc\ 2", "simc\ 3", "simc\ 4", "simc\ 5", "simc\ 6", "simc\ 7"]
+    met = ["ssc_15_8"]
+    nom = ["sim"]
+    for i in range(20, 29):
+        met.append("sc_11_8_" + str(i))
+        nom.append("simc\ " + str(i))
     # met = ["s_5_4", "r1_ss_5_4", "r2_ss_5_4", "r3_ss_5_4", "r4_ss_5_4"]
     # nom = [r"\mathcal{SS}^{[4]}_5", r"\hat{\mathcal{R}}^1(\mathcal{SS}^{[4]}_5)", r"\hat{\mathcal{R}}^2(\mathcal{SS}^{[4]}_5)", r"\hat{\mathcal{R}}^3(\mathcal{SS}^{[4]}_5)",  r"\hat{\mathcal{R}}^4(\mathcal{SS}^{[4]}_5)"]
     # met = ["s_3_4", "r1_ss4", "r2_ss4", "r3_ss4"]

@@ -46,7 +46,7 @@ if __name__ == "__main__":
         h_elem = [2.5, 1.0, 0.75, 0.5, 0.25, 0.1]
     elif pr == 6:
         prob = prb.kepl
-        t_final = 200
+        t_final = 20
         h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01]
     else:
         print("El problema", pr, "no existeix.")
@@ -65,40 +65,11 @@ if __name__ == "__main__":
     pro.append(0)
     h.append(h_elem)
 
-    met.append("sc_11_8_1")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
-
-    met.append("sc_11_8_2")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
-
-    met.append("sc_11_8_3")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
-
-    met.append("sc_11_8_4")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
-
-    met.append("sc_11_8_5")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
-
-    met.append("sc_11_8_6")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
-
-    met.append("sc_11_8_7")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
+    for i in range(0, 29):
+        met.append("sc_11_8_" + str(i))
+        tip.append(5)
+        pro.append(0)
+        h.append(h_elem)        
     
     # met.append("r1_s2")
     # tip.append(3)
