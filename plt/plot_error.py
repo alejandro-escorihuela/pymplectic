@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
-# 09-12-2019
+# 11-12-2019
 # alex
-# plot_harm_error.py
+# plot_error.py
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,28 +12,25 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica'], 'size' : 18})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    # met = ["r1_s2", "sc_3_4", "ssc_3_4"]
-    # nom = ["s=2", "s=3", "Yoshida"]
+    prob = ["ddnls", "em_estatic", "solar", "harm", "kepl"]
+    ip = 2
+    met = ["r1_s2", "r1_s2"]
+    nom = ["order 4, $h=0.05$", "order 4, $h=0.025$"]
+    hacs = ["0.05", "0.025"]
     
-    met = ["t2_s2", "sc_5_6", "sc_7_6", "ssc_7_6"]
-    nom = ["\hat{T}^{2}(S^{[2]})", "s=5", "S_7^{[6]}*", "S_7^{[6]}"]
-    
-    hacs = ["1.0", "1.0", "1.0", "1.0", "1.0"]
-    
-    tf = int(1e7)
+    tf = int(1e5)
     t = []
     H = []
     for i in range(0, len(met)):
-        ruta = "../dat/" + met[i] + "/harm_cons_" + str(tf) + "_" + str(hacs[i]).replace(".", "") + ".dat"
+        ruta = "../dat/" + met[i] + "/" + prob[ip] + "_" + str(tf) + "_" + str(hacs[i]).replace(".", "") + ".dat"
         fit = open(ruta, "r")
         linies = fit.readlines()
         t_item = []
         h_item = []
         for j in range(0, len(linies)):
-            if (j % 10 == 2):
-                lin = linies[j].replace("\n", "").split(" ")
-                t_item.append(np.log10(float(lin[0])))
-                h_item.append(np.log10(float(lin[2])))
+            lin = linies[j].replace("\n", "").split(" ")
+            t_item.append(np.log10(float(lin[0])))
+            h_item.append(np.log10(abs(float(lin[2]))))
         t.append(t_item)
         H.append(h_item)
     
@@ -44,13 +41,14 @@ if __name__ == "__main__":
     #plt.suptitle(r"Conservarci\'o de $H$ Oscil\textperiodcentered lador harm\`onic", fontsize = 16)
 
     for i in range(0, len(met)):
-        plt.plot(t[i], H[i], label = r"$\displaystyle " + nom[i] + "$")
+        plt.plot(t[i], H[i], label = nom[i])
+    plt.title(prob[ip].replace("_", " "))
     plt.xlabel(r'$\displaystyle\log_{10}\left(t\right)$')
     plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{|H-H_0|}{H_0}\right)$')
-    plt.xlim(0.5, 7.0)
+    plt.xlim(0.5, np.log10(tf))
     plt.legend()
     plt.grid(True)
    
-    nom_arxiu = "error.pdf"
+    nom_arxiu = "error_" + prob[ip] + ".pdf"
     plt.savefig(nom_arxiu, format='pdf')
     plt.show()
