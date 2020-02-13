@@ -26,23 +26,22 @@ if __name__ == "__main__":
     if pr == 1:
         prob = prb.ddnls
         t_final = 10
-        h_elem = [0.5, 0.4, 0.25]
+        h_elem = [1.0, 0.75, 0.5]
     elif pr == 2:
         prob = prb.fABC
-        t_final = 10
+        t_final = 5
         h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]
     elif pr == 3:
         prob = prb.em_es
-        t_final = 10
-        h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]
+        t_final = 20
+        h_elem = [2.5, 1.75, 1.0, 0.5, 0.25, 0.1]
     elif pr == 4:
         prob = prb.solar
         t_final = 10000.0
-        h_elem = [100.0, 50.0]
+        h_elem = [150.0, 100.0, 75.0, 50.0]
     elif pr == 5:
         prob = prb.harm
         t_final = 20
-        #h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01]
         h_elem = [2.5, 1.0, 0.75, 0.5, 0.25, 0.1]
     elif pr == 6:
         prob = prb.kepl
@@ -69,7 +68,8 @@ if __name__ == "__main__":
         met.append("sc_11_8_" + str(i))
         tip.append(5)
         pro.append(0)
-        h.append(h_elem)        
+        h.append(h_elem)   
+        
     
     # met.append("r1_s2")
     # tip.append(3)
@@ -107,25 +107,11 @@ if __name__ == "__main__":
     # h.append(h_elem)
     
     # Mètodes R, T i SC
-    # met.append("sx_2")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append(h_elem)
-    
-    # met.append("r1_s2")
-    # tip.append(3)
-    # pro.append(0)
-    # h.append([0.05])
 
     # met.append("r1_s2")
     # tip.append(3)
     # pro.append(0)
-    # h.append([0.025])
-
-    # met.append("r1_s2")
-    # tip.append(3)
-    # pro.append(0)
-    # h.append(h_elem)
+    # h.append([0.05, 0.025])
     
     # met.append("r2_s2")
     # tip.append(3)

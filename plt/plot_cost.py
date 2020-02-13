@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- 
 # 25-02-2019
 # alex
-# plot_kepler.py
+# plot_cost.py
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,21 +12,19 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
+    prob = ["ddnls", "em_estatic", "solar", "harm", "kepl"]
+    ip = 2
     met = ["ssc_15_8"]
     nom = ["sim"]
-    for i in range(20, 29):
+    for i in ([1, 25, 26]):
         met.append("sc_11_8_" + str(i))
         nom.append("simc\ " + str(i))
-    # met = ["s_5_4", "r1_ss_5_4", "r2_ss_5_4", "r3_ss_5_4", "r4_ss_5_4"]
-    # nom = [r"\mathcal{SS}^{[4]}_5", r"\hat{\mathcal{R}}^1(\mathcal{SS}^{[4]}_5)", r"\hat{\mathcal{R}}^2(\mathcal{SS}^{[4]}_5)", r"\hat{\mathcal{R}}^3(\mathcal{SS}^{[4]}_5)",  r"\hat{\mathcal{R}}^4(\mathcal{SS}^{[4]}_5)"]
-    # met = ["s_3_4", "r1_ss4", "r2_ss4", "r3_ss4"]
-    # nom = ["yoshida", "order 6", "order 8", "order 10"]
     t = []
     Neval = []
     H = []
     P = []
     for i in range(0, len(met)):
-        ruta = "../dat/" + met[i] + "/kepl_err.dat"
+        ruta = "../dat/" + met[i] + "/" + prob[ip] + "_err.dat"
         fit = open(ruta, "r")
         linies = fit.readlines()
         t_item = []
@@ -43,17 +41,18 @@ if __name__ == "__main__":
         Neval.append(n_item)
         H.append(h_item)
         P.append(p_item)
+        
     plt.rc('text', usetex = True)
     plt.rc('font', family = 'serif')
     plt.rc('figure', figsize = (11.69, 8.27))
-    #plt.rc('figure', figsize = (8.27, 11.69))
-    #plt.suptitle(r"Kepler", fontsize = 16)
+    # plt.rc('figure', figsize = (8.27, 11.69))
+    # plt.suptitle(r"Sim\`etric-conjugat $R_h^{[6]}$. Oscil\textperiodcentered lador harm\`onic", fontsize = 16)
 
-    #plt.subplot(2, 1, 1)
+    # plt.subplot(2, 1, 1)
     for i in range(0, len(met)):
-        plt.plot(Neval[i], H[i], label = nom[i])
-    #plt.title(r"Efici\`encia en H respecte Neval")
-    plt.xlabel(r'$\displaystyle\log_{10}\left(\frac{1}{h}\right)$')
+        plt.plot(Neval[i], H[i], label =  nom[i])
+    plt.title(prob[ip].replace("_", " "))
+    plt.xlabel(r'$\displaystyle\log_{10}\left(N_{\rm{eval}}\right)$')
     plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{\max(|H-H_0|)}{H_0}\right)$')
     plt.legend()
     plt.grid(True)
@@ -61,13 +60,13 @@ if __name__ == "__main__":
     # plt.subplot(2, 1, 2)
     # for i in range(0, len(met)):
     #     plt.plot(t[i], H[i], label = r"$\displaystyle " + nom[i] + "$")
-    # #plt.title(r"Efici\`encia en H respecte de t")
+    # plt.title(r"Efici\`encia en H respecte de t")
     # plt.xlabel(r'$\displaystyle\log_{10}\left(t_{\rm{CPU}}\right)$')
     # plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{\max(|H-H_0|)}{H_0}\right)$')
     # plt.legend()
     # plt.grid(True)
 
    
-    nom_arxiu = "kepler_ordre.pdf"
+    nom_arxiu = "cost_" + prob[ip] + ".pdf"
     plt.savefig(nom_arxiu, format='pdf')
     plt.show()
