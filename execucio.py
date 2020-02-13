@@ -59,17 +59,16 @@ if __name__ == "__main__":
 
     # Mètodes SC
 
-    met.append("ssc_15_8")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("ssc_15_8")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
 
-    for i in range(0, 29):
-        met.append("sc_11_8_" + str(i))
-        tip.append(5)
-        pro.append(0)
-        h.append(h_elem)   
-        
+    # for i in range(0, 29):
+    #     met.append("sc_11_8_" + str(i))
+    #     tip.append(5)
+    #     pro.append(0)
+    #     h.append(h_elem) 
     
     # met.append("r1_s2")
     # tip.append(3)
@@ -133,10 +132,20 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
     
-    # met.append("sc_3_4")
-    # tip.append(5)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("r1_s2")
+    tip.append(3)
+    pro.append(0)
+    h.append(h_elem)
+    
+    met.append("sc_3_4")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem)
+    
+    met.append("ssc_3_4")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem)
     
     # met.append("r2_s2")
     # tip.append(4)
