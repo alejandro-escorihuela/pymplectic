@@ -26,7 +26,7 @@ if __name__ == "__main__":
     if pr == 1:
         prob = prb.ddnls
         t_final = 10
-        h_elem = [1.0, 0.75, 0.5]
+        h_elem = [0.5, 0.25, 0.1, 0.0625, 0.05]
     elif pr == 2:
         prob = prb.fABC
         t_final = 5
@@ -132,20 +132,20 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
     
-    met.append("r1_s2")
-    tip.append(3)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("r1_s2")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append(h_elem)
     
-    met.append("sc_3_4")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("sc_3_4")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
     
-    met.append("ssc_3_4")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("ssc_3_4")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
     
     # met.append("r2_s2")
     # tip.append(4)
@@ -194,42 +194,42 @@ if __name__ == "__main__":
     
     # Escissió 3 parts
     
-    # met.append("abc_4")
-    # tip.append(0)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("abc_4")
+    tip.append(0)
+    pro.append(0)
+    h.append(h_elem)
 
     # Composició
     
-    # met.append("xa_6_4")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("xa_6_4")
+    tip.append(1)
+    pro.append(0)
+    h.append(h_elem)
     
-    # met.append("xb_6_4")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("xa_4_4")
+    tip.append(1)
+    pro.append(0)
+    h.append(h_elem)
     
-    # met.append("xa_4_4")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("xb_6_4")
+    tip.append(1)
+    pro.append(0)
+    h.append(h_elem)
+
+    met.append("xb_5_4")
+    tip.append(1)
+    pro.append(0)
+    h.append(h_elem)
+
+    met.append("xb_4_4")
+    tip.append(1)
+    pro.append(0)
+    h.append(h_elem)
     
-    # met.append("sx_6_4")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append(h_elem)
-    
-    # met.append("xb_5_4")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append(h_elem)
-    
-    # met.append("xb_6_4")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("sx_6_4")
+    tip.append(1)
+    pro.append(0)
+    h.append(h_elem)  
     
     # met.append("ss_9_6")
     # tip.append(2)
