@@ -399,15 +399,17 @@ class Metode:
         vec_coef = self.__read_coefCoCo_previ()[1]
         n = len(vec_coef)
         coef = []
-        for i in range(0, n):
+        print(vec_coef)
+        for i in range(1, n):
             aux = []
             for j in range(0, len(vec_coef[i])):
-                aux.append(vec_coef[i][j] * 0.5)
-                aux.append(vec_coef[i][j] * 0.5)
+                for k in range(0, len(vec_coef[0])):
+                    aux.append(vec_coef[i][j] * vec_coef[0][k])
             coef.append(aux)
         tam = len(coef)
         metode = []
         coefic = []
+        print(coef)
         for i in range(0, tam):
             metode.append([])
             coefic.append([])
