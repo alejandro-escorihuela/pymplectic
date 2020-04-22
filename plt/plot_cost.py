@@ -13,12 +13,12 @@ rc('text', usetex=True)
 
 if __name__ == "__main__":
     prob = ["ddnls", "em_estatic", "solar", "harm", "kepl"]
-    ip = 2
-    met = ["ssc_15_8"]
-    nom = ["sim"]
-    for i in ([1, 25, 26]):
-        met.append("sc_11_8_" + str(i))
-        nom.append("simc\ " + str(i))
+    ip = 4
+    met = []
+    nom = []
+    for i in range(0, 8):
+        met.append("s4c_10_10_" + str(i))
+        nom.append("s4c_10\ " + str(i))
     t = []
     Neval = []
     H = []
@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
     # plt.subplot(2, 1, 1)
     for i in range(0, len(met)):
-        plt.plot(Neval[i], H[i], label =  nom[i])
+        plt.plot(Neval[i], H[i], label =  i)
     plt.title(prob[ip].replace("_", " "))
     plt.xlabel(r'$\displaystyle\log_{10}\left(N_{\rm{eval}}\right)$')
     plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{\max(|H-H_0|)}{H_0}\right)$')

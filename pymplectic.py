@@ -92,7 +92,7 @@ class Solucionador:
             r = len(self.metode.ordre_pre)
             p_it = Nit / 5
         temps = 0.0
-        Neval = 0
+        Naval = 0
         self.ini(self.z, self.parametres)
         num_cons = len(self.conserves)
         Csub0 = np.array(np.zeros(num_cons), dtype = t_real_)
@@ -111,11 +111,11 @@ class Solucionador:
                 dt = self.metode.coef_pre[flux][index] * h
                 self.mapa(flux, self.z, dt, self.parametres)
             # temps += tm.time() - t0
-            # Neval += r
+            # Naval += r
 
         for it in range(0, Nit):
             # nucli
-            if not self.metode.compost:
+            if not self.metode.multifil:
                 # m <- nombre de fluxes
                 t0 = tm.time()
                 for i in range(0, m):
@@ -124,7 +124,7 @@ class Solucionador:
                     dt = self.metode.coef[flux][index] * h
                     self.mapa(flux, self.z, dt, self.parametres)
                 temps += tm.time() - t0
-                Neval += m
+                Naval += m
             else:
                 # m  <- nombre de 'fils'
                 # mm <- nombre de fluxes
@@ -155,10 +155,7 @@ class Solucionador:
                 for i in range(0, len(z_nou)):
                     z_nou[i] *= fac
                 self.z = z_nou.real
-                if (self.metode.tipus_metode >= 3):
-                    Neval += int((mm - 1)/4)
-                else:
-                    Neval += mm
+                Naval += self.metode.aval
                 
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
                 z_copia = self.z.copy()
@@ -170,7 +167,7 @@ class Solucionador:
                     dt = self.metode.coef_pos[flux][index] * h
                     self.mapa(flux, self.z, dt, self.parametres)
                 # temps += tm.time() - t0
-                # Neval += r
+                # Naval += r
                 # càlcul de les quantitats conservades
                 for i in range(0, num_cons):
                     Cvalr[i] = self.conserves[i](self.z, self.parametres)
@@ -189,7 +186,7 @@ class Solucionador:
                 if (it < Nit - 1):
                     self.z = z_copia.copy()
                     
-        tornar = [temps, Neval]
+        tornar = [temps, Naval]
         for i in range(0, num_cons):
                 tornar.append(abs(Cemax[i]/Csub0[i]))
         if self.printZ:
@@ -237,7 +234,7 @@ class Metode:
         self.fit = "fitxer"
         self.tipus_metode = tm
         self.tipus_processat = tp
-        self.compost = False
+        self.multifil = False
         self.num_parts = np
         self.ordre = []
         self.coef = []
@@ -245,7 +242,8 @@ class Metode:
         self.coef_pre = []
         self.ordre_pos = []
         self.coef_pos = []
-
+        self.aval = -1
+        
     def set_metode(self, arxiu):
         self.nom = arxiu
         self.fit = arxiu
@@ -261,16 +259,16 @@ class Metode:
                 self.ordre, self.coef = self.read_coefComp2()
             # Mètodes R
             elif (self.tipus_metode == 3):
-                self.compost = True
+                self.multifil = True
                 self.ordre, self.coef = self.read_coefRT(False)
             # Mètodes T
             elif (self.tipus_metode == 4):
                 self.nom = 't' + self.nom[1:]
-                self.compost = True
+                self.multifil = True
                 self.ordre, self.coef = self.read_coefRT(True)
             # Mètodes SC
             elif (self.tipus_metode == 5):
-                self.compost = True
+                self.multifil = True
                 self.ordre, self.coef = self.read_coefSC()
             else:
                 print(str(tipus_metode) + " no és cap tipus de mètode.")
@@ -398,8 +396,11 @@ class Metode:
     def read_coefSC(self):
         vec_coef = self.__read_coefCoCo_previ()[1]
         n = len(vec_coef)
-        coef = []
-        print(vec_coef)
+        nX = len(vec_coef[0]) # nombre de X en el mètode base
+        nS = nX // 2 # nombre de S en el mètode base
+        nSS = len(vec_coef[1]) # nombre de mètodes base en cada iteració
+        self.aval = nS * nSS
+        coef = []        
         for i in range(1, n):
             aux = []
             for j in range(0, len(vec_coef[i])):
@@ -409,7 +410,6 @@ class Metode:
         tam = len(coef)
         metode = []
         coefic = []
-        print(coef)
         for i in range(0, tam):
             metode.append([])
             coefic.append([])
@@ -420,6 +420,11 @@ class Metode:
     def read_coefRT(self, itT):
         vec_coef = self.__read_coefCoCo_previ()[1]
         n = len(vec_coef)
+        nX = len(vec_coef[0]) # nombre de X en el mètode base
+        nS = nX // 2 # nombre de S en el mètode base
+        nG = n - 1 # nombre de gammes
+        nSS = 2**nG # nombre de mètodes base en cada iteració
+        self.aval = nS * nSS
         coef = [vec_coef[0]]
         func0 = self.__operadorR1
         func1 = self.__operadorRn
