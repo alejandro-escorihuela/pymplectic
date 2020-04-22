@@ -64,11 +64,15 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
 
-    for i in range(0, 8):
-        met.append("s4c_10_10_" + str(i))
-        tip.append(5)
-        pro.append(0)
-        h.append(h_elem) 
+    # met.append("s4c_10_10")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
+
+    # met.append("s45c_10_10")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
     
     # met.append("r1_s2")
     # tip.append(3)
