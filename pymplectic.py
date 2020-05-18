@@ -23,19 +23,19 @@ class Solucionador:
         self.printZ = False
         self.printC = False
         self.num_coord = 0
-        
+
     def set_nom(self, n):
         self.nom_problema = n
-        
+
     def get_nom(self):
         return self.nom_problema
-    
+
     def set_parts(self, n):
         self.num_parts = n
-        
+
     def get_parts(self):
         return self.num_parts
-        
+
     def set_ini(self, func):
         self.ini = func
 
