@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 # 04-06-2019
 # alex
 # pymplectic.py
@@ -8,7 +8,7 @@ from scipy.integrate import ode
 import numpy as np
 import time as tm
 import os
-          
+
 class Solucionador:
     def __init__(self):
         self.nom_problema = ""
