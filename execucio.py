@@ -41,8 +41,10 @@ if __name__ == "__main__":
         h_elem = [200.0, 100.0, 50.0, 25.0]
     elif pr == 5:
         prob = prb.harm
-        t_final = 20
-        h_elem = [2.5, 1.0, 0.5, 0.25, 0.1]
+        # t_final = 20
+        # h_elem = [2.5, 1.0, 0.5, 0.25, 0.1]
+        t_final = int(1e6)
+        h_elem = [0.25]
     elif pr == 6:
         prob = prb.kepl
         t_final = 20
@@ -56,7 +58,33 @@ if __name__ == "__main__":
     tip = []
     pro = []
     h = []
+ 
+    # Comparativa 19-05-2020
+    # met.append("ss_35_10")
+    # tip.append(2)
+    # pro.append(0)
+    # h.append(h_elem)
 
+    # met.append("s4c_10_10")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
+    
+    # met.append("ss_17_8")
+    # tip.append(2)
+    # pro.append(0)
+    # h.append(h_elem)
+    
+    # met.append("sc_11_8")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
+
+    # met.append("s4c_5_8")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
+    
     # Mètodes SC
 
     # met.append("ssc_15_8")
@@ -74,20 +102,20 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
     
-    # met.append("r1_s2")
-    # tip.append(3)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("r1_s2")
+    tip.append(3)
+    pro.append(0)
+    h.append(h_elem)
     
-    # met.append("sc_3_4")
-    # tip.append(5)
-    # pro.append(0)
-    # h.append(h_elem) 
+    met.append("sc_3_4")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem) 
     
-    # met.append("ssc_3_4")
-    # tip.append(5)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("ssc_3_4")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem)
     
     # met.append("sc_5_6")
     # tip.append(5)
