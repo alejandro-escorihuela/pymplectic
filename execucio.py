@@ -53,12 +53,12 @@ if __name__ == "__main__":
         print("El problema", pr, "no existeix.")
         print_ajuda(sys.argv[0])
         exit(-2)
-        
+
     met = []
     tip = []
     pro = []
     h = []
- 
+
     # Comparativa 19-05-2020
     # met.append("ss_35_10")
     # tip.append(2)
