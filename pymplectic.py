@@ -155,8 +155,7 @@ class Solucionador:
                     z_nou[i] *= fac
                 self.z = z_nou.real
             Naval += self.metode.aval
-            print(Naval)
-            exit(-1)
+
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
                 z_copia = self.z.copy()
                 t0 = tm.time()
