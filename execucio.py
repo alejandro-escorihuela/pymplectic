@@ -33,7 +33,7 @@ if __name__ == "__main__":
         h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]
     elif pr == 3:
         prob = prb.em_es
-        t_final = 10
+        t_final = 650
         h_elem = [2.5, 2.0, 1.25, 1.0, 0.5]
     elif pr == 4:
         prob = prb.solar
@@ -42,9 +42,9 @@ if __name__ == "__main__":
     elif pr == 5:
         prob = prb.harm
         t_final = 650
-        h_elem = [2.5, 1.0, 0.5, 0.25, 0.1]
+        h_elem = [1.0, 0.5, 0.25, 0.1]
         # t_final = int(1e7)
-        # h_elem = [0.25]
+        # h_elem = [1.0/6.0]
     elif pr == 6:
         prob = prb.kepl
         t_final = 650
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     pro = []
     h = []
 
-    # Comparativa 19-05-2020
+    # # Comparativa 19-05-2020
     # met.append("ss_35_10")
     # tip.append(2)
     # pro.append(0)
@@ -102,20 +102,20 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
     
-    met.append("r1_s2")
-    tip.append(3)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("r1_s2")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append(h_elem)
     
-    met.append("sc_3_4")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem) 
+    # met.append("sc_3_4")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem) 
     
-    met.append("ssc_3_4")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("ssc_3_4")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
     
     # met.append("sc_5_6")
     # tip.append(5)
@@ -150,7 +150,7 @@ if __name__ == "__main__":
     # h.append(h_elem)
 
     # met.append("r3_s2")
-    # tip.append(3)
+    # tip.append(4)
     # pro.append(0)
     # h.append(h_elem)
     

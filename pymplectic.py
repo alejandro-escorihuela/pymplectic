@@ -124,7 +124,6 @@ class Solucionador:
                     dt = self.metode.coef[flux][index] * h
                     self.mapa(flux, self.z, dt, self.parametres)
                 temps += tm.time() - t0
-                Naval += m
             else:
                 # m  <- nombre de 'fils'
                 # mm <- nombre de fluxes
@@ -155,8 +154,9 @@ class Solucionador:
                 for i in range(0, len(z_nou)):
                     z_nou[i] *= fac
                 self.z = z_nou.real
-                Naval += self.metode.aval
-                
+            Naval += self.metode.aval
+            print(Naval)
+            exit(-1)
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
                 z_copia = self.z.copy()
                 t0 = tm.time()
@@ -381,12 +381,14 @@ class Metode:
     
     def read_coefComp(self):
         vec_coef = self.__read_coefComp_previ()[1]
+        self.aval = len(vec_coef[0]) # nombre de mètodes X en cada iteració
         metode, coef = self.comp2split(vec_coef[0], False)
         return [metode, coef]
 
     def read_coefComp2(self):
         vec_coef = self.__read_coefComp_previ()[1]
         vec_comp = []
+        self.aval = len(vec_coef[0]) # nombre de mètodes S en cada iteració
         for i in range(0, len(vec_coef[0])):
             vec_comp.append(vec_coef[0][i] * 0.5)
             vec_comp.append(vec_coef[0][i] * 0.5)
@@ -461,6 +463,7 @@ class Metode:
             if linia[0] == 'm':
                 linia = linia[2:]
                 cadena = linia.split(" ")
+                self.aval = len(cadena)
                 for j in range(0, len(cadena)):
                     flux = ord(cadena[j][0]) - 97
                     nume = int(cadena[j][1]) - 1
