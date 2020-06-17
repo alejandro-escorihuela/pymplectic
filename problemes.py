@@ -13,7 +13,7 @@ from em import *
 from solar import *
 from harmonic import *
 from kepler import *
-#from fisher import *
+from fisher import *
 
 # DDNLS
 ddnls = Solucionador()
@@ -119,5 +119,14 @@ kepl.set_print_coord(False)
 kepl.set_print_cons(True)
 
 # Equacio de Fisher
-#fish = Solucionador()
-#fish.set_nom("fisher")
+fish_tam = 1000
+fish = Solucionador()
+fish.set_nom("fisher")
+fish.set_parts(2)
+fish.set_ini(ini_fish)
+fish.set_tam(fish_tam)
+fish.set_mapa(mapaABfish)
+fish.set_parametres([fish_tam])
+fish.set_calc_error_coord(True)
+fish.set_print_coord(True)
+fish.set_print_cons(False)

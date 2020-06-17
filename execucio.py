@@ -17,6 +17,7 @@ def print_ajuda(nom_prog):
     print("\t4 -> Sistema Solar exterior i Plutó")
     print("\t5 -> Oscil·lador harmònic")
     print("\t6 -> Kepler")
+    print("\t7 -> Equació de Fisher")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -49,6 +50,10 @@ if __name__ == "__main__":
         prob = prb.kepl
         t_final = 650
         h_elem = [0.25, 0.1, 0.04, 0.025, 0.01]
+    elif pr == 7:
+        prob = prb.fish
+        t_final = 10
+        h_elem = [0.1, 0.05, 0.01]        
     else:
         print("El problema", pr, "no existeix.")
         print_ajuda(sys.argv[0])
@@ -59,6 +64,12 @@ if __name__ == "__main__":
     pro = []
     h = []
 
+    # Basics
+    met.append("sx_2")
+    tip.append(1)
+    pro.append(0)
+    h.append(h_elem)    
+    
     # # Comparativa 19-05-2020
     # met.append("ss_35_10")
     # tip.append(2)

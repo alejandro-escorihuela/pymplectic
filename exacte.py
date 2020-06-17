@@ -14,7 +14,7 @@ if __name__ == "__main__":
         print("S'ha de passar el temps inicial i el final")
         exit(-1)
     else:
-        problema = prb.em_es
+        problema = prb.fish
         t_ini = float(sys.argv[1])
         t_fi = float(sys.argv[2])
         z = problema.solucionar_exacte(t_ini, t_fi)

@@ -212,20 +212,29 @@ class Solucionador:
 
 
     def solucionar_exacte(self, t0, tf):
-        t = t0
-        h = tf - t0        
-        self.ini(self.z, self.parametres)
-        solver = ode(self.eqDreta)
-        solver.set_integrator('dop853', rtol = 1e-15, nsteps = 5000)
-        solver.set_f_params(self.parametres)
-        solver.set_initial_value(self.z, t)
-        while solver.successful() and solver.t < tf:
-            t = t + h
-            solver.integrate(t)
-        if (solver.t != tf):
-            print("No s'ha pogut evolucionar fins", tf, "només fins", solver.t)
-            exit(-1)
-        return solver.y
+        if (self.nom_problema == "fisher"):
+            N = self.parametres[0]
+            self.ini(self.z, self.parametres)
+            u0 = self.z.copy()
+            expt = np.exp(tf)
+            for i in range(0, N):
+                self.z[i] = u0[i] + u0[i]*(1.0 - u0[i])*((expt - 1.0)/(1.0 + u0[i]*(expt - 1.0)))
+            return self.z
+        else:
+            t = t0
+            h = tf - t0        
+            self.ini(self.z, self.parametres)
+            solver = ode(self.eqDreta)
+            solver.set_integrator('dop853', rtol = 1e-15, nsteps = 5000)
+            solver.set_f_params(self.parametres)
+            solver.set_initial_value(self.z, t)
+            while solver.successful() and solver.t < tf:
+                t = t + h
+                solver.integrate(t)
+            if (solver.t != tf):
+                print("No s'ha pogut evolucionar fins", tf, "només fins", solver.t)
+                exit(-1)
+            return solver.y
     
 class Metode:
     def __init__(self, np = 2, tm = 0, tp = 0):
