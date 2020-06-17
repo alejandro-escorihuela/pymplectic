@@ -216,9 +216,9 @@ class Solucionador:
             N = self.parametres[0]
             self.ini(self.z, self.parametres)
             u0 = self.z.copy()
-            expt = np.exp(tf)
+            expt = np.exp(tf) - 1.0
             for i in range(0, N):
-                self.z[i] = u0[i] + u0[i]*(1.0 - u0[i])*((expt - 1.0)/(1.0 + u0[i]*(expt - 1.0)))
+                self.z[i] = u0[i] + u0[i]*(1.0 - u0[i])*(expt/(1.0 + u0[i]*expt))
             return self.z
         else:
             t = t0
