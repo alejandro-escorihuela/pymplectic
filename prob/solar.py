@@ -84,9 +84,23 @@ def mapaABsolar(flux, z, dt, params):
     elif flux == 1:
         for i in range(0, npl):
             for j in range(0, 3):
-                p[i][j] = p[i][j] - (dt*grad(z, params, i, j))
-    
-def grad(z, params, i, j):
+                p[i][j] = p[i][j] - (dt*grad(z, params, i, j, 0))
+
+def mapaABsolni(flux, z, dt, params):
+    masses, npl, grav_cnt = params
+    q = np.reshape(z[0:18], (-1, 3))
+    p = np.reshape(z[18:36], (-1, 3))
+    if flux == 0:
+        for i in range(0, npl):
+            phiKepler(z, params, i, dt)
+    elif flux == 1:
+        for i in range(0, npl):
+            for j in range(0, 3):
+                p[i][j] = p[i][j] - (dt*grad(z, params, i, j, 1))
+                
+def grad(z, params, i, j, e):
+    # e = 0 -> T+V
+    # e = 1 -> H0+eH1
     masses, npl, grav_cnt = params
     q = np.reshape(z[0:18], (-1, 3))
     p = np.reshape(z[18:36], (-1, 3))
@@ -94,7 +108,9 @@ def grad(z, params, i, j):
     gV = 0.0
     if (type(q[0][0]).__name__ == "complex128"):
         resta = resta.astype(complex)
-    for k in range(0, npl):
+    if e == 1 and i == 0:
+        return 0.0
+    for k in range(e, npl):
         if i != k:
             for m in range(0, 3):
                 resta[m] = q[i][m] - q[k][m]
@@ -102,3 +118,37 @@ def grad(z, params, i, j):
             gV = gV + ((masses[k]*(q[i][j] - q[k][j]))/den)
     gV = gV * grav_cnt * masses[i]
     return gV
+
+def phiKepler(z, params, i, h): #real masses[MAX_PAR], real q[MAX_PAR][COMP], real p[MAX_PAR][COMP], int i, real h, int np):
+  # Sergio Blanes and Fernando Casas: A Concise Introduction to Geometric Numerical Integrator p[28,29]
+    masses, npl, grav_cnt = params
+    q = np.reshape(z[0:18], (-1, 3))
+    p = np.reshape(z[18:36], (-1, 3))
+    tol = 1e-12;
+    if i > 0:
+        q_ant = q[i].copy()
+        p_ant = p[i].copy()
+        t = h / masses[i]
+        mu = grav_cnt*masses[0]*masses[i]**2
+        r0 = np.linalg.norm(q[i])
+        v02 = np.dot(p[i], p[i])
+        u = np.dot(q[i], p[i])
+        a = -mu/(v02 - ((2.0*mu)/r0))
+        w = np.sqrt(mu/(a**3))
+        sig = 1 - r0/a
+        psi = u/(w*a**2)
+        x = w*t*(a/r0)
+        x_ant = x + 2*tol # Per poder simular el do-while de C
+        while abs(x - x_ant) > tol:
+            x_ant = x
+            c = np.cos(x)
+            s = np.sin(x)
+            x = x - ((x - (sig*s) + (psi*(1.0 - c)) - (w*t)) / (1.0 - (sig*c) + (psi*s)))
+        aux = 1.0 - (sig*c) + (psi*s)
+        ff = 1.0 + (((c - 1.0)*a)/r0)
+        gg = t + ((s - x)/w)
+        fp = (-a*w*s)/(aux*r0)
+        gp = 1.0 + ((c - 1)/aux)
+        for j in range(0, 3):
+            q[i][j] = (ff*q_ant[j]) + (gg*p_ant[j]);
+            p[i][j] = (fp*q_ant[j]) + (gp*p_ant[j]);

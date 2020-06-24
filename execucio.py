@@ -14,10 +14,12 @@ def print_ajuda(nom_prog):
     print("\t1 -> DDNLS")
     print("\t2 -> FluxABC")
     print("\t3 -> Força de Lorentz. Camp electroestàtic")
-    print("\t4 -> Sistema Solar exterior i Plutó")
-    print("\t5 -> Oscil·lador harmònic")
-    print("\t6 -> Kepler")
-    print("\t7 -> Equació de Fisher")
+    print("\t4 -> Sistema Solar exterior i Plutó: T+V")
+    print("\t5 -> Sistema Solar exterior i Plutó: H0+eH1")
+    print("\t6 -> Oscil·lador harmònic")
+    print("\t7 -> Kepler")
+    print("\t8 -> Kepler pertorbat: H0+eH1")
+    print("\t8 -> Equació de Fisher")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -41,16 +43,24 @@ if __name__ == "__main__":
         t_final = 2000
         h_elem = [200.0, 100.0, 50.0, 25.0]
     elif pr == 5:
+        prob = prb.solni
+        t_final = 20000
+        h_elem = [2000.0, 1000.0, 500.0, 200.0]        
+    elif pr == 6:
         prob = prb.harm
         t_final = 650
         h_elem = [1.0, 0.5, 0.25, 0.1]
         # t_final = int(1e7)
         # h_elem = [1.0/6.0]
-    elif pr == 6:
+    elif pr == 7:
         prob = prb.kepl
         t_final = 650
         h_elem = [0.25, 0.1, 0.04, 0.025, 0.01]
-    elif pr == 7:
+    elif pr == 8:
+        prob = prb.keni
+        t_final = 650
+        h_elem = [0.25, 0.1, 0.04, 0.025, 0.01]
+    elif pr == 9:
         prob = prb.fish
         t_final = 10
         h_elem = [0.1, 0.05, 0.01]        
@@ -65,15 +75,21 @@ if __name__ == "__main__":
     h = []
 
     # Basics
-    met.append("sx_2")
-    tip.append(1)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("sx_2")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(h_elem)
     
-    met.append("r1_s2")
-    tip.append(3)
+    # met.append("r1_s2")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append(h_elem)
+
+    # Quasi-integrables
+    met.append("nia_864")
+    tip.append(0)
     pro.append(0)
-    h.append(h_elem)
+    h.append(h_elem)    
     
     # # Comparativa 19-05-2020
     # met.append("ss_35_10")

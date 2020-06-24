@@ -92,6 +92,22 @@ solar.set_calc_error_coord(False)
 solar.set_print_coord(True)
 solar.set_print_cons(True)
 
+# Sistema solar exterior i Plutó: H0+eH1
+# solar_masses = np.array([1.00000597682, 9.543137255E-04, 2.857310206E-04, 4.364519859E-05, 5.148818502E-05, 6.571141277E-09])
+np = 6
+grav_cnt = 0.000295912208286
+solni = Solucionador()
+solni.set_nom("solni")
+solni.set_parts(2)
+solni.set_ini(ini_solar)
+solni.set_tam(2*6*3)
+solni.set_mapa(mapaABsolni)
+solni.set_parametres([solar_masses, np, grav_cnt])
+solni.add_conserva(hamiltonia_solar)
+solni.set_calc_error_coord(False)
+solni.set_print_coord(True)
+solni.set_print_cons(True)
+
 # Oscil·lador harmònic
 harm = Solucionador()
 harm.set_nom("harm")
