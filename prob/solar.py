@@ -92,7 +92,7 @@ def mapaABsolni(flux, z, dt, params):
     p = np.reshape(z[18:36], (-1, 3))
     if flux == 0:
         for i in range(0, npl):
-            phiKepler(z, params, i, dt)
+            phiKeplerSol(z, params, i, dt)
     elif flux == 1:
         for i in range(0, npl):
             for j in range(0, 3):
@@ -119,12 +119,12 @@ def grad(z, params, i, j, e):
     gV = gV * grav_cnt * masses[i]
     return gV
 
-def phiKepler(z, params, i, h): #real masses[MAX_PAR], real q[MAX_PAR][COMP], real p[MAX_PAR][COMP], int i, real h, int np):
+def phiKeplerSol(z, params, i, h):
   # Sergio Blanes and Fernando Casas: A Concise Introduction to Geometric Numerical Integrator p[28,29]
     masses, npl, grav_cnt = params
     q = np.reshape(z[0:18], (-1, 3))
     p = np.reshape(z[18:36], (-1, 3))
-    tol = 1e-12;
+    tol = 1e-15;
     if i > 0:
         q_ant = q[i].copy()
         p_ant = p[i].copy()

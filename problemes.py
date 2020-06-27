@@ -134,6 +134,19 @@ kepl.set_calc_error_coord(False)
 kepl.set_print_coord(False)
 kepl.set_print_cons(True)
 
+# Kepler pertorbat m = 1. H0+eH1
+keni = Solucionador()
+keni.set_nom("keni")
+keni.set_parts(2)
+keni.set_ini(ini_kepl)
+keni.set_tam(4)
+keni.set_mapa(mapaABkeni)
+keni.set_parametres([0.8, 1.0, 0.001])
+keni.add_conserva(hamiltonia_keni)
+keni.set_calc_error_coord(False)
+keni.set_print_coord(False)
+keni.set_print_cons(True)
+
 # Equacio de Fisher
 fish_tam = 1000
 fish = Solucionador()

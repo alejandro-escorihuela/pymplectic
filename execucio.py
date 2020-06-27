@@ -19,7 +19,7 @@ def print_ajuda(nom_prog):
     print("\t6 -> Oscil·lador harmònic")
     print("\t7 -> Kepler")
     print("\t8 -> Kepler pertorbat: H0+eH1")
-    print("\t8 -> Equació de Fisher")
+    print("\t9 -> Equació de Fisher")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
