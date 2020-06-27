@@ -59,7 +59,7 @@ if __name__ == "__main__":
     elif pr == 8:
         prob = prb.keni
         t_final = 650
-        h_elem = [0.25, 0.1, 0.04, 0.025, 0.01]
+        h_elem = [2.5, 1.0, 0.4, 0.25, 0.1]
     elif pr == 9:
         prob = prb.fish
         t_final = 10

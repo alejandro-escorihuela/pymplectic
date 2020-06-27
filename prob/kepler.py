@@ -9,10 +9,6 @@ import numpy as np
 def ini_kepl(z, params):
     e = params[0]
     z[0], z[1], z[2], z[3] = 1.0 - e, 0.0, 0.0, np.sqrt((1.0 + e)/(1.0 - e))
-
-def ini_keni(z, params):
-    e, alp, eps = params
-    z[0], z[1], z[2], z[3] = 1.0 - e, 0.0, 0.0, np.sqrt((1.0 + e)/(1.0 - e))
     
 def hamiltonia_kepl(z, params):
     return (0.5*(z[2]**2 + z[3]**2)) - (1.0/np.sqrt(z[0]**2 + z[1]**2))
@@ -51,14 +47,14 @@ def mapaABkeni(flux, z, dt, params):
         f2 = (q[0]**2)/r2
         funx = eps*f1*q[0]*(1.0 + 2.0*alp - 5.0*alp*f2)
         funy = eps*f1*q[1]*(1.0 - 5.0*alp*f2)
-        p[0] = p[0] - (dt*(q[0]*funx))
-        p[1] = p[1] - (dt*(q[1]*funy))
+        p[0] = p[0] - (dt*funx)
+        p[1] = p[1] - (dt*funy)
 
 def phiKepler(z, params, h):
   # Sergio Blanes and Fernando Casas: A Concise Introduction to Geometric Numerical Integrator p[28,29]
     e, alp, eps = params
     q, p = z[0:2], z[2:4]
-    tol = 1e-10;
+    tol = 1e-15;
 
     q_ant = q.copy()
     p_ant = p.copy()
