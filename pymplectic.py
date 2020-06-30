@@ -290,6 +290,10 @@ class Metode:
             self.ordre_pos, self.coef_pos = postp[0], postp[1]
         # Amb processat per a escissió
         elif (self.tipus_processat == 3) and (self.tipus_metode == 0):
+            nucli, prep, postp = self.read_coefSplt_P()
+            self.ordre, self.coef = nucli[0], nucli[1]
+            self.ordre_pre, self.coef_pre = prep[0], prep[1]
+            self.ordre_pos, self.coef_pos = postp[0], postp[1]
         else:
             print("El tipus de mètode i/o processat no existeixen.")
             exit(-2)
@@ -488,6 +492,65 @@ class Metode:
                     coef[ind].append(np.float128(cadena[j]))
         return [metode, coef]
 
+    def read_coefSplt_P(self):
+        nom_fit, n_parts = self.fit, self.num_parts
+        linies = []
+        with open("./coef/" + nom_fit + ".cnf") as fit:
+            linies = fit.readlines()
+        met_nuc, met_pre, met_pos = [], [], []
+        cof_nuc, cof_pre, cof_pos = [], [], []
+        for i in range(0, n_parts):
+            cof_nuc.append([])
+            cof_pre.append([])
+            cof_pos.append([])
+        for i in range(0, len(linies)):
+            linia = linies[i].replace("\n", "")
+            if linia[0] == 'm':
+                linia = linia[2:]
+                cadena = linia.split(" ")
+                self.aval = len(cadena)
+                for j in range(0, len(cadena)):
+                    flux = ord(cadena[j][0]) - 97
+                    nume = int(cadena[j][1]) - 1
+                    met_nuc.append([flux, nume])
+            elif linia[0:2] == "p0":
+                linia = linia[3:]
+                cadena = linia.split(" ")
+                for j in range(0, len(cadena)):
+                    flux = ord(cadena[j][0]) - 97 - 21
+                    nume = int(cadena[j][1]) - 1
+                    met_pre.append([flux, nume])
+            elif linia[0:2] == "p1":
+                linia = linia[3:]
+                cadena = linia.split(" ")
+                for j in range(0, len(cadena)):
+                    flux = ord(cadena[j][0]) - 97 - 5
+                    nume = int(cadena[j][1]) - 1
+                    met_pos.append([flux, nume])  
+            else:
+                ind = ord(linia[0]) - 97
+                if ind >= 0 and ind <= 4:
+                    cof = cof_nuc
+                elif ind >= 5 and ind <= 9:
+                    cof = cof_pos
+                    ind = ind - 5
+                elif ind >= 21 and ind <= 25:
+                    cof = cof_pre
+                    ind = ind - 21
+                linia = linia[2:]
+                cadena = linia.split(" ")
+                for j in range(0, len(cadena)):
+                    cof[ind].append(np.float128(cadena[j]))
+        print("nuc ->", met_nuc)
+        print(cof_nuc)
+        print("pre ->", met_pre)
+        print(cof_pre)
+        print("pos ->", met_pos)
+        print(cof_pos)
+        exit(-1)
+        return [met_nuc, cof_nuc], [met_pre, cof_pre], [met_pos, cof_pos]
+
+        
     def read_coefComp_P(self):
         tipus = self.tipus_processat
         noms, coefs = self.__read_coefComp_previ()
@@ -524,6 +587,9 @@ class Metode:
                 cofX_pre.append(-cofX_pos[2*n - j - 1])
             met_pos, cof_pos = self.comp2split(cofX_pre[::-1], False)
             met_pre, cof_pre = self.comp2split(cofX_pos[::-1], False)
+        # print(met_nuc, met_pre, met_pos)
+        # exit(-1) 
+        
         return [met_nuc, cof_nuc], [met_pre, cof_pre], [met_pos, cof_pos]
     
     def __operadorR1(self, vec, gamma):
