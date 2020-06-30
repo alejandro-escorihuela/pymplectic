@@ -255,6 +255,7 @@ class Metode:
     def set_metode(self, arxiu):
         self.nom = arxiu
         self.fit = arxiu
+        # Sense processat
         if (self.tipus_processat == 0):
             # Escissió
             if (self.tipus_metode == 0):
@@ -281,11 +282,14 @@ class Metode:
             else:
                 print(str(tipus_metode) + " no és cap tipus de mètode.")
                 exit(-2)
-        elif (self.tipus_processat > 0) and (self.tipus_metode == 1):
+        # Amb processat per a composicions de primer ordre
+        elif (self.tipus_processat > 0) and (self.tipus_processat < 3) and (self.tipus_metode == 1):
             nucli, prep, postp = self.read_coefComp_P()
             self.ordre, self.coef = nucli[0], nucli[1]
             self.ordre_pre, self.coef_pre = prep[0], prep[1]
             self.ordre_pos, self.coef_pos = postp[0], postp[1]
+        # Amb processat per a escissió
+        elif (self.tipus_processat == 3) and (self.tipus_metode == 0):
         else:
             print("El tipus de mètode i/o processat no existeixen.")
             exit(-2)
