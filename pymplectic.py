@@ -540,6 +540,14 @@ class Metode:
                 cadena = linia.split(" ")
                 for j in range(0, len(cadena)):
                     cof[ind].append(np.float128(cadena[j]))
+        
+        # print("pre ->", met_pre)
+        # print(cof_pre)
+        # print("nuc ->", met_nuc)
+        # print(cof_nuc)
+        # print("pos ->", met_pos)
+        # print(cof_pos)
+        # exit(-1)
         return [met_nuc, cof_nuc], [met_pre, cof_pre], [met_pos, cof_pos]
         
     def read_coefComp_P(self):
