@@ -73,8 +73,10 @@ if __name__ == "__main__":
     tip = []
     pro = []
     h = []
+    
 
     # Basics
+    
     # met.append("sx_2")
     # tip.append(1)
     # pro.append(0)
@@ -85,13 +87,14 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
 
-    # Esborrar després
-    # met.append("psx_4_4_4")
-    # tip.append(1)
-    # pro.append(1)
-    # h.append(h_elem)
-    
+
     # Quasi-integrables
+    
+    met.append("psnia_864_1")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
+    
     met.append("pnia_764")
     tip.append(0)
     pro.append(3)
@@ -100,9 +103,11 @@ if __name__ == "__main__":
     met.append("nia_864")
     tip.append(0)
     pro.append(0)
-    h.append(h_elem)    
+    h.append(h_elem) 
     
-    # # Comparativa 19-05-2020
+    
+    # Comparativa 19-05-2020
+    
     # met.append("ss_35_10")
     # tip.append(2)
     # pro.append(0)
@@ -132,6 +137,7 @@ if __name__ == "__main__":
     # tip.append(5)
     # pro.append(0)
     # h.append(h_elem)
+
     
     # Mètodes SC
 
@@ -184,6 +190,7 @@ if __name__ == "__main__":
     # tip.append(4)
     # pro.append(0)
     # h.append(h_elem)
+
     
     # Mètodes R, T i SC
 
@@ -271,6 +278,7 @@ if __name__ == "__main__":
     # tip.append(3)
     # pro.append(0)
     # h.append([10.0, 5.0, 2.0, 1.0])
+
     
     # Escissió 3 parts
     
@@ -279,6 +287,7 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
 
+    
     # Composició
     
     # met.append("xa_6_4")
@@ -315,6 +324,7 @@ if __name__ == "__main__":
     # tip.append(2)
     # pro.append(0)
     # h.append(h_elem)
+
     
     # Mètodes de processat
     

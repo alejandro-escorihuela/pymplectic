@@ -14,6 +14,7 @@ def ini_fluxABC(z, params):
 
 def mapaABC_fluxABC(flux, z, h, params):
     A, B, C = params
+    # z[flux] = z[flux] + h*(params[(flux + 1)%3]*np.cos(z[(flux + 1)%3]) + params[(flux + 2)%3]*np.sin(z[(flux + 2)%3]))
     if flux == 0:
         z[0] = z[0] + h*(B*np.cos(z[1]) + C*np.sin(z[2]))
     elif flux == 1:

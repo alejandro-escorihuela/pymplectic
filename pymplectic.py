@@ -90,7 +90,9 @@ class Solucionador:
         p_it = 0
         if (self.metode.tipus_processat > 0):
             r = len(self.metode.ordre_pre)
-            p_it = Nit / 5
+            p_it = Nit // 5
+            if (self.metode.tipus_processat == 4):
+                Nit = Nit - 2
         temps = 0.0
         Naval = 0
         self.ini(self.z, self.parametres)
@@ -110,8 +112,6 @@ class Solucionador:
                 index = self.metode.ordre_pre[i][1]
                 dt = self.metode.coef_pre[flux][index] * h
                 self.mapa(flux, self.z, dt, self.parametres)
-            # temps += tm.time() - t0
-            # Naval += r
 
         for it in range(0, Nit):
             # nucli
@@ -165,8 +165,6 @@ class Solucionador:
                     index = self.metode.ordre_pos[i][1]
                     dt = self.metode.coef_pos[flux][index] * h
                     self.mapa(flux, self.z, dt, self.parametres)
-                # temps += tm.time() - t0
-                # Naval += r
                 # càlcul de les quantitats conservades
                 for i in range(0, num_cons):
                     Cvalr[i] = self.conserves[i](self.z, self.parametres)
@@ -184,7 +182,8 @@ class Solucionador:
                     fitC.write(esc + "\n")
                 if (it < Nit - 1):
                     self.z = z_copia.copy()
-                    
+        if (self.metode.tipus_processat == 4):
+            Naval += 2*self.metode.aval
         tornar = [temps, Naval]
         for i in range(0, num_cons):
                 tornar.append(abs(Cemax[i]/Csub0[i]))
@@ -289,7 +288,7 @@ class Metode:
             self.ordre_pre, self.coef_pre = prep[0], prep[1]
             self.ordre_pos, self.coef_pos = postp[0], postp[1]
         # Amb processat per a escissió
-        elif (self.tipus_processat == 3) and (self.tipus_metode == 0):
+        elif (self.tipus_processat >= 3) and (self.tipus_processat < 5) and (self.tipus_metode == 0):
             nucli, prep, postp = self.read_coefSplt_P()
             self.ordre, self.coef = nucli[0], nucli[1]
             self.ordre_pre, self.coef_pre = prep[0], prep[1]
@@ -527,7 +526,7 @@ class Metode:
                     flux = ord(cadena[j][0]) - 97 - 5
                     nume = int(cadena[j][1]) - 1
                     met_pos.append([flux, nume])  
-            else:
+            elif ord(linia[0]) >= 97 and ord(linia[0]) <= 122:
                 ind = ord(linia[0]) - 97
                 if ind >= 0 and ind <= 4:
                     cof = cof_nuc
@@ -541,15 +540,7 @@ class Metode:
                 cadena = linia.split(" ")
                 for j in range(0, len(cadena)):
                     cof[ind].append(np.float128(cadena[j]))
-        print("nuc ->", met_nuc)
-        print(cof_nuc)
-        print("pre ->", met_pre)
-        print(cof_pre)
-        print("pos ->", met_pos)
-        print(cof_pos)
-        exit(-1)
         return [met_nuc, cof_nuc], [met_pre, cof_pre], [met_pos, cof_pos]
-
         
     def read_coefComp_P(self):
         tipus = self.tipus_processat
