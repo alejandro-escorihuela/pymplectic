@@ -14,7 +14,7 @@ rc('text', usetex=True)
 if __name__ == "__main__":
     prob = ["solni", "keni"]
     nom_prob = ["Sistema Solar exterior i Plutó", "Kepler pertorbat"]
-    ip = 0
+    ip = 1
     met = ["psnia_864_1", "psnia_864_2", "pnia_764", "nia_864"]
     nom = ["P_sNIA_3^{[8,6,4]} (opc 1)", "P_sNIA_3^{[8,6,4]} (opc 2)", "PNIA_3^{[7,6,4]}", "NIA_5^{[8,6,4]}"]
     sim = ["o", "v", "^", "<"]
