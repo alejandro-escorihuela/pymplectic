@@ -100,15 +100,15 @@ if __name__ == "__main__":
     pro.append(4)
     h.append(h_elem)
     
-    # met.append("pnia_764")
-    # tip.append(0)
-    # pro.append(3)
-    # h.append(h_elem) 
+    met.append("pnia_764")
+    tip.append(0)
+    pro.append(3)
+    h.append(h_elem) 
     
-    # met.append("nia_864")
-    # tip.append(0)
-    # pro.append(0)
-    # h.append(h_elem) 
+    met.append("nia_864")
+    tip.append(0)
+    pro.append(0)
+    h.append(h_elem) 
     
     
     # Comparativa 19-05-2020

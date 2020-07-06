@@ -87,10 +87,10 @@ class Solucionador:
         m = len(self.metode.ordre)
         r = 0
         Nit = int(round(T / h))
-        p_it = 0
+        p_it = int(1e10)
         if (self.metode.tipus_processat > 0):
             r = len(self.metode.ordre_pre)
-            p_it = Nit // 5
+            #p_it = Nit // 5
             if (self.metode.tipus_processat == 4):
                 Nit = Nit - 2
         temps = 0.0
@@ -112,7 +112,6 @@ class Solucionador:
                 index = self.metode.ordre_pre[i][1]
                 dt = self.metode.coef_pre[flux][index] * h
                 self.mapa(flux, self.z, dt, self.parametres)
-
         for it in range(0, Nit):
             # nucli
             if not self.metode.multifil:
@@ -156,7 +155,7 @@ class Solucionador:
                 self.z = z_nou.real
             Naval += self.metode.aval
 
-            if ((self.metode.tipus_processat > 0) and ((it % p_it == 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
+            if ((self.metode.tipus_processat > 0) and ((it % p_it == 0 and it > 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
                 z_copia = self.z.copy()
                 t0 = tm.time()
                 # post-processat
