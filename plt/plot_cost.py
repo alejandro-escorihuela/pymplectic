@@ -14,7 +14,7 @@ rc('text', usetex=True)
 if __name__ == "__main__":
     prob = ["solni", "keni"]
     nom_prob = ["Sistema Solar exterior i Plutó", "Kepler pertorbat"]
-    ip = 1
+    ip = 0
     met = ["psnia_864_1", "psnia_864_2", "pnia_764", "nia_864"]
     nom = ["P_sNIA_3^{[8,6,4]} (opc 1)", "P_sNIA_3^{[8,6,4]} (opc 2)", "PNIA_3^{[7,6,4]}", "NIA_5^{[8,6,4]}"]
     sim = ["o", "v", "^", "<"]
@@ -52,7 +52,8 @@ if __name__ == "__main__":
     plt.ylabel(r'$\displaystyle\log_{10}\left(\frac{|H(t_f)-H(t_0)|}{H(t_0)}\right)$')
     plt.legend()
     plt.grid(True)
-   
+    plt.tight_layout()
+    
     nom_arxiu = "cost_" + prob[ip] + ".pdf"
     plt.savefig(nom_arxiu, format='pdf')
     plt.show()
