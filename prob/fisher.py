@@ -8,10 +8,10 @@ import numpy as np
 
 def ini_fish(z, params):
     N = params[0]
-    d = 1.0 / N
+    d = 1.0/N
     x = 0.0
     for i in range(0, N):
-        z[i] = np.sin(2.0 * np.pi * x)
+        z[i] = np.sin(2.0*np.pi*x)
         x = x + d
     
 def mapaABfish(flux, z, dt, params):
@@ -26,10 +26,19 @@ def mapaABfish(flux, z, dt, params):
 
 def laplacia(v, dx):
     D = np.zeros(v.size)
-    ddx = dx*dx
+    inv_ddx = 1.0/(dx*dx)
     ult = v.size - 1
-    D[0] = (2.0*v[0] - 5.0*v[1] + 4.0*v[2] - v[3])/ddx
-    D[ult] = (2.0*v[ult] - 5.0*v[ult - 1] + 4.0*v[ult - 2] - v[ult - 3])/ddx
+    D[0] = (v[2] - 2.0 * v[1] + v[0])*inv_ddx
+    D[ult] = (v[ult] - 2.0 * v[ult - 1] + v[ult - 2])*inv_ddx
     for i in range(1, ult):
-        D[i] = (v[i + 1] + v[i - 1] - 2.0*v[i])/ddx
+        D[i] = (v[i + 1] - 2.0*v[i] + v[i - 1])*inv_ddx
     return D
+
+def eqDreta_fish(t, z, params):
+    N = params[0]
+    zpunt = np.zeros(N)
+    lap = np.zeros(N)
+    lap = laplacia(z, 1.0/N)
+    for i in range(0, N):
+        zpunt[i] = lap[i] + z[i]*(1.0 - z[i])
+    return zpunt
