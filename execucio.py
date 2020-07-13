@@ -45,7 +45,7 @@ if __name__ == "__main__":
     elif pr == 5:
         prob = prb.solni
         t_final = 20000
-        h_elem = [2000.0, 1000.0, 500.0, 200.0, 100.0]        
+        h_elem = [5000.0, 2000.0, 1000.0, 500.0, 200.0, 100.0]        
     elif pr == 6:
         prob = prb.harm
         t_final = 650
