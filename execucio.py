@@ -45,7 +45,7 @@ if __name__ == "__main__":
     elif pr == 5:
         prob = prb.solni
         t_final = 20000
-        h_elem = [5000.0, 2000.0, 1000.0, 500.0, 200.0, 100.0]        
+        h_elem = [500.0, 400.0, 200.0, 160.0, 100.0]        
     elif pr == 6:
         prob = prb.harm
         t_final = 650
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     elif pr == 8:
         prob = prb.keni
         t_final = 650
-        h_elem = [2.5, 1.0, 0.4, 0.25, 0.1, 0.04]
+        h_elem = [0.4, 0.2, 0.1, 0.08, 0.04]
     elif pr == 9:
         prob = prb.fish
         t_final = 10
@@ -96,6 +96,26 @@ if __name__ == "__main__":
     h.append(h_elem)
 
     met.append("psnia_864_2")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
+
+    met.append("psnia_864_3")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
+
+    met.append("psnia_864_4")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
+
+    met.append("psnia_864_5")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
+
+    met.append("psnia_864_6")
     tip.append(0)
     pro.append(4)
     h.append(h_elem)

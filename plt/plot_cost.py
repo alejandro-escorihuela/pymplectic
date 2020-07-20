@@ -12,16 +12,16 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica'], 'size' : 14})
 rc('text', usetex=True)
 
 if __name__ == "__main__":
-    ip = 0 # Quin problema?
+    ip = 1 # Quin problema?
     ig = 0 # Quina gràfica?
     prob = ["solni", "keni"]
     nom_prob = ["Giant planets and Pluto", "pertorbed Kepler"]
     nom_fit = ["cost", "costcpu", "order"]
     nom_graf = ["Efficency", "Efficieny (CPU time)", "Order"]
-    met = ["psnia_864_1", "psnia_864_2", "pnia_764", "nia_864"]
-    nom = ["P_sNIA_3^{[8,6,4]} (opc 1)", "P_sNIA_3^{[8,6,4]} (opc 2)", "PNIA_3^{[7,6,4]}", "NIA_5^{[8,6,4]}"]
-    nuc = [3, 3, 3, 5]
-    sim = ["o", "v", "^", "<"]
+    met = ["psnia_864_1", "psnia_864_2", "psnia_864_3", "psnia_864_4", "psnia_864_5", "psnia_864_6", "pnia_764", "nia_864"]
+    nom = ["P_sNIA_3^{[8,6,4]} (opc 1)", "P_sNIA_3^{[8,6,4]} (opc 2)",  "P_sNIA_4^{[8,6,4]} (opc 3)", "P_sNIA_4^{[8,6,4]} (opc 4)", "P_sNIA_4^{[8,6,4]} (opc 5)", "P_sNIA_5^{[8,6,4]} (opc 6)","PNIA_3^{[7,6,4]}", "NIA_7^{[8,6,4]}"]
+    nuc = [3, 3, 4, 4, 4, 5, 3, 7]
+    sim = ["o", "v", "^", "<", ">", "8", "s", "p", "P"]
     t = []
     Neval = []
     H = []
@@ -47,7 +47,8 @@ if __name__ == "__main__":
     
     plt.rc('text', usetex = True)
     plt.rc('font', family = 'serif')
-    plt.rc('figure', figsize = (5.84, 4.14))
+    plt.rc('figure', figsize = (11.68, 8.28))
+    #plt.rc('figure', figsize = (5.84, 4.14))
     
     xval = np.zeros(len(Neval))
     xlab = ""
