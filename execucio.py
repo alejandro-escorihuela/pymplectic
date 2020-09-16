@@ -48,10 +48,10 @@ if __name__ == "__main__":
         h_elem = [500.0, 400.0, 200.0, 160.0, 100.0]        
     elif pr == 6:
         prob = prb.harm
-        t_final = 650
-        h_elem = [1.0, 0.5, 0.25, 0.1]
-        # t_final = int(1e7)
-        # h_elem = [1.0/6.0]
+        # t_final = 650
+        # h_elem = [1.0, 0.5, 0.25, 0.1]
+        t_final = int(1e7)
+        h_elem = [1.8]
     elif pr == 7:
         prob = prb.kepl
         t_final = 650
@@ -88,47 +88,59 @@ if __name__ == "__main__":
     # h.append(h_elem)
 
 
+    # Comparativa 15-09-2020
+
+    met.append("sc_5_6")
+    tip.append(5)
+    pro.append(0)
+    h.append([5.0/9.0])
+
+    met.append("s4c_2_6")
+    tip.append(5)
+    pro.append(0)
+    h.append([1.0])
+
     # Quasi-integrables
     
-    met.append("psnia_864_1")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_1")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
 
-    met.append("psnia_864_2")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_2")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
 
-    met.append("psnia_864_3")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_3")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
 
-    met.append("psnia_864_4")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_4")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
 
-    met.append("psnia_864_5")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_5")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
 
-    met.append("psnia_864_6")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_6")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
     
-    met.append("pnia_764")
-    tip.append(0)
-    pro.append(3)
-    h.append(h_elem) 
+    # met.append("pnia_764")
+    # tip.append(0)
+    # pro.append(3)
+    # h.append(h_elem) 
     
-    met.append("nia_864")
-    tip.append(0)
-    pro.append(0)
-    h.append(h_elem) 
+    # met.append("nia_864")
+    # tip.append(0)
+    # pro.append(0)
+    # h.append(h_elem) 
     
     
     # Comparativa 19-05-2020
