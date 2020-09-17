@@ -48,10 +48,10 @@ if __name__ == "__main__":
         h_elem = [500.0, 400.0, 200.0, 160.0, 100.0]        
     elif pr == 6:
         prob = prb.harm
-        # t_final = 650
-        # h_elem = [1.0, 0.5, 0.25, 0.1]
-        t_final = int(1e7)
-        h_elem = [1.8]
+        t_final = 650
+        h_elem = [1.0, 0.5, 0.25, 0.1]
+        # t_final = int(1e6)
+        # h_elem = [10.0]
     elif pr == 7:
         prob = prb.kepl
         t_final = 650
@@ -93,12 +93,17 @@ if __name__ == "__main__":
     met.append("sc_5_6")
     tip.append(5)
     pro.append(0)
-    h.append([5.0/9.0])
+    h.append(h_elem)
 
-    met.append("s4c_2_6")
+    met.append("sc_7_6")
     tip.append(5)
     pro.append(0)
-    h.append([1.0])
+    h.append(h_elem)
+
+    met.append("ssc_7_6")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem)    
 
     # Quasi-integrables
     
