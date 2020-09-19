@@ -89,21 +89,21 @@ if __name__ == "__main__":
 
 
     # Comparativa 15-09-2020
-
+    t_final = int(1e7)
     met.append("sc_5_6")
     tip.append(5)
     pro.append(0)
-    h.append(h_elem)
+    h.append([5.0/7])
 
     met.append("sc_7_6")
     tip.append(5)
     pro.append(0)
-    h.append(h_elem)
+    h.append([1.0])
 
     met.append("ssc_7_6")
     tip.append(5)
     pro.append(0)
-    h.append(h_elem)    
+    h.append([1.0])    
 
     # Quasi-integrables
     
