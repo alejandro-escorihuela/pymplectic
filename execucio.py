@@ -89,22 +89,37 @@ if __name__ == "__main__":
 
 
     # Comparativa 15-09-2020
-    t_final = int(1e7)
+
+    t_final=int(1e6)
     met.append("sc_5_6")
     tip.append(5)
     pro.append(0)
-    h.append([5.0/7])
+    h.append([2/7])
 
     met.append("sc_7_6")
     tip.append(5)
     pro.append(0)
-    h.append([1.0])
+    h.append([0.4])
 
     met.append("ssc_7_6")
     tip.append(5)
     pro.append(0)
-    h.append([1.0])    
+    h.append([0.4])   
 
+    # h_elem2 = []
+    # for i in range(0, len(h_elem)):
+    #     h_elem2.append(h_elem[i]*(2))
+    
+    # met.append("sc_11_8")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem2)
+
+    # met.append("ssc_15_8")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem2)
+    
     # Quasi-integrables
     
     # met.append("psnia_864_1")
@@ -164,16 +179,17 @@ if __name__ == "__main__":
     # tip.append(2)
     # pro.append(0)
     # h.append(h_elem)
-    
+    # hac = 1/6
+    # t_final = int(1e6)
     # met.append("sc_11_8")
     # tip.append(5)
     # pro.append(0)
-    # h.append(h_elem)
+    # h.append([hac])
 
     # met.append("ssc_15_8")
     # tip.append(5)
     # pro.append(0)
-    # h.append(h_elem)
+    # h.append([hac*(15/11)])
     
     # met.append("s4c_5_8")
     # tip.append(5)
