@@ -42,7 +42,7 @@ class Solucionador:
     def set_tam(self, tam):
         self.num_coord = tam
         self.z = np.float128(np.array(np.zeros(self.num_coord)))
-        
+        ###self.z = np.array(np.zeros(self.num_coord), dtype = complex)
     def set_mapa(self, func):
         self.mapa = func
         
@@ -76,7 +76,8 @@ class Solucionador:
         if quad:
             t_real_ = np.float128
             t_comp_ = np.complex256
-        self.z = np.array(np.zeros(self.num_coord), dtype = t_real_)
+        self.z = np.array(np.zeros(self.num_coord), dtype = t_real_)   
+        ###self.z = np.array(np.zeros(self.num_coord), dtype = t_comp_)
         ruta_comu = "./dat/" + self.metode.nom + "/" + self.nom_problema
         ruta_Z = ruta_comu + "_coor_" + str(int(round(T))) + "_" + str(h).replace(".", "") + ".dat"
         ruta_C = ruta_comu + "_cons_" + str(int(round(T))) + "_" + str(h).replace(".", "") + ".dat"
@@ -85,6 +86,7 @@ class Solucionador:
         if self.printC:
             fitC = open(ruta_C, "w")    
         m = len(self.metode.ordre)
+        ###m = 1
         r = 0
         Nit = int(round(T / h))
         p_it = int(1e10)
@@ -153,6 +155,7 @@ class Solucionador:
                 for i in range(0, len(z_nou)):
                     z_nou[i] *= fac
                 self.z = z_nou.real
+                ###self.z = z_nou
             Naval += self.metode.aval
 
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0 and it > 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):

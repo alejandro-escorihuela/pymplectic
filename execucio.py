@@ -88,11 +88,11 @@ if __name__ == "__main__":
 
     # Comparativa 15-09-2020
 
-    # t_final=int(1e6)
-    # met.append("sc_5_6")
-    # tip.append(5)
-    # pro.append(0)
-    # h.append([2/7])
+    #t_final=int(1e6)
+    met.append("sc_5_6")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem)
 
     # met.append("sc_7_6")
     # tip.append(5)
@@ -160,15 +160,15 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem) 
 
-    met.append("psnia_1064_1")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_1064_1")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
 
-    met.append("psnia_1064_2")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_1064_2")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
     
     # Comparativa 19-05-2020
     

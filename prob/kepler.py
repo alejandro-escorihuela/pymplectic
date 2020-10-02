@@ -83,3 +83,6 @@ def phiKepler(z, params, h):
     for j in range(0, 2):
         q[j] = (ff*q_ant[j]) + (gg*p_ant[j]);
         p[j] = (fp*q_ant[j]) + (gp*p_ant[j]);
+
+def eqDreta_kepl(t, z, params):
+    #TODO
