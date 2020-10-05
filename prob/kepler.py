@@ -85,4 +85,13 @@ def phiKepler(z, params, h):
         p[j] = (fp*q_ant[j]) + (gp*p_ant[j]);
 
 def eqDreta_kepl(t, z, params):
-    #TODO
+    q, p = z[0:2], z[2:4]
+    qpunt = p.copy()
+    ppunt = p.copy()
+    r = q[0]**2 + q[1]**2
+    r3 = (q[0]**2 + q[1]**2)**1.5
+    fun = 1/r3
+    for i in range(0, 2):
+        ppunt[i] = -q[i]*fun
+    zpunt = np.concatenate((qpunt, ppunt))
+    return zpunt

@@ -212,12 +212,12 @@ class Solucionador:
         return tornar
 
 
-    def solucionar_exacte(self, t0, tf):
+    def solucionar_exacte(self, t0, tf, N = 5000):
         t = t0
-        h = tf - t0        
+        h = (tf - t0)
         self.ini(self.z, self.parametres)
         solver = ode(self.eqDreta)
-        solver.set_integrator('dop853', rtol = 1e-15, nsteps = 5000)
+        solver.set_integrator('dop853', rtol = 1e-15, nsteps = N)
         solver.set_f_params(self.parametres)
         solver.set_initial_value(self.z, t)
         while solver.successful() and solver.t < tf:
