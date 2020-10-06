@@ -118,7 +118,7 @@ harm.set_mapa(mapaABharm)
 harm.set_parametres([1.0, 1.0])
 harm.add_conserva(hamiltonia_harm)
 harm.set_calc_error_coord(False)
-harm.set_print_coord(False)
+harm.set_print_coord(True)
 harm.set_print_cons(True)
 
 # Kepler m = 1

@@ -8,7 +8,8 @@ import numpy as np
 
 def ini_harm(z, params):
     k, m = params
-    z[0], z[1] = 2.5, 0.0
+    #z[0], z[1] = 2.5, 0.0
+    z[0], z[1] = 1.0, 1.0
     
 def hamiltonia_harm(z, params):
     k, m = params

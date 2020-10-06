@@ -42,7 +42,6 @@ class Solucionador:
     def set_tam(self, tam):
         self.num_coord = tam
         self.z = np.float128(np.array(np.zeros(self.num_coord)))
-        ###self.z = np.array(np.zeros(self.num_coord), dtype = complex)
     def set_mapa(self, func):
         self.mapa = func
         
@@ -76,17 +75,20 @@ class Solucionador:
         if quad:
             t_real_ = np.float128
             t_comp_ = np.complex256
-        self.z = np.array(np.zeros(self.num_coord), dtype = t_real_)   
-        ###self.z = np.array(np.zeros(self.num_coord), dtype = t_comp_)
+        if self.metode.npi:
+            self.z = np.array(np.zeros(self.num_coord), dtype = t_comp_)
+        else:
+            self.z = np.array(np.zeros(self.num_coord), dtype = t_real_)   
         ruta_comu = "./dat/" + self.metode.nom + "/" + self.nom_problema
         ruta_Z = ruta_comu + "_coor_" + str(int(round(T))) + "_" + str(h).replace(".", "") + ".dat"
         ruta_C = ruta_comu + "_cons_" + str(int(round(T))) + "_" + str(h).replace(".", "") + ".dat"
         if self.printZ:
             fitZ = open(ruta_Z, "w")
         if self.printC:
-            fitC = open(ruta_C, "w")    
+            fitC = open(ruta_C, "w")
         m = len(self.metode.ordre)
-        ###m = 1
+        if self.metode.npi:
+            m = 1
         r = 0
         Nit = int(round(T / h))
         p_it = int(1e10)
@@ -106,6 +108,15 @@ class Solucionador:
         for i in range(0, num_cons):
             Csub0[i] = self.conserves[i](self.z, self.parametres)
             Cvalr[i] = Csub0[i]
+        # imprimir z i quantitats conservades al moment inicial
+        if self.printZ:
+            esc = "0.0 " + str(self.z.tolist()).replace(",", "").replace("[", "").replace("]","")
+            fitZ.write(esc + "\n")
+        if self.printC:
+            esc = "0.0"
+            for i in range(0, num_cons):
+                esc = esc + " " + str(Cvalr[i]) + " " +  str(Cdife[i]/Csub0[i])
+            fitC.write(esc + "\n")        
         # pre-processat
         if (self.metode.tipus_processat > 0):
             t0 = tm.time()
@@ -154,8 +165,10 @@ class Solucionador:
                         z_nou[i] += zetes[j][i]
                 for i in range(0, len(z_nou)):
                     z_nou[i] *= fac
-                self.z = z_nou.real
-                ###self.z = z_nou
+                if self.metode.npi:
+                    self.z = z_nou
+                else:
+                    self.z = z_nou.real
             Naval += self.metode.aval
 
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0 and it > 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
@@ -170,15 +183,17 @@ class Solucionador:
                 # càlcul de les quantitats conservades
                 for i in range(0, num_cons):
                     Cvalr[i] = self.conserves[i](self.z, self.parametres)
+                    if self.metode.npi:
+                        Cvalr[i] = Cvalr[i].real
                     Cdife[i] = abs(Cvalr[i] - Csub0[i])
                     if (Cdife[i] > Cemax[i]):
                         Cemax[i] = Cdife[i]
                 # imprimir z i quantitats conservades
                 if self.printZ:
-                    esc = str(it * h) + " " + str(self.z.tolist()).replace(",", "").replace("[", "").replace("]","")
+                    esc = str((it + 1) * h) + " " + str(self.z.tolist()).replace(",", "").replace("[", "").replace("]","")
                     fitZ.write(esc + "\n")
                 if self.printC:
-                    esc = str(it * h)
+                    esc = str((it + 1) * h)
                     for i in range(0, num_cons):
                         esc = esc + " " + str(Cvalr[i]) + " " +  str(Cdife[i]/Csub0[i])
                     fitC.write(esc + "\n")
@@ -235,6 +250,7 @@ class Metode:
         self.tipus_metode = tm
         self.tipus_processat = tp
         self.multifil = False
+        self.npi = False # No projectem a cada iteració
         self.num_parts = np
         self.ordre = []
         self.coef = []

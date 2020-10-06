@@ -88,21 +88,21 @@ if __name__ == "__main__":
 
     # Comparativa 15-09-2020
 
-    #t_final=int(1e6)
-    met.append("sc_5_6")
+    t_final=int(1e6)
+    # met.append("sc_5_6")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
+
+    met.append("sc_7_6")
     tip.append(5)
     pro.append(0)
-    h.append(h_elem)
+    h.append([2.0*np.pi/10])
 
-    # met.append("sc_7_6")
-    # tip.append(5)
-    # pro.append(0)
-    # h.append([0.4])
-
-    # met.append("ssc_7_6")
-    # tip.append(5)
-    # pro.append(0)
-    # h.append([0.4])   
+    met.append("ssc_7_6")
+    tip.append(5)
+    pro.append(0)
+    h.append([2.0*np.pi/10])   
 
     # h_elem2 = []
     # for i in range(0, len(h_elem)):
@@ -416,6 +416,7 @@ if __name__ == "__main__":
     for i in range(0, len(met)):
         metode = Metode(prob.get_parts(), tip[i], pro[i])
         metode.set_metode(met[i])
+        metode.npi = True
         prob.set_metode(metode)
         print(metode.nom)
         direc = "dat/" + metode.nom
