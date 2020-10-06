@@ -88,21 +88,21 @@ if __name__ == "__main__":
 
     # Comparativa 15-09-2020
 
-    t_final=int(1e6)
+    # t_final=int(1e6)
     # met.append("sc_5_6")
     # tip.append(5)
     # pro.append(0)
     # h.append(h_elem)
 
-    met.append("sc_7_6")
-    tip.append(5)
-    pro.append(0)
-    h.append([2.0*np.pi/10])
+    # met.append("sc_7_6")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append([np.pi/6])
 
-    met.append("ssc_7_6")
-    tip.append(5)
-    pro.append(0)
-    h.append([2.0*np.pi/10])   
+    # met.append("ssc_7_6")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append([np.pi/6])   
 
     # h_elem2 = []
     # for i in range(0, len(h_elem)):
@@ -124,31 +124,6 @@ if __name__ == "__main__":
     # tip.append(0)
     # pro.append(4)
     # h.append(h_elem)
-
-    # met.append("psnia_864_2")
-    # tip.append(0)
-    # pro.append(4)
-    # h.append(h_elem)
-
-    # met.append("psnia_864_3")
-    # tip.append(0)
-    # pro.append(4)
-    # h.append(h_elem)
-
-    # met.append("psnia_864_4")
-    # tip.append(0)
-    # pro.append(4)
-    # h.append(h_elem)
-
-    # met.append("psnia_864_5")
-    # tip.append(0)
-    # pro.append(4)
-    # h.append(h_elem)
-
-    # met.append("psnia_864_6")
-    # tip.append(0)
-    # pro.append(4)
-    # h.append(h_elem)
     
     # met.append("pnia_764")
     # tip.append(0)
@@ -160,15 +135,6 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem) 
 
-    # met.append("psnia_1064_1")
-    # tip.append(0)
-    # pro.append(4)
-    # h.append(h_elem)
-
-    # met.append("psnia_1064_2")
-    # tip.append(0)
-    # pro.append(4)
-    # h.append(h_elem)
     
     # Comparativa 19-05-2020
     
@@ -416,7 +382,7 @@ if __name__ == "__main__":
     for i in range(0, len(met)):
         metode = Metode(prob.get_parts(), tip[i], pro[i])
         metode.set_metode(met[i])
-        metode.npi = True
+        # metode.npi = True
         prob.set_metode(metode)
         print(metode.nom)
         direc = "dat/" + metode.nom
