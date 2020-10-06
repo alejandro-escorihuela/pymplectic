@@ -75,15 +75,15 @@ if __name__ == "__main__":
 
     # Basics
     
-    # met.append("sx_2")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("sx_2")
+    tip.append(1)
+    pro.append(0)
+    h.append(h_elem)
     
-    # met.append("r1_s2")
-    # tip.append(3)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("r1_s2")
+    tip.append(3)
+    pro.append(0)
+    h.append(h_elem)
 
 
     # Comparativa 15-09-2020

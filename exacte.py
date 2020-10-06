@@ -14,7 +14,7 @@ if __name__ == "__main__":
         print("S'ha de passar el temps inicial i el final i opcionalment el nombre de passos (per defecte 5000)")
         exit(-1)
     else:
-        problema = prb.kepl
+        problema = prb.fish
         t_ini = float(sys.argv[1])
         t_fi = float(sys.argv[2])
         if (len(sys.argv) == 3):

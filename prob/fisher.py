@@ -5,15 +5,15 @@
 # fisher.py
 
 import numpy as np
+from scipy.linalg import expm, sinm, cosm
 
 def ini_fish(z, params):
     N = params[0]
     d = 1.0/N
-    x = 0.0
+    xv = np.linspace(0.0, 1.0, N)
     for i in range(0, N):
-        z[i] = np.sin(2.0*np.pi*x)
-        x = x + d
-    
+        z[i] = np.sin(2.0*np.pi*xv[i])
+        
 def mapaABfish(flux, z, dt, params):
     N = params[0]
     u = z.copy()
@@ -21,7 +21,8 @@ def mapaABfish(flux, z, dt, params):
         u = dt*laplacia(u, 1.0/N)
     elif flux == 1:
         for i in range(0, N):
-            u[i] = dt*u[i]*(1.0 - u[i])
+            frac = (np.exp(dt) - 1.0)/(1.0 + u[i]*(np.exp(dt) - 1.0))
+            u[i] = u[i]*(1.0 + (1.0 - u[i])*frac)
     z = u.copy()
 
 def laplacia(v, dx):
