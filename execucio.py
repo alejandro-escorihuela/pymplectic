@@ -60,8 +60,9 @@ if __name__ == "__main__":
         h_elem = [0.4, 0.2, 0.1, 0.08, 0.04]
     elif pr == 9:
         prob = prb.fish
-        t_final = 10
-        h_elem = [0.1, 0.05, 0.01]        
+        t_final = 1
+        #h_elem = [0.1, 0.05, 0.01]
+        h_elem = [0.01]
     else:
         print("El problema", pr, "no existeix.")
         print_ajuda(sys.argv[0])
@@ -80,10 +81,10 @@ if __name__ == "__main__":
     pro.append(0)
     h.append(h_elem)
     
-    met.append("r1_s2")
-    tip.append(3)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("r1_s2")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append(h_elem)
 
 
     # Comparativa 15-09-2020

@@ -149,7 +149,7 @@ keni.set_print_coord(False)
 keni.set_print_cons(True)
 
 # Equacio de Fisher
-fish_tam = 1000
+fish_tam = 10
 fish = Solucionador()
 fish.set_nom("fisher")
 fish.set_parts(2)
@@ -158,6 +158,6 @@ fish.set_tam(fish_tam)
 fish.set_mapa(mapaABfish)
 fish.set_eqDreta(eqDreta_fish)
 fish.set_parametres([fish_tam])
-fish.set_calc_error_coord(True)
+fish.set_calc_error_coord(False)
 fish.set_print_coord(True)
 fish.set_print_cons(False)
