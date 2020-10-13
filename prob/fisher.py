@@ -38,15 +38,6 @@ def mapaABfish(flux, z, dt, params):
         u[i] = ua[i]*(1.0 + (1.0 - ua[i])*frac)
     for i in range(0, N):
         z[i] = u[i]
-    
-def laplacia(v, dx):
-    D = np.zeros(v.size)
-    ult = v.size - 1
-    D[0] = (v[1] - 2.0*v[0] + v[ult])
-    D[ult] = (v[0] - 2.0*v[ult] + v[ult - 1])
-    for i in range(1, ult):
-        D[i] = (v[i + 1] - 2.0*v[i] + v[i - 1])    
-    return D/(dx*dx)
 
 def eqDreta_fish(t, z, params):
     N = params[0]
