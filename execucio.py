@@ -11,15 +11,16 @@ import sys
 
 def print_ajuda(nom_prog):
     print("Utilitzeu: python " + nom_prog + " t\nOn t és el problema a resoldre.")
-    print("\t1 -> DDNLS")
-    print("\t2 -> FluxABC")
-    print("\t3 -> Força de Lorentz. Camp electroestàtic")
-    print("\t4 -> Sistema Solar exterior i Plutó: T+V")
-    print("\t5 -> Sistema Solar exterior i Plutó: H0+eH1")
-    print("\t6 -> Oscil·lador harmònic")
-    print("\t7 -> Kepler")
-    print("\t8 -> Kepler pertorbat: H0+eH1")
-    print("\t9 -> Equació de Fisher")
+    print("\t1  -> DDNLS")
+    print("\t2  -> FluxABC")
+    print("\t3  -> Força de Lorentz. Camp electroestàtic")
+    print("\t4  -> Sistema Solar exterior i Plutó: T+V")
+    print("\t5  -> Sistema Solar exterior i Plutó: H0+eH1")
+    print("\t6  -> Oscil·lador harmònic")
+    print("\t7  -> Kepler")
+    print("\t8  -> Kepler pertorbat: H0+eH1")
+    print("\t9  -> Equació lineal parabòlica amb V(x)=λ(2+sin(2πx))")
+    print("\t10 -> Equació de Fisher")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -59,10 +60,14 @@ if __name__ == "__main__":
         t_final = 650
         h_elem = [0.4, 0.2, 0.1, 0.08, 0.04]
     elif pr == 9:
-        prob = prb.fish
+        prob = prb.lpara
         t_final = 1
+        h_elem = [0.1, 0.05, 0.01, 0.005, 0.001]
+    elif pr == 10:
+        prob = prb.fish
+        t_final = 10
         #h_elem = [0.1, 0.05, 0.01]
-        h_elem = [0.01]
+        h_elem = [0.01]    
     else:
         print("El problema", pr, "no existeix.")
         print_ajuda(sys.argv[0])
@@ -80,7 +85,12 @@ if __name__ == "__main__":
     tip.append(1)
     pro.append(0)
     h.append(h_elem)
-    
+
+    met.append("sc_7_6")
+    tip.append(5)
+    pro.append(0)
+    h.append([0.0001])    
+
     # met.append("r1_s2")
     # tip.append(3)
     # pro.append(0)

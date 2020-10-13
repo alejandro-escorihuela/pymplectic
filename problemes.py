@@ -14,6 +14,7 @@ from solar import *
 from harmonic import *
 from kepler import *
 from fisher import *
+from lpara import *
 
 # DDNLS
 ddnls = Solucionador()
@@ -148,15 +149,27 @@ keni.set_calc_error_coord(False)
 keni.set_print_coord(False)
 keni.set_print_cons(True)
 
+# Equació lineal parabòlica
+lpara_tam = 10
+lpara = Solucionador()
+lpara.set_nom("lpara")
+lpara.set_parts(2)
+lpara.set_ini(ini_lpara)
+lpara.set_tam(lpara_tam)
+lpara.set_mapa(mapaABlpara)
+lpara.set_parametres([lpara_tam, 1.0, 4.0])
+lpara.set_calc_error_coord(False)
+lpara.set_print_coord(True)
+lpara.set_print_cons(False)
+
 # Equacio de Fisher
-fish_tam = 10
+fish_tam = 100
 fish = Solucionador()
 fish.set_nom("fisher")
 fish.set_parts(2)
 fish.set_ini(ini_fish)
 fish.set_tam(fish_tam)
 fish.set_mapa(mapaABfish)
-fish.set_eqDreta(eqDreta_fish)
 fish.set_parametres([fish_tam])
 fish.set_calc_error_coord(False)
 fish.set_print_coord(True)

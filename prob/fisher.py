@@ -12,20 +12,6 @@ def ini_fish(z, params):
     d = 1.0/N
     for i in range(0, N):
         z[i] = np.sin(2.0*np.pi*(i + 1)*d)
-        
-def mapaABfish_noexp(flux, z, dt, params):
-    N = params[0]
-    if flux == 0:
-        D = laplacia(z, 1.0/N)
-        for i in range(0, N):
-            z[i] = z[i] + dt*D[i]  
-    elif flux == 1:
-        za = z.copy()
-        for i in range(0, N):
-            # Fisher
-            # frac = (np.exp(dt) - 1.0)/(1.0 + za[i]*(np.exp(dt) - 1.0))
-            # z[i] = za[i]*(1.0 + (1.0 - za[i])*frac)
-            z[i] = z[i] + dt*4*z[i]*(2 + np.sin(2*np.pi*((i + 1)/N)))
 
 def mapaABfish(flux, z, dt, params):
     N = params[0]
@@ -43,13 +29,13 @@ def mapaABfish(flux, z, dt, params):
         A[i][i] = -2
         A[i][i + 1] = 1
     A = A*(N**2)
-    for i in range(0, N):
-        B[i][i] = 4*(2 + np.sin(2*np.pi*((i + 1)/N)))
     if flux == 0:
-        exp = expm(dt*A)   
+        exp = expm(dt*A)
+        u = np.matmul(exp, u)
     elif flux == 1:
-        exp = expm(dt*B)
-    u = np.matmul(exp, u)
+        ua = z.copy()
+        frac = (np.exp(dt) - 1.0)/(1.0 + ua[i]*(np.exp(dt) - 1.0))
+        u[i] = ua[i]*(1.0 + (1.0 - ua[i])*frac)
     for i in range(0, N):
         z[i] = u[i]
     
