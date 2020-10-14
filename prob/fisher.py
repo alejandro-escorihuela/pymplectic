@@ -34,8 +34,9 @@ def mapaABfish(flux, z, dt, params):
         u = np.matmul(exp, u)
     elif flux == 1:
         ua = z.copy()
-        frac = (np.exp(dt) - 1.0)/(1.0 + ua[i]*(np.exp(dt) - 1.0))
-        u[i] = ua[i]*(1.0 + (1.0 - ua[i])*frac)
+        for i in range(0, N):
+            frac = (np.exp(dt) - 1.0)/(1.0 + ua[i]*(np.exp(dt) - 1.0))
+            u[i] = ua[i]*(1.0 + (1.0 - ua[i])*frac)
     for i in range(0, N):
         z[i] = u[i]
 
