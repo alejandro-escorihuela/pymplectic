@@ -66,7 +66,7 @@ if __name__ == "__main__":
     elif pr == 10:
         prob = prb.fish
         t_final = 10
-        h_elem = [0.5, 0.1, 0.05]    
+        h_elem = [0.5, 0.1]    
     else:
         print("El problema", pr, "no existeix.")
         print_ajuda(sys.argv[0])

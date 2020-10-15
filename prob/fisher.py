@@ -17,7 +17,7 @@ def mapaABfish(flux, z, dt, params):
     N = params[0]
     A = np.zeros((N, N))
     B = np.zeros((N, N))
-    u = z.copy()
+    u = np.copy(z)
     A[0][0] = -2
     A[0][1] = 1
     A[0][N - 1] = 1
@@ -39,12 +39,3 @@ def mapaABfish(flux, z, dt, params):
             u[i] = ua[i]*(1.0 + (1.0 - ua[i])*frac)
     for i in range(0, N):
         z[i] = u[i]
-
-def eqDreta_fish(t, z, params):
-    N = params[0]
-    zpunt = np.zeros(N)
-    lap = np.zeros(N)
-    lap = laplacia(z, 1.0/N)
-    for i in range(0, N):
-        zpunt[i] = lap[i] + z[i]*(1.0 - z[i])
-    return zpunt
