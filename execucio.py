@@ -80,21 +80,21 @@ if __name__ == "__main__":
 
     # Basics
     
-    met.append("sx_2")
-    tip.append(1)
-    pro.append(0)
-    h.append(h_elem)  
+    # met.append("sx_2")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(h_elem)  
     
 
-    met.append("r1_s2")
-    tip.append(4)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("r1_s2")
+    # tip.append(4)
+    # pro.append(0)
+    # h.append(h_elem)
 
-    met.append("r2_s2")
-    tip.append(4)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("r2_s2")
+    # tip.append(4)
+    # pro.append(0)
+    # h.append(h_elem)
     
     # Comparativa 15-09-2020
 
@@ -114,19 +114,24 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append([np.pi/6])   
 
-    # h_elem2 = []
-    # for i in range(0, len(h_elem)):
-    #     h_elem2.append(h_elem[i]*(2))
+    h_elem2 = []
+    for i in range(0, len(h_elem)):
+        h_elem2.append(h_elem[i]*(2))
     
-    # met.append("sc_11_8")
-    # tip.append(5)
-    # pro.append(0)
-    # h.append(h_elem2)
+    met.append("sc_9_8")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem2)
 
-    # met.append("ssc_15_8")
-    # tip.append(5)
-    # pro.append(0)
-    # h.append(h_elem2)
+    met.append("sc_11_8")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem2)
+
+    met.append("ssc_15_8")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem2)
     
     # Quasi-integrables
     
