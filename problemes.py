@@ -13,6 +13,7 @@ from em import *
 from solar import *
 from harmonic import *
 from kepler import *
+from pendol import *
 from fisher import *
 from lpara import *
 
