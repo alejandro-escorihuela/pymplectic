@@ -32,15 +32,14 @@ def mapaABlpara(flux, z, dt, params):
     for i in range(0, N):
         B[i][i] = lamb*(2 + np.sin(2*np.pi*((i + 1)/N)))
     if flux == 0:
-        exp = expm(dt*A)
-        u = np.matmul(exp, u)
-        # mu = np.zeros(N)
-        # for i in range(0, N):
-        #     mu[i] = 2*np.pi*(i + 1)
-        # mod = np.linalg.norm(mu)
-        # ufft = np.fft.fft(u)
-        # ufft = ufft*np.exp(-mod*dt)/N
-        # u = np.fft.ifft(ufft)
+        # exp = expm(dt*A)
+        # u = np.matmul(exp, u)
+        k = np.concatenate((np.linspace(0,N/2,N/2+1),np.linspace(-N/2+1,-1,N/2-1)))
+        mu = 2*np.pi*k
+        mu = mu*mu
+        v = np.fft.fft(u)
+        p = v*np.exp(-mu*alp*dt)
+        u = np.fft.ifft(p)
     elif flux == 1:
         exp = expm(dt*B)
         u = np.matmul(exp, u)

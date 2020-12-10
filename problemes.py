@@ -150,7 +150,7 @@ keni.set_print_coord(False)
 keni.set_print_cons(True)
 
 # Equació lineal parabòlica
-lpara_tam = 10
+lpara_tam = 100
 lpara = Solucionador()
 lpara.set_nom("lpara")
 lpara.set_parts(2)
@@ -158,7 +158,7 @@ lpara.set_ini(ini_lpara)
 lpara.set_tam(lpara_tam)
 lpara.set_mapa(mapaABlpara)
 lpara.set_parametres([lpara_tam, 1.0, 4.0])
-lpara.set_calc_error_coord(False)
+lpara.set_calc_error_coord(True)
 lpara.set_print_coord(True)
 lpara.set_print_cons(False)
 

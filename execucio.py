@@ -54,7 +54,7 @@ if __name__ == "__main__":
     elif pr == 7:
         prob = prb.kepl
         t_final = 650
-        h_elem = [0.25, 0.1, 0.04, 0.025, 0.01]
+        h_elem = [10.0, 5.0, 2.5, 1.0, 0.5, 0.25, 0.1, 0.04, 0.025, 0.01]
     elif pr == 8:
         prob = prb.keni
         t_final = 650
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     elif pr == 9:
         prob = prb.lpara
         t_final = 1
-        h_elem = [0.1, 0.05, 0.01, 0.005, 0.001]
+        h_elem = [0.01, 0.001]
     elif pr == 10:
         prob = prb.fish
         t_final = 10
@@ -83,8 +83,7 @@ if __name__ == "__main__":
     # met.append("sx_2")
     # tip.append(1)
     # pro.append(0)
-    # h.append(h_elem)  
-    
+    # h.append(h_elem)      
 
     # met.append("r1_s2")
     # tip.append(4)
@@ -98,7 +97,7 @@ if __name__ == "__main__":
     
     # Comparativa 15-09-2020
 
-    # t_final=int(1e6)
+    # # t_final=int(1e6)
     # met.append("sc_5_6")
     # tip.append(5)
     # pro.append(0)
@@ -107,31 +106,31 @@ if __name__ == "__main__":
     # met.append("sc_7_6")
     # tip.append(5)
     # pro.append(0)
-    # h.append([np.pi/6])
+    # h.append(h_elem)
 
     # met.append("ssc_7_6")
     # tip.append(5)
     # pro.append(0)
-    # h.append([np.pi/6])   
+    # h.append(h_elem)   
 
-    h_elem2 = []
-    for i in range(0, len(h_elem)):
-        h_elem2.append(h_elem[i]*(2))
+    # h_elem2 = []
+    # for i in range(0, len(h_elem)):
+    #     h_elem2.append(h_elem[i]*(2))
     
-    met.append("sc_9_8")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem2)
+    # met.append("sc_9_8")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
 
-    met.append("sc_11_8")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem2)
+    # met.append("sc_11_8")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
 
-    met.append("ssc_15_8")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem2)
+    # met.append("ssc_15_8")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
     
     # Quasi-integrables
     
@@ -201,21 +200,23 @@ if __name__ == "__main__":
     # tip.append(5)
     # pro.append(0)
     # h.append(h_elem)
+
+    t_final = int(1e6)
+    h_elem = [0.1]    
+    met.append("r1_s2")
+    tip.append(3)
+    pro.append(0)
+    h.append(h_elem)
     
-    # met.append("r1_s2")
-    # tip.append(3)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("sc_3_4")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem) 
     
-    # met.append("sc_3_4")
-    # tip.append(5)
-    # pro.append(0)
-    # h.append(h_elem) 
-    
-    # met.append("ssc_3_4")
-    # tip.append(5)
-    # pro.append(0)
-    # h.append(h_elem)
+    met.append("ssc_3_4")
+    tip.append(5)
+    pro.append(0)
+    h.append(h_elem)
     
     # met.append("sc_5_6")
     # tip.append(5)
@@ -397,7 +398,7 @@ if __name__ == "__main__":
     for i in range(0, len(met)):
         metode = Metode(prob.get_parts(), tip[i], pro[i])
         metode.set_metode(met[i])
-        # metode.npi = True
+        metode.npi = True
         prob.set_metode(metode)
         print(metode.nom)
         direc = "dat/" + metode.nom
