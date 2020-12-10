@@ -14,6 +14,7 @@ from solar import *
 from harmonic import *
 from kepler import *
 from pendol import *
+from lotka import *
 from fisher import *
 from lpara import *
 
@@ -122,6 +123,32 @@ harm.add_conserva(hamiltonia_harm)
 harm.set_calc_error_coord(False)
 harm.set_print_coord(True)
 harm.set_print_cons(True)
+
+# Pèndol simple
+pend = Solucionador()
+pend.set_nom("pend")
+pend.set_parts(2)
+pend.set_ini(ini_pend)
+pend.set_tam(2)
+pend.set_mapa(mapaABpend)
+pend.set_parametres([1.0])
+pend.add_conserva(hamiltonia_pend)
+pend.set_calc_error_coord(False)
+pend.set_print_coord(True)
+pend.set_print_cons(True)
+
+# Lotka-Volterra
+lotka = Solucionador()
+lotka.set_nom("lotka")
+lotka.set_parts(2)
+lotka.set_ini(ini_lotka)
+lotka.set_tam(2)
+lotka.set_mapa(mapaABlotka)
+lotka.set_parametres([])
+lotka.add_conserva(hamiltonia_lotka)
+lotka.set_calc_error_coord(False)
+lotka.set_print_coord(True)
+lotka.set_print_cons(True)
 
 # Kepler m = 1
 kepl = Solucionador()

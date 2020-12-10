@@ -13,7 +13,7 @@ def ini_pend(z, params):
 def hamiltonia_pend(z, params):
     k = params[0]
     q, p = z
-    return 0.5*(p**2 + k**2*(1.0 - np.cos(q)))
+    return 0.5*p**2 + k**2*(1.0 - np.cos(q))
 
 def mapaABpend(flux, z, dt, params):
     k = params[0]

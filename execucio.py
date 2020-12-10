@@ -20,8 +20,9 @@ def print_ajuda(nom_prog):
     print("\t7  -> Pèndol simple")
     print("\t8  -> Kepler")
     print("\t9  -> Kepler pertorbat: H0+eH1")
-    print("\t10  -> Equació lineal parabòlica amb V(x)=λ(2+sin(2πx))")
-    print("\t11 -> Equació de Fisher")
+    print("\t10 -> Lotka-Volterra")
+    print("\t11 -> Equació lineal parabòlica amb V(x)=λ(2+sin(2πx))")
+    print("\t12 -> Equació de Fisher")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -65,10 +66,14 @@ if __name__ == "__main__":
         t_final = 650
         h_elem = [0.4, 0.2, 0.1, 0.08, 0.04]
     elif pr == 10:
+        prob = prb.lotka
+        t_final = 650
+        h_elem = [1.0, 0.5, 0.25, 0.1]        
+    elif pr == 11:
         prob = prb.lpara
         t_final = 1
         h_elem = [0.01, 0.001]
-    elif pr == 11:
+    elif pr == 12:
         prob = prb.fish
         t_final = 10
         h_elem = [0.5, 0.1]    
@@ -207,7 +212,7 @@ if __name__ == "__main__":
     # h.append(h_elem)
 
     t_final = int(1e6)
-    h_elem = [0.1]    
+    h_elem = [1.0]    
     met.append("r1_s2")
     tip.append(3)
     pro.append(0)
