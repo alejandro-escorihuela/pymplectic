@@ -48,7 +48,7 @@ if __name__ == "__main__":
     elif pr == 5:
         prob = prb.solni
         t_final = 20000
-        h_elem = [500.0, 400.0, 200.0, 160.0, 100.0]        
+        h_elem = [500.0, 400.0, 200.0, 160.0, 100.0]
     elif pr == 6:
         prob = prb.harm
         t_final = 650
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     elif pr == 10:
         prob = prb.lotka
         t_final = 650
-        h_elem = [1.0, 0.5, 0.25, 0.1]        
+        h_elem = [1.0, 0.5, 0.25, 0.1]
     elif pr == 11:
         prob = prb.lpara
         t_final = 1
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     elif pr == 12:
         prob = prb.fish
         t_final = 10
-        h_elem = [0.5, 0.1]    
+        h_elem = [0.00001]
     else:
         print("El problema", pr, "no existeix.")
         print_ajuda(sys.argv[0])
@@ -86,14 +86,14 @@ if __name__ == "__main__":
     tip = []
     pro = []
     h = []
-    
+
 
     # Basics
-    
-    # met.append("sx_2")
-    # tip.append(1)
-    # pro.append(0)
-    # h.append(h_elem)      
+
+    met.append("sx_2")
+    tip.append(1)
+    pro.append(0)
+    h.append(h_elem)
 
     # met.append("r1_s2")
     # tip.append(4)
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     # tip.append(4)
     # pro.append(0)
     # h.append(h_elem)
-    
+
     # Comparativa 15-09-2020
 
     # # t_final=int(1e6)
@@ -121,12 +121,12 @@ if __name__ == "__main__":
     # met.append("ssc_7_6")
     # tip.append(5)
     # pro.append(0)
-    # h.append(h_elem)   
+    # h.append(h_elem)
 
     # h_elem2 = []
     # for i in range(0, len(h_elem)):
     #     h_elem2.append(h_elem[i]*(2))
-    
+
     # met.append("sc_9_8")
     # tip.append(5)
     # pro.append(0)
@@ -211,22 +211,22 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
 
-    t_final = int(1e2)
-    h_elem = [0.05]    
-    met.append("r1_s2")
-    tip.append(3)
-    pro.append(0)
-    h.append(h_elem)
+    # t_final = int(1e6)
+    # h_elem = [0.01]
+    # met.append("r1_s2")
+    # tip.append(3)
+    # pro.append(0)
+    # h.append(h_elem)
     
-    met.append("sc_3_4")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem) 
+    # met.append("sc_3_4")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem) 
     
-    met.append("ssc_3_4")
-    tip.append(5)
-    pro.append(0)
-    h.append(h_elem)
+    # met.append("ssc_3_4")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append(h_elem)
     
     # met.append("sc_5_6")
     # tip.append(5)
