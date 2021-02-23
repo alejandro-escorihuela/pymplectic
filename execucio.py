@@ -90,7 +90,7 @@ if __name__ == "__main__":
 
 
     # Basics
-
+    h_elem = [1e-7]
     met.append("sx_2")
     tip.append(1)
     pro.append(0)
