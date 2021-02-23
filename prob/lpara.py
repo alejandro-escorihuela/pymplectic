@@ -34,7 +34,7 @@ def mapaABlpara(flux, z, dt, params):
     if flux == 0:
         # exp = expm(dt*A)
         # u = np.matmul(exp, u)
-        k = np.concatenate((np.linspace(0,N/2,N/2+1),np.linspace(-N/2+1,-1,N/2-1)))
+        k = np.concatenate((np.arange(0, N//2), np.array([0]), np.arange(-N//2 + 1, 0)))
         mu = 2*np.pi*k
         mu = mu*mu
         v = np.fft.fft(u)
