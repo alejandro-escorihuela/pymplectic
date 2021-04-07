@@ -73,7 +73,7 @@ if __name__ == "__main__":
     elif pr == 11:
         prob = prb.lpara
         t_final = 1
-        h_elem = [0.5, 0.1, 0.01, 0.001]
+        h_elem = list(1.0/np.array([2,3,5,10]))#,25,42,64,100]))
     elif pr == 12:
         prob = prb.fish
         t_final = 10
@@ -90,26 +90,26 @@ if __name__ == "__main__":
 
 
     # Basics
-    h_elem = [1e-7]
-    met.append("sx_2")
-    tip.append(1)
+    # met.append("xc_4_4")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(h_elem)
+    rot = 4
+    met.append("r1_xc4")
+    tip.append(rot)
+    pro.append(0)
+    h.append(h_elem)
+
+    met.append("r2_xc4")
+    tip.append(rot)
+    pro.append(0)
+    h.append(h_elem)    
+
+    met.append("r3_xc4")
+    tip.append(rot)
     pro.append(0)
     h.append(h_elem)
     
-    # met.append("r1_xc4")
-    # tip.append(4)
-    # pro.append(0)
-    # h.append(h_elem)
-
-    # met.append("r2_xc4")
-    # tip.append(4)
-    # pro.append(0)
-    # h.append(h_elem)    
-
-    # met.append("r3_xc4")
-    # tip.append(4)
-    # pro.append(0)
-    # h.append(h_elem) 
     
     # met.append("r1_s2")
     # tip.append(4)
