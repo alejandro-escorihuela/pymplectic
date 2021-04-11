@@ -158,10 +158,10 @@ kepl.set_ini(ini_kepl)
 kepl.set_tam(4)
 kepl.set_mapa(mapaABkepl)
 kepl.set_eqDreta(eqDreta_kepl)
-kepl.set_parametres([0.8])
+kepl.set_parametres([0.6])
 kepl.add_conserva(hamiltonia_kepl)
 kepl.set_calc_error_coord(False)
-kepl.set_print_coord(True)
+kepl.set_print_coord(False)
 kepl.set_print_cons(True)
 
 # Kepler pertorbat m = 1. H0+eH1

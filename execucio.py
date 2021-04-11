@@ -60,8 +60,8 @@ if __name__ == "__main__":
     elif pr == 8:
         prob = prb.kepl
         t_final = 20.0*np.pi
-        #h_elem = [10.0, 5.0, 2.5, 1.0, 0.5, 0.25, 0.1, 0.04, 0.025, 0.01]
-        h_elem = list(10**-np.linspace(np.log10(6), 2, 10))
+        h_elem = [10.0, 5.0, 2.5, 1.0, 0.5, 0.25, 0.1, 0.04, 0.025, 0.01]
+        # h_elem = list(10**-np.linspace(np.log10(6), 2, 10))
     elif pr == 9:
         prob = prb.keni
         t_final = 650
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     elif pr == 11:
         prob = prb.lpara
         t_final = 1
-        h_elem = list(1.0/np.array([2,3,5,10]))#,25,42,64,100]))
+        h_elem = list(1.0/np.array([2,3,5,10,25,42,64,100]))
     elif pr == 12:
         prob = prb.fish
         t_final = 10
@@ -90,37 +90,84 @@ if __name__ == "__main__":
 
 
     # Basics
-    # met.append("xc_4_4")
-    # tip.append(1)
+
+    # met.append("ssc_15_8")
+    # tip.append(5)
     # pro.append(0)
-    # h.append(h_elem)
-    rot = 4
+    # h.append([1/1000])
+    
+    #hh = 10**-np.linspace(0.4, 1.6, 10)
+    hh = 1.0/np.array([4,6,8,10,14,18,24,36])
+    #t_final = 2000.0*np.pi
+    met.append("xc_4_4")
+    tip.append(1)
+    pro.append(0)
+    #h.append(h_elem)
+    h.append(list(hh/4))
+    #h.append([0.015])
+    
+    rot = 3
     met.append("r1_xc4")
     tip.append(rot)
     pro.append(0)
-    h.append(h_elem)
-
+    #h.append(h_elem)
+    h.append(list(hh/2))
+    #h.append([0.03])
+    
     met.append("r2_xc4")
     tip.append(rot)
     pro.append(0)
-    h.append(h_elem)    
-
+    #h.append(h_elem)
+    h.append(list(hh))    
+    #h.append([0.06])
+    
     met.append("r3_xc4")
     tip.append(rot)
     pro.append(0)
-    h.append(h_elem)
+    #h.append(h_elem)
+    h.append(list(hh*2))
+    #h.append([0.12])
     
+    # met.append("sx_2")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(h_elem)      
     
     # met.append("r1_s2")
-    # tip.append(4)
+    # tip.append(rot)
     # pro.append(0)
     # h.append(h_elem)
 
     # met.append("r2_s2")
-    # tip.append(4)
+    # tip.append(rot)
     # pro.append(0)
     # h.append(h_elem)
 
+    # met.append("r3_s2")
+    # tip.append(rot)
+    # pro.append(0)
+    # h.append(h_elem)
+    
+    # met.append("s_3_4")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(h_elem)
+
+    # met.append("r1_ss4")
+    # tip.append(rot)
+    # pro.append(0)
+    # h.append(h_elem)
+    
+    # met.append("r2_ss4")
+    # tip.append(rot)
+    # pro.append(0)
+    # h.append(h_elem)
+
+    # met.append("r3_ss4")
+    # tip.append(rot)
+    # pro.append(0)
+    # h.append(h_elem)
+    
     # Comparativa 15-09-2020
 
     # # t_final=int(1e6)

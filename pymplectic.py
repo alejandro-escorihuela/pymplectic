@@ -130,11 +130,14 @@ class Solucionador:
             if not self.metode.multifil:
                 # m <- nombre de fluxes
                 t0 = tm.time()
+                zcomp = self.z.astype(t_comp_)
                 for i in range(0, m):
                     flux = self.metode.ordre[i][0]
                     index = self.metode.ordre[i][1]
                     dt = self.metode.coef[flux][index] * h
-                    self.mapa(flux, self.z, dt, self.parametres)
+                    self.mapa(flux, zcomp, dt, self.parametres)
+                    ##self.mapa(flux, self.z, dt, self.parametres)
+                self.z = zcomp.copy().real
                 temps += tm.time() - t0
             else:
                 # m  <- nombre de 'fils'
@@ -395,8 +398,10 @@ class Metode:
             linia = item.replace("\n", "")
             tros = linia.split(" ")
             for j, jtem in enumerate(tros):
-                if (is_numeric(jtem)):
+                if (is_real(jtem)):
                     aux.append(np.float128(jtem))
+                elif (is_complex(jtem)):
+                    aux.append(np.complex256(complex(jtem)))
                 elif (j == 0):
                     nom.append(jtem[0])
             if (len(aux) > 0):
@@ -661,11 +666,21 @@ class Metode:
         if not os.path.exists(direc):
             os.mkdir(direc)
     
-def is_numeric(val):
+def is_real(val):
     if (val.strip() == ""):
         return False
     try:
         float(val)
+    except ValueError:
+        return False
+    else:
+        return True
+
+def is_complex(val):
+    if (val.strip() == ""):
+        return False
+    try:
+        complex(val)
     except ValueError:
         return False
     else:
