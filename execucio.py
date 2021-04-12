@@ -99,34 +99,44 @@ if __name__ == "__main__":
     #hh = 10**-np.linspace(0.4, 1.6, 10)
     hh = 1.0/np.array([4,6,8,10,14,18,24,36])
     #t_final = 2000.0*np.pi
-    met.append("xc_4_4")
+    #hh = hh/4
+
+    met.append("tj1_xc4")
     tip.append(1)
     pro.append(0)
-    #h.append(h_elem)
-    h.append(list(hh/4))
-    #h.append([0.015])
-    
-    rot = 3
-    met.append("r1_xc4")
-    tip.append(rot)
+    h.append(list(hh/9))    
+
+    met.append("tj2_xc4")
+    tip.append(1)
     pro.append(0)
-    #h.append(h_elem)
-    h.append(list(hh/2))
-    #h.append([0.03])
-    
-    met.append("r2_xc4")
-    tip.append(rot)
+    h.append(list(hh/3))
+
+    met.append("tj3_xc4")
+    tip.append(1)
     pro.append(0)
-    #h.append(h_elem)
-    h.append(list(hh))    
-    #h.append([0.06])
+    h.append(list(hh))
     
-    met.append("r3_xc4")
-    tip.append(rot)
-    pro.append(0)
-    #h.append(h_elem)
-    h.append(list(hh*2))
-    #h.append([0.12])
+    # rot = 3
+    # met.append("r1_xc4")
+    # tip.append(rot)
+    # pro.append(0)
+    # #h.append(h_elem)
+    # h.append(list(hh/2))
+    # #h.append([0.03])
+    
+    # met.append("r2_xc4")
+    # tip.append(rot)
+    # pro.append(0)
+    # #h.append(h_elem)
+    # h.append(list(hh))    
+    # #h.append([0.06])
+    
+    # met.append("r3_xc4")
+    # tip.append(rot)
+    # pro.append(0)
+    # #h.append(h_elem)
+    # h.append(list(hh*2))
+    # #h.append([0.12])
     
     # met.append("sx_2")
     # tip.append(1)
