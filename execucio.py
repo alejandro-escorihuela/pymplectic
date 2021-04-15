@@ -96,8 +96,8 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append([1/1000])
     
-    #hh = 10**-np.linspace(0.4, 1.6, 10)
-    hh = 1.0/np.array([4,6,8,10,14,18,24,36])
+    hh = 10**-np.linspace(0.1, 2.8, 20)
+    #hh = 1.0/np.array([4,6,8,10,12,14,16,18,20,22,24,28,32,36,40,46,52,58,66,72])
     #t_final = 2000.0*np.pi
     #hh = hh/4
 
@@ -116,7 +116,14 @@ if __name__ == "__main__":
     pro.append(0)
     h.append(list(hh))
     
-    # rot = 3
+    rot = 3
+
+    # met.append("xc_4_4")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(list(hh/4))
+    # #h.append([0.015]) 
+    
     # met.append("r1_xc4")
     # tip.append(rot)
     # pro.append(0)
@@ -488,6 +495,7 @@ if __name__ == "__main__":
         fit = open(direc + "/" + prob.get_nom() + "_err.dat", "w")
         for j in range(0, len(h[i])):
             r = prob.solucionar(h[i][j], t_final, quad = True)
+            r[1] = r[1]//2
             esc = str(r).replace(",", "").replace("[", "").replace("]","")
             esc = str(h[i][j]) + " " + esc
             fit.write(esc + "\n")

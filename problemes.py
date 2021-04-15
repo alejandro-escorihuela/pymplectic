@@ -178,7 +178,7 @@ keni.set_print_coord(False)
 keni.set_print_cons(True)
 
 # Equació lineal parabòlica
-lpara_tam = 100
+lpara_tam = 128
 lpara = Solucionador()
 lpara.set_nom("lpara")
 lpara.set_parts(2)
