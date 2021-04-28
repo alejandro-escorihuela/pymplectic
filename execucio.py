@@ -48,7 +48,8 @@ if __name__ == "__main__":
     elif pr == 5:
         prob = prb.solni
         t_final = 20000
-        h_elem = [500.0, 400.0, 200.0, 160.0, 100.0]
+        h_elem = [2000.0, 1000.0, 500.0, 400.0, 200.0, 160.0, 100.0]
+        # h_elem = list(10**np.linspace(3, 2, 5))
     elif pr == 6:
         prob = prb.harm
         t_final = 650
@@ -65,7 +66,7 @@ if __name__ == "__main__":
     elif pr == 9:
         prob = prb.keni
         t_final = 650
-        h_elem = [0.4, 0.2, 0.1, 0.08, 0.04]
+        h_elem = [1.0, 0.6, 0.4, 0.2, 0.1, 0.08, 0.04]
     elif pr == 10:
         prob = prb.lotka
         t_final = 650
@@ -96,27 +97,27 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append([1/1000])
     
-    hh = 10**-np.linspace(0.1, 2.8, 20)
-    #hh = 1.0/np.array([4,6,8,10,12,14,16,18,20,22,24,28,32,36,40,46,52,58,66,72])
-    #t_final = 2000.0*np.pi
-    #hh = hh/4
+    # hh = 10**-np.linspace(0.1, 2.8, 20)
+    # #hh = 1.0/np.array([4,6,8,10,12,14,16,18,20,22,24,28,32,36,40,46,52,58,66,72])
+    # #t_final = 2000.0*np.pi
+    # #hh = hh/4
 
-    met.append("tj1_xc4")
-    tip.append(1)
-    pro.append(0)
-    h.append(list(hh/9))    
+    # met.append("tj1_xc4")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(list(hh/9))    
 
-    met.append("tj2_xc4")
-    tip.append(1)
-    pro.append(0)
-    h.append(list(hh/3))
+    # met.append("tj2_xc4")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(list(hh/3))
 
-    met.append("tj3_xc4")
-    tip.append(1)
-    pro.append(0)
-    h.append(list(hh))
+    # met.append("tj3_xc4")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(list(hh))
     
-    rot = 3
+    # rot = 3
 
     # met.append("xc_4_4")
     # tip.append(1)
@@ -223,21 +224,55 @@ if __name__ == "__main__":
     # h.append(h_elem)
     
     # Quasi-integrables
+    met.append("psnia_1064_1")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
+
+    met.append("psnia_1064_2")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
     
-    # met.append("psnia_864_1")
-    # tip.append(0)
-    # pro.append(4)
-    # h.append(h_elem)
+    met.append("psnia_864_1")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
+
+    met.append("psnia_864_2")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
+
+    met.append("psnia_864_3")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
     
-    # met.append("pnia_764")
-    # tip.append(0)
-    # pro.append(3)
-    # h.append(h_elem) 
+    met.append("psnia_864_4")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
+
+    met.append("psnia_864_5")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)
     
-    # met.append("nia_864")
-    # tip.append(0)
-    # pro.append(0)
-    # h.append(h_elem) 
+    met.append("psnia_864_6")
+    tip.append(0)
+    pro.append(4)
+    h.append(h_elem)   
+    
+    met.append("pnia_764")
+    tip.append(0)
+    pro.append(3)
+    h.append(h_elem) 
+    
+    met.append("nia_864")
+    tip.append(0)
+    pro.append(0)
+    h.append(h_elem) 
 
     
     # Comparativa 19-05-2020

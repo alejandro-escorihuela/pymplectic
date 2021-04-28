@@ -130,14 +130,14 @@ class Solucionador:
             if not self.metode.multifil:
                 # m <- nombre de fluxes
                 t0 = tm.time()
-                zcomp = self.z.astype(t_comp_)
+                ##zcomp = self.z.astype(t_comp_)
                 for i in range(0, m):
                     flux = self.metode.ordre[i][0]
                     index = self.metode.ordre[i][1]
                     dt = self.metode.coef[flux][index] * h
-                    self.mapa(flux, zcomp, dt, self.parametres)
-                    ##self.mapa(flux, self.z, dt, self.parametres)
-                self.z = zcomp.copy().real
+                    ##self.mapa(flux, zcomp, dt, self.parametres)
+                    self.mapa(flux, self.z, dt, self.parametres)
+                ##self.z = zcomp.copy().real
                 temps += tm.time() - t0
             else:
                 # m  <- nombre de 'fils'
