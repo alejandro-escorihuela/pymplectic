@@ -8,7 +8,7 @@ import numpy as np
 
 def ini_pend(z, params):
     k = params[0]
-    z[0], z[1] = 2.5, 0.0
+    z[0], z[1] = 0.0, 5.0
     
 def hamiltonia_pend(z, params):
     k = params[0]

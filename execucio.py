@@ -32,41 +32,41 @@ if __name__ == "__main__":
     if pr == 1:
         prob = prb.ddnls
         t_final = 10
-        h_elem = [0.5, 0.25, 0.1, 0.0625, 0.05]
+        h_elem = [2.0, 1.0, 0.5, 0.25, 0.1, 0.0625, 0.05]
     elif pr == 2:
         prob = prb.fABC
-        t_final = 5
-        h_elem = [0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]
+        t_final = 20
+        h_elem = [2.0, 1.0, 0.5, 0.25, 0.1, 0.05, 0.04, 0.025, 0.01, 0.005]
     elif pr == 3:
         prob = prb.em_es
         t_final = 650
-        h_elem = [2.5, 2.0, 1.25, 1.0, 0.5]
+        h_elem = t_final/((10**np.linspace(2, 4, 10)).astype(int))#[1.25, 1.0, 0.5]
     elif pr == 4:
         prob = prb.solar
         t_final = 2000
-        h_elem = [200.0, 100.0, 50.0, 25.0]
+        h_elem = [1000.0, 400.0, 200.0, 100.0, 50.0, 25.0, 10.0]
     elif pr == 5:
         prob = prb.solni
         t_final = 20000
-        h_elem = [2000.0, 1000.0, 500.0, 400.0, 200.0, 160.0, 100.0]
-        # h_elem = list(10**np.linspace(3, 2, 5))
+        # h_elem = [10000.0, 4000.0, 2000.0, 1000.0, 500.0, 400.0, 200.0, 160.0, 100.0]
+        h_elem = t_final/((2*10**np.linspace(1, 2, 20)).astype(int))
     elif pr == 6:
         prob = prb.harm
         t_final = 650
-        h_elem = [1.0, 0.5, 0.25, 0.1]
+        h_elem = [1.0, 0.5, 0.25, 0.1, 0.05, 0.025, 0.01]
     elif pr == 7:
         prob = prb.pend
         t_final = 650
-        h_elem = [1.0, 0.5, 0.25, 0.1]
+        h_elem = [1.0, 0.5, 0.25, 0.1, 0.05, 0.01, 0.005, 0.0025]
     elif pr == 8:
         prob = prb.kepl
         t_final = 20.0*np.pi
-        h_elem = [10.0, 5.0, 2.5, 1.0, 0.5, 0.25, 0.1, 0.04, 0.025, 0.01]
-        # h_elem = list(10**-np.linspace(np.log10(6), 2, 10))
+        h_elem = [5.0, 2.5, 1.0, 0.5, 0.25, 0.1, 0.04, 0.025, 0.01]
     elif pr == 9:
         prob = prb.keni
-        t_final = 650
-        h_elem = [1.0, 0.6, 0.4, 0.2, 0.1, 0.08, 0.04]
+        t_final = 20.0*np.pi
+        # h_elem = [4.0, 2.0, 1.0, 0.6, 0.4, 0.2, 0.1, 0.08, 0.04]
+        h_elem = t_final/((10**np.linspace(1, 3.8, 20)).astype(int))
     elif pr == 10:
         prob = prb.lotka
         t_final = 650
@@ -223,56 +223,56 @@ if __name__ == "__main__":
     # pro.append(0)
     # h.append(h_elem)
     
-    # Quasi-integrables
-    met.append("psnia_1064_1")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # # Quasi-integrables
+    # met.append("psnia_1064_1")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
 
-    met.append("psnia_1064_2")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_1064_2")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
     
-    met.append("psnia_864_1")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_1")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
 
-    met.append("psnia_864_2")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_2")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
 
-    met.append("psnia_864_3")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_3")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
     
-    met.append("psnia_864_4")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_4")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
 
-    met.append("psnia_864_5")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)
+    # met.append("psnia_864_5")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)
     
-    met.append("psnia_864_6")
-    tip.append(0)
-    pro.append(4)
-    h.append(h_elem)   
+    # met.append("psnia_864_6")
+    # tip.append(0)
+    # pro.append(4)
+    # h.append(h_elem)   
     
-    met.append("pnia_764")
-    tip.append(0)
-    pro.append(3)
-    h.append(h_elem) 
+    # met.append("pnia_764")
+    # tip.append(0)
+    # pro.append(3)
+    # h.append(h_elem) 
     
-    met.append("nia_864")
-    tip.append(0)
-    pro.append(0)
-    h.append(h_elem) 
+    # met.append("nia_864")
+    # tip.append(0)
+    # pro.append(0)
+    # h.append(h_elem) 
 
     
     # Comparativa 19-05-2020
@@ -461,8 +461,13 @@ if __name__ == "__main__":
 
     
     # Composició
-    
-    # met.append("xa_6_4")
+
+    # met.append("sx_10_6")
+    # tip.append(1)
+    # pro.append(0)
+    # h.append(h_elem)
+
+    # met.append("sx_5_4")
     # tip.append(1)
     # pro.append(0)
     # h.append(h_elem)
@@ -499,15 +504,35 @@ if __name__ == "__main__":
 
     
     # Mètodes de processat
-    
-    # met.append("psx_4_4_4")
+      
+    # met.append("px_6_7_6")
     # tip.append(1)
     # pro.append(1)
     # h.append(h_elem)
 
-    # met.append("pc_6_6_4")
+    # met.append("px_7_7_6")
     # tip.append(1)
-    # pro.append(2)
+    # pro.append(1)
+    # h.append(h_elem)
+
+    # met.append("px_7_23_6")
+    # tip.append(1)
+    # pro.append(1)
+    # h.append(h_elem)
+    
+    # met.append("px_8_7_6")
+    # tip.append(1)
+    # pro.append(1)
+    # h.append(h_elem)
+
+    # met.append("px_9_7_6")
+    # tip.append(1)
+    # pro.append(1)
+    # h.append(h_elem)
+    
+    # met.append("px_7_7_4")
+    # tip.append(1)
+    # pro.append(1)
     # h.append(h_elem)
     
     # met.append("pc_9_8_6")
@@ -519,11 +544,30 @@ if __name__ == "__main__":
     # tip.append(1)
     # pro.append(2)
     # h.append(h_elem)
+
+    # Projectem o no?
+    t_final = 1e6
+    h_1 = 0.4
+    h_2 = (7/5)*h_1
+    met.append("sc_5_6")
+    tip.append(5)
+    pro.append(0)
+    h.append([h_1])
+    
+    # met.append("sc_7_6")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append([h_2]) 
+    
+    # met.append("ssc_7_6")
+    # tip.append(5)
+    # pro.append(0)
+    # h.append([h_2])
     
     for i in range(0, len(met)):
         metode = Metode(prob.get_parts(), tip[i], pro[i])
         metode.set_metode(met[i])
-        # metode.npi = True
+        metode.npi = True
         prob.set_metode(metode)
         print(metode.nom)
         direc = "dat/" + metode.nom

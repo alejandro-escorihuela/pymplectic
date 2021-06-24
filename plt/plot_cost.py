@@ -13,7 +13,7 @@ rc('text', usetex=True)
 
 if __name__ == "__main__":
     ip = 1 # Quin problema?
-    ig = 0 # Quina gràfica?
+    ig = 2 # Quina gràfica?
     prob = ["solni", "keni"]
     nom_prob = ["Giant planets and Pluto", "perturbed Kepler"]
     nom_fit = ["cost", "costcpu", "order"]
@@ -60,8 +60,11 @@ if __name__ == "__main__":
         xlab = r"t_{\rm{CPU}}"
     elif ig == 2:
         xval = P.copy()
-        xlab = r"\frac{\tau}{s}"    
-    for i in range(0, len(met)):
+        xlab = r"\frac{\tau}{s}"
+    #iter_graf = range(0, len(met))
+    iter_graf = [0, 1, 6, 7]
+    #iter_graf = [0, 1, 2, 3, 4, 5, 8, 9]
+    for i in iter_graf:
         plt.plot(xval[i], H[i], "C" + str(i) + "--", marker="o", markersize=7.5, linewidth=1.5, label =  r"$\displaystyle " + nom[i] + "$")
     plt.title((nom_graf[ig] + " in " + nom_prob[ip]).replace("_", " "))
     plt.xlabel(r'$\displaystyle\log_{10}\left(' + xlab + r'\right)$')

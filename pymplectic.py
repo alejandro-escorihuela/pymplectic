@@ -92,6 +92,7 @@ class Solucionador:
         r = 0
         Nit = int(round(T / h))
         p_it = int(1e10)
+        #p_it = int(5)
         if (self.metode.tipus_processat > 0):
             r = len(self.metode.ordre_pre)
             #p_it = Nit // 5
@@ -173,7 +174,6 @@ class Solucionador:
                 else:
                     self.z = z_nou.real
             Naval += self.metode.aval
-
             if ((self.metode.tipus_processat > 0) and ((it % p_it == 0 and it > 0) or (it == Nit - 1))) or (self.metode.tipus_processat == 0):
                 z_copia = self.z.copy()
                 t0 = tm.time()
@@ -580,18 +580,20 @@ class Metode:
             met_pre, cof_pre = self.comp2split(coefs[i_p], True)
             coefs_p = []
             n = len(coefs[i_p])
-            for j in range(0, n):
+            self.aval = len(coefs[i_n])
+            # for j in range(0, n):
                 # P^{-1}·K·P -> versió del llibre de S. Blanes i F. Casas
-                coefs_p.append(-coefs[i_p][n - j - 1])
+                # coefs_p.append(-coefs[i_p][n - j - 1])
                 # P^{*}·K·P -> versió posterior de S. Blanes i F. Casas
-                # coefs_p.append(coefs[ip][n - j - 1])
-            met_pos, cof_pos = self.comp2split(coefs_p, False)
+                # coefs_p.append(coefs[i_p][n - j - 1])
+            met_pos, cof_pos = self.comp2split(coefs[i_p][::-1], False)
         elif (tipus == 2):
             # Processat pi=w(h)·w(-h)
             met_nuc, cof_nuc = self.comp2split(coefs[i_n], True)
             cofX_pre = []
             cofX_pos = []
             n = len(coefs[i_p])
+            self.aval = len(coefs[i_n])
             for j in range(0, n):
                 cofX_pos.append(-coefs[i_p][j])
             for j in range(0, n):
@@ -600,7 +602,9 @@ class Metode:
                 cofX_pre.append(-cofX_pos[2*n - j - 1])
             met_pos, cof_pos = self.comp2split(cofX_pre[::-1], False)
             met_pre, cof_pre = self.comp2split(cofX_pos[::-1], False)
-        # print(met_nuc, met_pre, met_pos)
+        # print(met_pre)
+        # print(met_nuc)
+        # print(met_pos)
         # exit(-1) 
         
         return [met_nuc, cof_nuc], [met_pre, cof_pre], [met_pos, cof_pos]
