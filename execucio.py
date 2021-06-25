@@ -547,12 +547,12 @@ if __name__ == "__main__":
 
     # Projectem o no?
     t_final = 1e6
-    h_1 = 0.4
+    h_1 = 0.2
     h_2 = (7/5)*h_1
     met.append("sc_5_6")
     tip.append(5)
     pro.append(0)
-    h.append([h_1])
+    h.append([0.05, 0.01])
     
     # met.append("sc_7_6")
     # tip.append(5)
