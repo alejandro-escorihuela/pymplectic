@@ -552,7 +552,7 @@ if __name__ == "__main__":
     met.append("sc_5_6")
     tip.append(5)
     pro.append(0)
-    h.append([0.05, 0.01])
+    h.append([1.6, 1.2])
     
     # met.append("sc_7_6")
     # tip.append(5)
@@ -567,7 +567,7 @@ if __name__ == "__main__":
     for i in range(0, len(met)):
         metode = Metode(prob.get_parts(), tip[i], pro[i])
         metode.set_metode(met[i])
-        metode.npi = True
+        # metode.npi = True
         prob.set_metode(metode)
         print(metode.nom)
         direc = "dat/" + metode.nom
